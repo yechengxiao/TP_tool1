@@ -5,11 +5,7 @@ object dm: Tdm
   object DB_Con: TADOConnection
     CommandTimeout = 10
     ConnectionString = 
-      'Provider=SQLOLEDB.1;Password=tp797979;Persist Security Info=True' +
-      ';User ID=ycx;Initial Catalog=ZK2015-2-6;Data Source=192.168.0.68' +
-      ';Use Procedure for Prepare=1;Auto Translate=True;Packet Size=409' +
-      '6;Workstation ID=DESKTOP-QMT4NK4;Use Encryption for Data=False;T' +
-      'ag with column collation when possible=False'
+      ''
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
     Left = 56
@@ -97,11 +93,7 @@ object dm: Tdm
   object DB_Con_dev: TADOConnection
     CommandTimeout = 10
     ConnectionString = 
-      'Provider=SQLOLEDB.1;Password=tp797979;Persist Security Info=True' +
-      ';User ID=ycx;Initial Catalog=ZK2015-2-6;Data Source=DESKTOP-QMT4' +
-      'NK4\SQLEXPRESS;Use Procedure for Prepare=1;Auto Translate=True;P' +
-      'acket Size=4096;Workstation ID=DESKTOP-QMT4NK4;Use Encryption fo' +
-      'r Data=False;Tag with column collation when possible=False'
+      ''
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
     Left = 160
