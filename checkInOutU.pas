@@ -22,7 +22,7 @@ uses
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
-  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, Data.Win.ADODB;
+  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, Data.Win.ADODB, StrUtils;
 
 type
   TcheckInOutF = class(TForm)
@@ -124,11 +124,17 @@ type
     dSet_ckInOut_mtype_: TStringField;
     dSet_ckInOut_mczy: TStringField;
     dSet_ckInOut_mmemo: TStringField;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyle_bg: TcxStyle;
+    cxStyle_cont: TcxStyle;
     procedure btn_tjClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cbb_bmDropDown(Sender: TObject);
     procedure cxGrid1DBTableView1DblClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
+    bmList: TStringList;
     { Private declarations }
   public
     { Public declarations }
@@ -139,7 +145,7 @@ var
 
 implementation
 
-uses dmU, utilU, mainU;
+uses dmU, utilU, mainU, checkInOut_modify_U;
 {$R *.dfm}
 
 procedure TcheckInOutF.btn_tjClick(Sender: TObject);
@@ -181,17 +187,75 @@ begin
 end;
 
 procedure TcheckInOutF.cxGrid1DBTableView1DblClick(Sender: TObject);
+var
+  selectedField: string;
 begin
+  if not dSet_ckInOut.Active then
+  begin
+    Application.MessageBox(PChar('当前无数据'), '提示', MB_OK);
+    Exit;
+  end;
+
   // 双击弹出考勤修改页面
+  try
+    try
+      checkInOut_modify_F := TcheckInOut_modify_F.Create(checkInOut_modify_F);
 
+      DataSet_Open(dSet_ckInOut_m, 'SELECT TOP 0 * FROM checkInOut_modified');
+      dSet_ckInOut_m.Append;
+      // 姓名
+      checkInOut_modify_F.edt_name.Text := Trim(dSet_ckInOutname.AsString);
+      // 员工编号
+      dSet_ckInOut_mbadgenumber.AsString :=
+        Trim(dSet_ckInOutbadgenumber.AsString);
+      // 工时
+      dSet_ckInOut_mwork_num.AsString := '1';
 
+      selectedField := cxGrid1DBTableView1.Controller.FocusedColumn.Caption;
+      selectedField := RightStr(selectedField, 2);
+
+      // 签到日期
+      dSet_ckInOut_mcheck_time.AsString := Trim(dSet_ckInOutyf.AsString) + '-' +
+        selectedField;
+
+      checkInOut_modify_F.Visible := False;
+      checkInOut_modify_F.ShowModal;
+    except
+      on e: Exception do
+      begin
+        Application.MessageBox(PChar('出错了：' + e.Message), '提示',
+          MB_OK + MB_ICONSTOP);
+        FreeAndNil(checkInOut_modify_F);
+      end;
+    end;
+  finally
+
+  end;
+
+end;
+
+procedure TcheckInOutF.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := caFree;
+end;
+
+procedure TcheckInOutF.FormCreate(Sender: TObject);
+begin
+  checkInOutF.Position := poScreenCenter;
+  checkInOutF.WindowState := wsMaximized;
 end;
 
 procedure TcheckInOutF.FormShow(Sender: TObject);
 begin
   dtp1.Format := 'yyyy-MM';
-
   dtp1.Date := StartOfTheMonth(Now);
+
+  // bmList := TStringList.Create;
+  //
+  // GetBM(bmList);
+
+  DropDown_(dm.dSet_pub, cbb_bm,
+    'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
 end;
 
 end.

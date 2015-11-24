@@ -4,6 +4,7 @@ object dm: Tdm
   Width = 450
   object DB_Con: TADOConnection
     CommandTimeout = 10
+    Connected = True
     ConnectionString = 
       'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
       'fo=False;User ID=ycx;Initial Catalog=ZK2015-2-6;Data Source=DESK' +
@@ -92,10 +93,9 @@ object dm: Tdm
     Left = 168
     Top = 184
   end
-  object DB_Con_dev: TADOConnection
-    CommandTimeout = 10
-    LoginPrompt = False
-    Provider = 'SQLOLEDB.1'
+  object DB_com: TADOCommand
+    Connection = DB_Con
+    Parameters = <>
     Left = 168
     Top = 24
   end

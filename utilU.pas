@@ -4,15 +4,65 @@ interface
 
 uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, Forms,
   Data.Win.ADODB, Vcl.DBGrids, ClipBrd, ComObj, Vcl.Dialogs, cxGridExportLink,
-  cxGrid, Vcl.StdCtrls,;
+  cxGrid, Vcl.StdCtrls, System.Classes;
 
 procedure Delay(dwMilliseconds: DWORD);
-procedure DataSet_Open(dset: TADODataSet; sql: string);
 function ExportData(cxGrid: TcxGrid): Boolean;
 function DropDown_(dset: TADODataSet; combobox: TComboBox;
   sql, field: string): Boolean;
+procedure msg_info(msg: string);
+procedure msg_err(msg: string);
+function Command_Exec(sql: string): Boolean;
+procedure DataSet_Open(dset: TADODataSet; sql: string);
+function GetBM(var list: TStringList): Boolean; // 返回所有部门
 
 implementation
+
+uses dmU;
+
+function GetBM(var list: TStringList): Boolean;
+var
+  sql: string;
+begin
+  // try
+  // sql := 'SELECT deptname FROM departments ORDER BY deptname DESC';
+  //
+  // DataSet_Open(dm.dSet_pub, sql);
+  //
+  // dm.dSet_pub.First;
+  // while not dm.dSet_pub.Eof do
+  // begin
+  // list.Clear;
+  // list.Add(dm.dSet_pub.FieldByName('deptname').AsString);
+  //
+  // dm.dSet_pub.Next;
+  // end;
+  // Result := True;
+  // except
+  // Result := False;
+  // end;
+end;
+
+function Command_Exec(sql: string): Boolean;
+begin
+  try
+    dm.DB_com.CommandText := sql;
+    dm.DB_com.Execute;
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+procedure msg_info(msg: string);
+begin
+  Application.MessageBox(PChar(msg), '提示', MB_OK);
+end;
+
+procedure msg_err(msg: string);
+begin
+  Application.MessageBox(PChar(msg), '出错了', MB_OK + MB_ICONSTOP);
+end;
 
 // 延时
 procedure Delay(dwMilliseconds: DWORD);

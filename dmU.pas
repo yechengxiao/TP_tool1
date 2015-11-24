@@ -24,7 +24,7 @@ type
     dSet_carcashszcost_amount: TBCDField;
     dSet_carcashszmanage_amount: TBCDField;
     dSet_carcashszhj: TBCDField;
-    DB_Con_dev: TADOConnection;
+    DB_com: TADOCommand;
   private
     { Private declarations }
   public
