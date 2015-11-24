@@ -26,33 +26,11 @@ uses
 
 type
   TmainF = class(TForm)
-    PageControl1: TPageControl;
-    tab1: TTabSheet;
-    pan_down: TPanel;
-    cxGrid1: TcxGrid;
-    cxGrid1DBTableView1: TcxGridDBTableView;
-    cxGrid1Level1: TcxGridLevel;
-    cxGrid1DBTableView1create_operator: TcxGridDBColumn;
-    cxGrid1DBTableView1checktime: TcxGridDBColumn;
-    cxGrid1DBTableView1chongZhi_count: TcxGridDBColumn;
-    cxGrid1DBTableView1tuiKuan_count: TcxGridDBColumn;
-    cxGrid1DBTableView1chongZhi_amount: TcxGridDBColumn;
-    cxGrid1DBTableView1tuiKuan_amount: TcxGridDBColumn;
-    cxGrid1DBTableView1faKa_count: TcxGridDBColumn;
-    cxGrid1DBTableView1tuiKa_count: TcxGridDBColumn;
-    cxGrid1DBTableView1tuiKa_amount: TcxGridDBColumn;
-    cxGrid1DBTableView1cost_amount: TcxGridDBColumn;
-    cxGrid1DBTableView1manage_amount: TcxGridDBColumn;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle_content: TcxStyle;
     cxStyle_header: TcxStyle;
     cxStyle_footer: TcxStyle;
     cxStyle_bg: TcxStyle;
-    tab2: TTabSheet;
-    Panel2: TPanel;
-    cxGrid2: TcxGrid;
-    cxGridDBTableView1: TcxGridDBTableView;
-    cxGridLevel1: TcxGridLevel;
     pan_up: TPanel;
     lbl1: TLabel;
     lbl2: TLabel;
@@ -64,7 +42,24 @@ type
     btn_tj: TButton;
     btn_export: TButton;
     timer_disDBCon: TTimer;
+    pg_ctl: TPageControl;
+    tab1: TTabSheet;
+    pan_down: TPanel;
+    cxGrid1: TcxGrid;
+    cxGrid1DBTableView1: TcxGridDBTableView;
+    cxGrid1DBTableView1create_operator: TcxGridDBColumn;
+    cxGrid1DBTableView1checktime: TcxGridDBColumn;
+    cxGrid1DBTableView1chongZhi_count: TcxGridDBColumn;
+    cxGrid1DBTableView1tuiKuan_count: TcxGridDBColumn;
+    cxGrid1DBTableView1chongZhi_amount: TcxGridDBColumn;
+    cxGrid1DBTableView1tuiKuan_amount: TcxGridDBColumn;
+    cxGrid1DBTableView1faKa_count: TcxGridDBColumn;
+    cxGrid1DBTableView1tuiKa_count: TcxGridDBColumn;
+    cxGrid1DBTableView1tuiKa_amount: TcxGridDBColumn;
+    cxGrid1DBTableView1cost_amount: TcxGridDBColumn;
+    cxGrid1DBTableView1manage_amount: TcxGridDBColumn;
     cxGrid1DBTableView1hj: TcxGridDBColumn;
+    cxGrid1Level1: TcxGridLevel;
     procedure btn_tjClick(Sender: TObject);
     procedure btn_exportClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -173,7 +168,7 @@ begin
   edit_czy.Color := clScrollBar;
 
   // 月度考勤
-  tab2.Caption := 'TODO';
+  //tab2.Caption := 'TODO';
   { 月度考勤
     CREATE PROCEDURE sp_checkInOut_tj(
     @month1 varchar(30),

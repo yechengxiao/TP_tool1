@@ -2,7 +2,6 @@ object startF: TstartF
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'starter'
   ClientHeight = 334
   ClientWidth = 651
   Color = clBtnFace

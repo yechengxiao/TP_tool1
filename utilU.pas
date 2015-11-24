@@ -4,11 +4,13 @@ interface
 
 uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, Forms,
   Data.Win.ADODB, Vcl.DBGrids, ClipBrd, ComObj, Vcl.Dialogs, cxGridExportLink,
-  cxGrid;
+  cxGrid, Vcl.StdCtrls,;
 
 procedure Delay(dwMilliseconds: DWORD);
 procedure DataSet_Open(dset: TADODataSet; sql: string);
 function ExportData(cxGrid: TcxGrid): Boolean;
+function DropDown_(dset: TADODataSet; combobox: TComboBox;
+  sql, field: string): Boolean;
 
 implementation
 
@@ -34,6 +36,38 @@ begin
   end;
 end;
 
+function DropDown_(dset: TADODataSet; combobox: TComboBox;
+  sql, field: string): Boolean;
+var
+  item: string;
+begin
+  if (Trim(sql) = '') or (Trim(field) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  with dset do
+  begin
+    Close;
+    CommandText := sql;
+    Open;
+
+    combobox.Clear;
+    combobox.Items.Add('');
+    while not Eof do
+    begin
+      item := Trim(FieldByName(field).AsString);
+      if item <> '' then
+      begin
+        combobox.Items.Add(item);
+      end;
+      Next;
+    end;
+  end;
+  Result := True;
+end;
+
 function ExportData(cxGrid: TcxGrid): Boolean;
 var
   // str: string;
@@ -50,9 +84,9 @@ begin
         Filter := '*.xls|*.xls';
         if Execute then
         begin
-          ExportGridToExcel(SaveDialog.FileName, cxGrid, true, true,
-            true, 'xls');
-          Result := true;
+          ExportGridToExcel(SaveDialog.FileName, cxGrid, True, True,
+            True, 'xls');
+          Result := True;
         end;
       end;
     except

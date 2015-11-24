@@ -1,11 +1,13 @@
 object dm: Tdm
   OldCreateOrder = False
-  Height = 342
-  Width = 429
+  Height = 364
+  Width = 450
   object DB_Con: TADOConnection
     CommandTimeout = 10
     ConnectionString = 
-      ''
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;User ID=ycx;Initial Catalog=ZK2015-2-6;Data Source=DESK' +
+      'TOP-QMT4NK4\SQLEXPRESS'
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
     Left = 56
@@ -26,8 +28,8 @@ object dm: Tdm
     Connection = DB_Con
     CommandTimeout = 15
     Parameters = <>
-    Left = 152
-    Top = 112
+    Left = 168
+    Top = 104
     object dSet_carcashszcreate_operator: TStringField
       DisplayLabel = #25805#20316#21592
       FieldName = 'create_operator'
@@ -87,16 +89,14 @@ object dm: Tdm
   end
   object dSource_carcashsz: TDataSource
     DataSet = dSet_carcashsz
-    Left = 152
+    Left = 168
     Top = 184
   end
   object DB_Con_dev: TADOConnection
     CommandTimeout = 10
-    ConnectionString = 
-      ''
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
-    Left = 160
-    Top = 32
+    Left = 168
+    Top = 24
   end
 end

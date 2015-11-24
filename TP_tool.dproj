@@ -96,6 +96,14 @@
         <DCCReference Include="startU.pas">
             <Form>startF</Form>
         </DCCReference>
+        <DCCReference Include="checkInOutU.pas">
+            <Form>checkInOutF</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="checkInOut_modify_U.pas">
+            <Form>checkInOut_modify_F</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
