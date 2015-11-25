@@ -23,11 +23,9 @@ object checkInOut_modify_F: TcheckInOut_modify_F
     Width = 415
     Height = 265
     Align = alClient
+    Color = clInfoBk
+    ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 8
-    ExplicitTop = 109
-    ExplicitWidth = 424
-    ExplicitHeight = 296
     object lbl_badgenumber: TLabel
       Left = 19
       Top = 69
@@ -92,7 +90,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       Left = 265
       Top = 66
       Width = 121
-      Height = 22
+      Height = 21
       Color = clScrollBar
       DataField = 'check_time'
       DataSource = checkInOutF.dSource_ckInOut_m
@@ -116,13 +114,15 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       Height = 21
       DataField = 'type_'
       DataSource = checkInOutF.dSource_ckInOut_m
+      DropDownCount = 10
       TabOrder = 5
+      OnKeyPress = dbCbb_typeKeyPress
     end
     object dbEdt_czy: TDBEdit
       Left = 265
       Top = 24
       Width = 121
-      Height = 22
+      Height = 21
       Color = clScrollBar
       DataField = 'czy'
       DataSource = checkInOutF.dSource_ckInOut_m
@@ -160,8 +160,6 @@ object checkInOut_modify_F: TcheckInOut_modify_F
     ParentColor = False
     ShowCaptions = True
     TabOrder = 0
-    ExplicitTop = 340
-    ExplicitWidth = 421
     object tBtn_save: TToolButton
       Left = 0
       Top = 0
@@ -176,12 +174,14 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       Caption = 'tBtn_Separator1'
       ImageIndex = 1
       Style = tbsSeparator
+      Visible = False
     end
     object tBtn_exit: TToolButton
       Left = 39
       Top = 0
       Caption = #36864#20986
       ImageIndex = 1
+      Visible = False
       OnClick = tBtn_exitClick
     end
   end

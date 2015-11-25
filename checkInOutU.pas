@@ -22,7 +22,8 @@ uses
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
-  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, Data.Win.ADODB, StrUtils;
+  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, Data.Win.ADODB, StrUtils, Vcl.Grids,
+  Vcl.ValEdit;
 
 type
   TcheckInOutF = class(TForm)
@@ -127,14 +128,23 @@ type
     cxStyleRepository1: TcxStyleRepository;
     cxStyle_bg: TcxStyle;
     cxStyle_cont: TcxStyle;
+    cxGrid1DBTableView1NO: TcxGridDBColumn;
+    dSet_ckInOutNO: TLargeintField;
+    btn_empty: TButton;
+    ValueListEditor1: TValueListEditor;
     procedure btn_tjClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cbb_bmDropDown(Sender: TObject);
     procedure cxGrid1DBTableView1DblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btn_exportClick(Sender: TObject);
+    procedure btn_emptyClick(Sender: TObject);
+    procedure cxGrid1DBTableView1CustomDrawCell(Sender: TcxCustomGridTableView;
+      ACanvas: TcxCanvas; AViewInfo: TcxGridTableDataCellViewInfo;
+      var ADone: Boolean);
   private
-    bmList: TStringList;
+    drawCellList: TStringList;
     { Private declarations }
   public
     { Public declarations }
@@ -148,90 +158,194 @@ implementation
 uses dmU, utilU, mainU, checkInOut_modify_U;
 {$R *.dfm}
 
+procedure TcheckInOutF.btn_emptyClick(Sender: TObject);
+begin
+  try
+    // 清空表格数据
+    cxGrid1DBTableView1.DataController.DataSource.DataSet.Close;
+  except
+    on e: Exception do
+      msg_err('出错了：' + e.Message);
+  end;
+end;
+
+procedure TcheckInOutF.btn_exportClick(Sender: TObject);
+var
+  b: Boolean;
+  SaveDialog: TSaveDialog;
+begin
+  if cxGrid1DBTableView1.DataController.DataSource.DataSet.IsEmpty then
+  begin
+    msg_info('没有数据...');
+    Exit;
+  end;
+
+  b := ExportData(cxGrid1);
+  if b then
+  begin
+    msg_info('导出完成...');
+  end
+  else if b then
+  begin
+    msg_info('导出未完成...');
+  end;
+end;
+
 procedure TcheckInOutF.btn_tjClick(Sender: TObject);
 var
   sql: string;
   yf, bm: string;
+  I: Integer;
 begin
   try
     paintBox.Canvas.TextOut(5, 10, '开始统计...');
 
     yf := FormatDateTime('yyyy-mm', dtp1.Date);
 
-    bm := cbb_bm.Text;
+    bm := Trim(cbb_bm.Text);
+
+    if bm = '' then
+    begin
+      msg_info('请选择部门');
+
+      if cbb_bm.CanFocus then
+        cbb_bm.Focused;
+
+      Exit;
+    end;
 
     sql := 'EXEC SP_KaoQin_tj ''' + yf + ''',''' + bm + ''' ';
 
     DataSet_Open(dSet_ckInOut, sql);
 
     paintBox.Canvas.TextOut(5, 10, '统计完成...');
+
+    try
+      if Assigned(drawCellList) then
+        FreeAndNil(drawCellList);
+
+      drawCellList := TStringList.Create;
+
+      // TODO sql right?
+      sql := 'SELECT A.* FROM ' +
+        ' (SELECT badgenumber,''D''+RIGHT(CONVERT(VARCHAR(20),check_time,23),2) AS month FROM checkInOut_modified'
+        + 'WHERE LEFT(CONVERT(VARCHAR(20),check_time,23),7)=''' + yf + ''') A' +
+        'LEFT JOIN' + 'userinfo u ON A.badgenumber=u.badgenumber' +
+        'INNER JOIN departments d ON d.DeptID=u.defaultdeptid' +
+        'WHERE DeptName=''' + bm + '''';
+
+      GetList(drawCellList, sql, 'badgenumber', 'month');
+
+      for I := 0 to drawCellList.Count - 1 do
+      begin
+        ValueListEditor1.InsertRow(drawCellList[I],
+          drawCellList.ValueFromIndex[I], true);
+      end;
+
+    except
+      on e: Exception do
+        msg_err('突出显示已修改数据失败');
+    end;
   except
     on e: Exception do
     begin
-      Application.MessageBox(PChar('出错了：' + e.Message), '提示',
-        MB_OK + MB_ICONSTOP);
-      paintBox.Canvas.TextOut(5, 10, '出错了...');
+      msg_err('出错了：' + e.Message);
+      paintBox.Canvas.TextOut(5, 10, '出错了...' + e.Message);
     end;
   end;
 end;
 
 procedure TcheckInOutF.cbb_bmDropDown(Sender: TObject);
-var
-  sql: string;
 begin
-  sql := 'SELECT deptName FROM departments';
 
-  // DropDown_(dm.dSet_pub,);
+end;
 
-  // DataSet_Open(dm.dSet_pub, sql);
+// 双击弹出考勤修改页面
+procedure TcheckInOutF.cxGrid1DBTableView1CustomDrawCell
+  (Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+var
+  field, badgeNO: string;
+begin
+  // 这个函数怎么运行的? 扫描全部单元格？
+  {
+    field := cxGrid1DBTableView1.Controller.FocusedColumn.Caption;
+    badgeNO := cxGrid1DBTableView1.Controller.FocusedRow.DisplayTexts
+    [cxGrid1DBTableView1badgenumber.index];
+
+    if dm.dSet_pub.FieldByName(field).AsString = badgeNO then
+    begin
+    ACanvas.Brush.Color := clRed;
+    ACanvas.Font.Color := clBlack;
+    end; }
 end;
 
 procedure TcheckInOutF.cxGrid1DBTableView1DblClick(Sender: TObject);
 var
-  selectedField: string;
+  selectedField, badgenumber, ck_rq, sql: string;
 begin
   if not dSet_ckInOut.Active then
   begin
-    Application.MessageBox(PChar('当前无数据'), '提示', MB_OK);
+    msg_info('当前无数据');
     Exit;
   end;
 
-  // 双击弹出考勤修改页面
   try
     try
       checkInOut_modify_F := TcheckInOut_modify_F.Create(checkInOut_modify_F);
 
       DataSet_Open(dSet_ckInOut_m, 'SELECT TOP 0 * FROM checkInOut_modified');
       dSet_ckInOut_m.Append;
+
+      badgenumber := Trim(dSet_ckInOutbadgenumber.AsString);
+      selectedField := cxGrid1DBTableView1.Controller.FocusedColumn.Caption;
+      selectedField := RightStr(selectedField, 2);
+      ck_rq := Trim(dSet_ckInOutyf.AsString) + '-' + selectedField;
+
+      sql := 'SELECT top 1 type_, memo, work_num FROM checkInOut_modified WHERE check_time='''
+        + ck_rq + ''' AND badgenumber = ''' + badgenumber + ''' ';
+      DataSet_Open(dm.dSet_pub, sql);
+
+      // 类型
+      with checkInOut_modify_F do
+      begin
+        dbCbb_type.Clear;
+
+        dbCbb_type.Text := dm.dSet_pub.FieldByName('type_').AsString;
+
+        dbCbb_type.Items.Add('');
+        dbCbb_type.Items.Add('调休');
+        dbCbb_type.Items.Add('加班');
+        dbCbb_type.Items.Add('病假');
+        dbCbb_type.Items.Add('事假');
+        dbCbb_type.Items.Add('旷工');
+      end;
+
+      // 备注
+      dSet_ckInOut_mmemo.AsString := dm.dSet_pub.FieldByName('memo').AsString;
+      // 工时
+      dSet_ckInOut_mwork_num.AsString := dm.dSet_pub.FieldByName
+        ('work_num').AsString;
+
+      // 签到日期
+      dSet_ckInOut_mcheck_time.AsString := Trim(ck_rq);
       // 姓名
       checkInOut_modify_F.edt_name.Text := Trim(dSet_ckInOutname.AsString);
       // 员工编号
       dSet_ckInOut_mbadgenumber.AsString :=
         Trim(dSet_ckInOutbadgenumber.AsString);
-      // 工时
-      dSet_ckInOut_mwork_num.AsString := '1';
-
-      selectedField := cxGrid1DBTableView1.Controller.FocusedColumn.Caption;
-      selectedField := RightStr(selectedField, 2);
-
-      // 签到日期
-      dSet_ckInOut_mcheck_time.AsString := Trim(dSet_ckInOutyf.AsString) + '-' +
-        selectedField;
 
       checkInOut_modify_F.Visible := False;
       checkInOut_modify_F.ShowModal;
     except
       on e: Exception do
       begin
-        Application.MessageBox(PChar('出错了：' + e.Message), '提示',
-          MB_OK + MB_ICONSTOP);
+        msg_err('出错了：' + e.Message);
         FreeAndNil(checkInOut_modify_F);
       end;
     end;
   finally
-
   end;
-
 end;
 
 procedure TcheckInOutF.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -249,10 +363,6 @@ procedure TcheckInOutF.FormShow(Sender: TObject);
 begin
   dtp1.Format := 'yyyy-MM';
   dtp1.Date := StartOfTheMonth(Now);
-
-  // bmList := TStringList.Create;
-  //
-  // GetBM(bmList);
 
   DropDown_(dm.dSet_pub, cbb_bm,
     'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');

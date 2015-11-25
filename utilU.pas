@@ -4,43 +4,44 @@ interface
 
 uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, Forms,
   Data.Win.ADODB, Vcl.DBGrids, ClipBrd, ComObj, Vcl.Dialogs, cxGridExportLink,
-  cxGrid, Vcl.StdCtrls, System.Classes;
+  cxGrid, Vcl.StdCtrls, System.Classes, Vcl.DBCtrls;
 
 procedure Delay(dwMilliseconds: DWORD);
 function ExportData(cxGrid: TcxGrid): Boolean;
 function DropDown_(dset: TADODataSet; combobox: TComboBox;
   sql, field: string): Boolean;
+function DropDown_DB(dset: TADODataSet; cbb: TDBComboBox;
+  sql, field: string): Boolean;
 procedure msg_info(msg: string);
 procedure msg_err(msg: string);
 function Command_Exec(sql: string): Boolean;
 procedure DataSet_Open(dset: TADODataSet; sql: string);
-function GetBM(var list: TStringList): Boolean; // 返回所有部门
+// 查询数据，将数据装入list
+function GetList(var list: TStringList; sql, key, value: string): Boolean;
 
 implementation
 
 uses dmU;
 
-function GetBM(var list: TStringList): Boolean;
-var
-  sql: string;
+function GetList(var list: TStringList; sql, key, value: string): Boolean;
 begin
-  // try
-  // sql := 'SELECT deptname FROM departments ORDER BY deptname DESC';
-  //
-  // DataSet_Open(dm.dSet_pub, sql);
-  //
-  // dm.dSet_pub.First;
-  // while not dm.dSet_pub.Eof do
-  // begin
-  // list.Clear;
-  // list.Add(dm.dSet_pub.FieldByName('deptname').AsString);
-  //
-  // dm.dSet_pub.Next;
-  // end;
-  // Result := True;
-  // except
-  // Result := False;
-  // end;
+  try
+    DataSet_Open(dm.dSet_pub, sql);
+
+    dm.dSet_pub.First;
+    while not dm.dSet_pub.Eof do
+    begin
+      list.Clear;
+
+      list.Add(dm.dSet_pub.FieldByName(key).AsString + '=' +
+        dm.dSet_pub.FieldByName(value).AsString);
+
+      dm.dSet_pub.Next;
+    end;
+    Result := True;
+  except
+    Result := False;
+  end;
 end;
 
 function Command_Exec(sql: string): Boolean;
@@ -111,6 +112,38 @@ begin
       if item <> '' then
       begin
         combobox.Items.Add(item);
+      end;
+      Next;
+    end;
+  end;
+  Result := True;
+end;
+
+function DropDown_DB(dset: TADODataSet; cbb: TDBComboBox;
+  sql, field: string): Boolean;
+var
+  item: string;
+begin
+  if (Trim(sql) = '') or (Trim(field) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  with dset do
+  begin
+    Close;
+    CommandText := sql;
+    Open;
+
+    cbb.Clear;
+    cbb.Items.Add('');
+    while not Eof do
+    begin
+      item := Trim(FieldByName(field).AsString);
+      if item <> '' then
+      begin
+        cbb.Items.Add(item);
       end;
       Next;
     end;

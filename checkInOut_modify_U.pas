@@ -33,6 +33,7 @@ type
     procedure tBtn_saveClick(Sender: TObject);
     procedure tBtn_exitClick(Sender: TObject);
     procedure dbEdt_work_numKeyPress(Sender: TObject; var Key: Char);
+    procedure dbCbb_typeKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -46,6 +47,12 @@ implementation
 
 uses checkInOutU, utilU, dmU;
 {$R *.dfm}
+
+procedure TcheckInOut_modify_F.dbCbb_typeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := #0;
+end;
 
 procedure TcheckInOut_modify_F.dbEdt_work_numKeyPress(Sender: TObject;
   var Key: Char);
@@ -62,12 +69,8 @@ begin
   if dbEdt_work_num.CanFocus then
     dbEdt_work_num.Focused;
 
-  dbCbb_type.Clear;
-  dbCbb_type.Items.Add('');
-  dbCbb_type.Items.Add('调休');
-  dbCbb_type.Items.Add('加班');
-  dbCbb_type.Items.Add('病假');
-  dbCbb_type.Items.Add('事假');
+  // DropDown_DB(dm.dSet_pub, dbCbb_type,
+  // 'SELECT distinct type_ FROM checkInOut_modified', 'deptname');
 end;
 
 procedure TcheckInOut_modify_F.tBtn_exitClick(Sender: TObject);
@@ -87,13 +90,16 @@ begin
   badgeNO := Trim(checkInOutF.dSet_ckInOut_mbadgenumber.AsString);
   czy := Trim(checkInOutF.dSet_ckInOut_mczy.AsString);
   workCount := Trim(checkInOutF.dSet_ckInOut_mwork_num.AsString);
-  // workCount := Trim(checkInOutF.dSet_ckInOut_mwork_num.AsString);
   workType := Trim(checkInOutF.dSet_ckInOut_mtype_.AsString);
   memo := Trim(checkInOutF.dSet_ckInOut_mmemo.AsString);
 
   if workCount = '' then
   begin
     msg_info('请填写工时');
+
+    if dbEdt_work_num.CanFocus then
+      dbEdt_work_num.Focused;
+
     Exit;
   end
   else
@@ -114,6 +120,10 @@ begin
   if workType = '' then
   begin
     msg_info('请填写类型');
+
+    if dbCbb_type.CanFocus then
+      dbCbb_type.Focused;
+
     Exit;
   end;
 
@@ -138,15 +148,17 @@ begin
   end;
 
   try
-    // checkInOutF.dSet_ckInOut_m.Post; // 这里不能不存，要用SQL语句
+    // 这里不能不存，要用SQL语句
+    // checkInOutF.dSet_ckInOut_m.Post;
 
     if Command_Exec(sql) then
       msg_info('   保存完成   ');
 
     Close;
   except
+    on E: Exception do
+      msg_err('出错了：' + E.Message);
   end;
-
 end;
 
 end.
