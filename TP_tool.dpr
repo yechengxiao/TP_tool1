@@ -22,7 +22,7 @@ begin
   Application.CreateForm(Tdm, dm);
   startF := TstartF.Create(startF); // 创建启动画面窗口
 
-  ver := '20151123';
+  ver := '20151123_dev';
 
   startF.lbl_ver.Caption := ver;
   startF.Show; // 显示启动画面窗口

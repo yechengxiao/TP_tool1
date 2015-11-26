@@ -154,6 +154,8 @@ begin
     if Command_Exec(sql) then
       msg_info('   ±£´æÍê³É   ');
 
+    checkInOutF.btn_tjClick(checkInOutF);
+
     Close;
   except
     on E: Exception do

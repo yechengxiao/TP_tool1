@@ -28,13 +28,13 @@ begin
   try
     DataSet_Open(dm.dSet_pub, sql);
 
+    list.Clear;
     dm.dSet_pub.First;
     while not dm.dSet_pub.Eof do
     begin
-      list.Clear;
 
-      list.Add(dm.dSet_pub.FieldByName(key).AsString + '=' +
-        dm.dSet_pub.FieldByName(value).AsString);
+      list.Add(UpperCase(Trim(dm.dSet_pub.FieldByName(key).AsString)) + '=' +
+        UpperCase(Trim(dm.dSet_pub.FieldByName(value).AsString)));
 
       dm.dSet_pub.Next;
     end;

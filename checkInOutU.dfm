@@ -27,7 +27,6 @@ object checkInOutF: TcheckInOutF
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 798
     object lbl1: TLabel
       Left = 32
       Top = 12
@@ -87,7 +86,6 @@ object checkInOutF: TcheckInOutF
       Height = 21
       DropDownCount = 20
       TabOrder = 4
-      OnDropDown = cbb_bmDropDown
       Items.Strings = (
         #22612#29260#25991#21270#20013#24515)
     end
@@ -109,8 +107,6 @@ object checkInOutF: TcheckInOutF
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
-    ExplicitWidth = 798
-    ExplicitHeight = 342
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
@@ -119,12 +115,8 @@ object checkInOutF: TcheckInOutF
       ActivePage = tab1
       Align = alClient
       TabOrder = 0
-      ExplicitWidth = 796
-      ExplicitHeight = 340
       object tab1: TTabSheet
         Caption = 'tab1'
-        ExplicitWidth = 788
-        ExplicitHeight = 312
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
@@ -132,8 +124,6 @@ object checkInOutF: TcheckInOutF
           Height = 319
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 788
-          ExplicitHeight = 312
           object cxGrid1DBTableView1: TcxGridDBTableView
             OnDblClick = cxGrid1DBTableView1DblClick
             Navigator.Buttons.CustomButtons = <>
@@ -347,11 +337,12 @@ object checkInOutF: TcheckInOutF
       end
     end
     object ValueListEditor1: TValueListEditor
-      Left = 248
-      Top = 25
+      Left = 485
+      Top = 176
       Width = 306
-      Height = 300
+      Height = 65
       TabOrder = 1
+      Visible = False
     end
   end
   object dSet_ckInOut: TADODataSet

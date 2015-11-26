@@ -134,7 +134,7 @@ type
     ValueListEditor1: TValueListEditor;
     procedure btn_tjClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure cbb_bmDropDown(Sender: TObject);
+
     procedure cxGrid1DBTableView1DblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -221,26 +221,25 @@ begin
     paintBox.Canvas.TextOut(5, 10, '统计完成...');
 
     try
+      // 为 突出显示已修改数据 做准备
       if Assigned(drawCellList) then
         FreeAndNil(drawCellList);
 
       drawCellList := TStringList.Create;
+      {
+        -- 此存储过程返回的表结构。某个月，某个部门的已修改考勤记录。
+        -- badgenumber  days
+        -- 000000784	D02,D04
+      }
+      sql := 'exec SP_get_ckDays_modified ''' + yf + ''',''' + bm + ''' ';
 
-      // TODO sql right?
-      sql := 'SELECT A.* FROM ' +
-        ' (SELECT badgenumber,''D''+RIGHT(CONVERT(VARCHAR(20),check_time,23),2) AS month FROM checkInOut_modified'
-        + 'WHERE LEFT(CONVERT(VARCHAR(20),check_time,23),7)=''' + yf + ''') A' +
-        'LEFT JOIN' + 'userinfo u ON A.badgenumber=u.badgenumber' +
-        'INNER JOIN departments d ON d.DeptID=u.defaultdeptid' +
-        'WHERE DeptName=''' + bm + '''';
+      GetList(drawCellList, sql, 'badgenumber', 'days');
 
-      GetList(drawCellList, sql, 'badgenumber', 'month');
-
-      for I := 0 to drawCellList.Count - 1 do
-      begin
-        ValueListEditor1.InsertRow(drawCellList[I],
-          drawCellList.ValueFromIndex[I], true);
-      end;
+      // for I := 0 to drawCellList.Count - 1 do
+      // begin
+      // ValueListEditor1.InsertRow(drawCellList.Names[I],
+      // drawCellList.ValueFromIndex[I], true);
+      // end;
 
     except
       on e: Exception do
@@ -255,34 +254,37 @@ begin
   end;
 end;
 
-procedure TcheckInOutF.cbb_bmDropDown(Sender: TObject);
-begin
-
-end;
-
-// 双击弹出考勤修改页面
 procedure TcheckInOutF.cxGrid1DBTableView1CustomDrawCell
   (Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 var
-  field, badgeNO: string;
+  field, badgeNO, daysFromDB: string;
 begin
+  // 将人工修改过的记录标记出来
   // 这个函数怎么运行的? 扫描全部单元格？
-  {
-    field := cxGrid1DBTableView1.Controller.FocusedColumn.Caption;
-    badgeNO := cxGrid1DBTableView1.Controller.FocusedRow.DisplayTexts
-    [cxGrid1DBTableView1badgenumber.index];
+  try
+    // field := TcxGridDBColumn(AViewInfo.Item).Caption;
+    field := UpperCase(TcxGridDBColumn(AViewInfo.Item).DataBinding.FieldName);
 
-    if dm.dSet_pub.FieldByName(field).AsString = badgeNO then
+    badgeNO := UpperCase(AViewInfo.GridRecord.DisplayTexts
+      [cxGrid1DBTableView1badgenumber.index]);
+
+    daysFromDB := drawCellList.Values[badgeNO];
+
+    if Pos(field, daysFromDB) > 0 then
     begin
-    ACanvas.Brush.Color := clRed;
-    ACanvas.Font.Color := clBlack;
-    end; }
+      ACanvas.Brush.Color := clRed;
+      ACanvas.Font.Color := clBlack;
+    end;
+  except
+  end;
 end;
 
+// 双击弹出考勤修改页面
 procedure TcheckInOutF.cxGrid1DBTableView1DblClick(Sender: TObject);
 var
-  selectedField, badgenumber, ck_rq, sql: string;
+  selectedField, badgenumber, ck_rq, sql, type_: string;
+  memo, work_num: string;
 begin
   if not dSet_ckInOut.Active then
   begin
@@ -298,42 +300,42 @@ begin
       dSet_ckInOut_m.Append;
 
       badgenumber := Trim(dSet_ckInOutbadgenumber.AsString);
-      selectedField := cxGrid1DBTableView1.Controller.FocusedColumn.Caption;
-      selectedField := RightStr(selectedField, 2);
-      ck_rq := Trim(dSet_ckInOutyf.AsString) + '-' + selectedField;
+
+      selectedField :=
+        RightStr(cxGrid1DBTableView1.Controller.FocusedColumn.Caption, 2);
+      ck_rq := Trim(dSet_ckInOutyf.AsString) + '-' + Trim(selectedField);
 
       sql := 'SELECT top 1 type_, memo, work_num FROM checkInOut_modified WHERE check_time='''
         + ck_rq + ''' AND badgenumber = ''' + badgenumber + ''' ';
       DataSet_Open(dm.dSet_pub, sql);
 
-      // 类型
-      with checkInOut_modify_F do
-      begin
-        dbCbb_type.Clear;
-
-        dbCbb_type.Text := dm.dSet_pub.FieldByName('type_').AsString;
-
-        dbCbb_type.Items.Add('');
-        dbCbb_type.Items.Add('调休');
-        dbCbb_type.Items.Add('加班');
-        dbCbb_type.Items.Add('病假');
-        dbCbb_type.Items.Add('事假');
-        dbCbb_type.Items.Add('旷工');
-      end;
-
-      // 备注
-      dSet_ckInOut_mmemo.AsString := dm.dSet_pub.FieldByName('memo').AsString;
-      // 工时
-      dSet_ckInOut_mwork_num.AsString := dm.dSet_pub.FieldByName
-        ('work_num').AsString;
-
+      type_ := Trim(dm.dSet_pub.FieldByName('type_').AsString);
+      memo := Trim(dm.dSet_pub.FieldByName('memo').AsString);
+      work_num := Trim(dm.dSet_pub.FieldByName('work_num').AsString);
       // 签到日期
-      dSet_ckInOut_mcheck_time.AsString := Trim(ck_rq);
+      dSet_ckInOut_mcheck_time.AsString := ck_rq;
+      // 备注
+      dSet_ckInOut_mmemo.AsString := memo;
+      // 工时
+      if work_num = '' then
+        dSet_ckInOut_mwork_num.AsString := '1'
+      else
+        dSet_ckInOut_mwork_num.AsString := work_num;
+
       // 姓名
       checkInOut_modify_F.edt_name.Text := Trim(dSet_ckInOutname.AsString);
       // 员工编号
       dSet_ckInOut_mbadgenumber.AsString :=
         Trim(dSet_ckInOutbadgenumber.AsString);
+
+      // 类型
+      with checkInOut_modify_F do
+      begin
+        sql := 'SELECT distinct type_ FROM ck_type';
+        DropDown_DB(dm.dSet_pub, dbCbb_type, sql, 'type_');
+
+        dbCbb_type.Text := type_;
+      end;
 
       checkInOut_modify_F.Visible := False;
       checkInOut_modify_F.ShowModal;
