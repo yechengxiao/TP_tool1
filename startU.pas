@@ -11,7 +11,7 @@ uses
 type
   TstartF = class(TForm)
     Image1: TImage;
-    lbl_ver: TLabel;
+    paintBox: TPaintBox;
   private
     { Private declarations }
   public

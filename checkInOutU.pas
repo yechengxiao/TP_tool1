@@ -231,7 +231,7 @@ begin
         -- badgenumber  days
         -- 000000784	D02,D04
       }
-      sql := 'exec SP_get_ckDays_modified ''' + yf + ''',''' + bm + ''' ';
+      sql := 'EXEC SP_get_KaoQin_modifid_Days ''' + yf + ''',''' + bm + ''' ';
 
       GetList(drawCellList, sql, 'badgenumber', 'days');
 
@@ -331,7 +331,7 @@ begin
       // ¿‡–Õ
       with checkInOut_modify_F do
       begin
-        sql := 'SELECT distinct type_ FROM ck_type';
+        sql := 'SELECT distinct type_ FROM ck_type ORDER BY type_';
         DropDown_DB(dm.dSet_pub, dbCbb_type, sql, 'type_');
 
         dbCbb_type.Text := type_;

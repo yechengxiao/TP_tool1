@@ -1,12 +1,12 @@
 program TP_tool;
 
 uses
-  Vcl.Forms,
-  mainU in 'mainU.pas' {mainF},
-  dmU in 'dmU.pas' {dm: TDataModule},
+  Vcl.Forms, System.SysUtils,
+  mainU in 'mainU.pas' {mainF} ,
+  dmU in 'dmU.pas' {dm: TDataModule} ,
   utilU in 'utilU.pas',
-  startU in 'startU.pas' {startF},
-  checkInOutU in 'checkInOutU.pas' {checkInOutF},
+  startU in 'startU.pas' {startF} ,
+  checkInOutU in 'checkInOutU.pas' {checkInOutF} ,
   checkInOut_modify_U in 'checkInOut_modify_U.pas' {checkInOut_modify_F};
 
 {$R *.res}
@@ -24,26 +24,29 @@ begin
 
   ver := '20151123_dev';
 
-  startF.lbl_ver.Caption := ver;
+  // ver := '2015112sd3_dev';
+
   startF.Show; // 显示启动画面窗口
   startF.Update;
+
+  startF.paintBox.Canvas.TextOut(0, 0, ' ' + UpperCase(ver));
 
   sql := 'SELECT TOP 1 status, limit_num, status_memo FROM tp_tool_ver WHERE ver='''
     + ver + ''' ';
 
   DataSet_Open(dm.dSet_pub, sql);
 
-  stau := dm.dSet_pub.FieldByName('status').AsString;
+  stau := Trim(dm.dSet_pub.FieldByName('status').AsString);
   stau_memo := dm.dSet_pub.FieldByName('status_memo').AsString;
   limit := dm.dSet_pub.FieldByName('limit_num').AsString; // TODO 登录数限制
 
   if stau = '1' then
   begin
-   // Application.CreateForm(TmainF, mainF);
+    // Application.CreateForm(TmainF, mainF);
 
     Application.CreateForm(TcheckInOutF, checkInOutF);
 
-   // checkInOutF.Show;
+    // checkInOutF.Show;
 
     Delay(2500); // 启动画面窗口显示一秒钟
     startF.Hide; // 隐藏启动画面窗口
@@ -53,9 +56,18 @@ begin
   else
   begin
     if stau_memo <> '' then
-      startF.lbl_ver.Caption := stau_memo
+    begin
+      // startF.lbl_ver.Caption := stau_memo + ' 将自动关闭...';
+
+      startF.paintBox.Canvas.TextOut(0, 0, ' ' + stau_memo + ' 将自动关闭...');
+
+    end
     else
-      startF.lbl_ver.Caption := '此版本已停用...';
+    begin
+      // startF.lbl_ver.Caption := '此版本已停用!! ' + ' 将自动关闭...';
+
+      startF.paintBox.Canvas.TextOut(0, 0, ' ' + '此版本已停用!! ' + ' 将自动关闭...');
+    end;
 
     Delay(5000);
     Application.Terminate;

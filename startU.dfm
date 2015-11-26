@@ -2,8 +2,8 @@ object startF: TstartF
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  ClientHeight = 334
-  ClientWidth = 651
+  ClientHeight = 382
+  ClientWidth = 676
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,9 +16,9 @@ object startF: TstartF
   TextHeight = 13
   object Image1: TImage
     Left = 0
-    Top = 0
-    Width = 651
-    Height = 334
+    Top = 14
+    Width = 676
+    Height = 368
     Align = alClient
     Picture.Data = {
       0D546478536D617274496D616765FFD8FFE000104A4649460001010100000000
@@ -1708,11 +1708,20 @@ object startF: TstartF
     ExplicitWidth = 105
     ExplicitHeight = 105
   end
-  object lbl_ver: TLabel
-    Left = 64
-    Top = 290
-    Width = 16
-    Height = 13
-    Caption = 'lbl1'
+  object paintBox: TPaintBox
+    Left = 0
+    Top = 0
+    Width = 676
+    Height = 14
+    Align = alTop
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+    ExplicitLeft = -32
+    ExplicitTop = 56
   end
 end
