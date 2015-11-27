@@ -119,12 +119,6 @@ type
     paintBox: TPaintBox;
     dSet_ckInOut_m: TADODataSet;
     dSource_ckInOut_m: TDataSource;
-    dSet_ckInOut_mbadgenumber: TStringField;
-    dSet_ckInOut_mcheck_time: TStringField;
-    dSet_ckInOut_mwork_num: TStringField;
-    dSet_ckInOut_mtype_: TStringField;
-    dSet_ckInOut_mczy: TStringField;
-    dSet_ckInOut_mmemo: TStringField;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle_bg: TcxStyle;
     cxStyle_cont: TcxStyle;
@@ -132,6 +126,13 @@ type
     dSet_ckInOutNO: TLargeintField;
     btn_empty: TButton;
     ValueListEditor1: TValueListEditor;
+    dSet_ckInOut_mbadgenumber: TStringField;
+    dSet_ckInOut_mcheck_time: TStringField;
+    dSet_ckInOut_mwork_num: TStringField;
+    dSet_ckInOut_mtype_: TStringField;
+    dSet_ckInOut_mczy: TStringField;
+    dSet_ckInOut_mmemo: TStringField;
+    dSet_ckInOut_mchange_time: TStringField;
     procedure btn_tjClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
 
@@ -283,8 +284,8 @@ end;
 // 双击弹出考勤修改页面
 procedure TcheckInOutF.cxGrid1DBTableView1DblClick(Sender: TObject);
 var
-  selectedField, badgenumber, ck_rq, sql, type_: string;
-  memo, work_num: string;
+  badgenumber, check_time, type_, memo, work_num: string;
+  sql, selectedField: string;
 begin
   if not dSet_ckInOut.Active then
   begin
@@ -295,45 +296,42 @@ begin
   try
     try
       checkInOut_modify_F := TcheckInOut_modify_F.Create(checkInOut_modify_F);
-
-      DataSet_Open(dSet_ckInOut_m, 'SELECT TOP 0 * FROM checkInOut_modified');
-      dSet_ckInOut_m.Append;
-
+      // 用来查 数据
       badgenumber := Trim(dSet_ckInOutbadgenumber.AsString);
 
       selectedField :=
         RightStr(cxGrid1DBTableView1.Controller.FocusedColumn.Caption, 2);
-      ck_rq := Trim(dSet_ckInOutyf.AsString) + '-' + Trim(selectedField);
+      check_time := Trim(dSet_ckInOutyf.AsString) + '-' + Trim(selectedField);
 
-      sql := 'SELECT top 1 type_, memo, work_num FROM checkInOut_modified WHERE check_time='''
-        + ck_rq + ''' AND badgenumber = ''' + badgenumber + ''' ';
-      DataSet_Open(dm.dSet_pub, sql);
+      sql := 'SELECT * FROM checkinout_modified ' + ' WHERE badgenumber=''' +
+        badgenumber + ''' AND check_time=''' + check_time + ''' ';
+      DataSet_Open(dSet_ckInOut_m, sql);
 
-      type_ := Trim(dm.dSet_pub.FieldByName('type_').AsString);
-      memo := Trim(dm.dSet_pub.FieldByName('memo').AsString);
-      work_num := Trim(dm.dSet_pub.FieldByName('work_num').AsString);
-      // 签到日期
-      dSet_ckInOut_mcheck_time.AsString := ck_rq;
-      // 备注
-      dSet_ckInOut_mmemo.AsString := memo;
-      // 工时
-      if work_num = '' then
-        dSet_ckInOut_mwork_num.AsString := '1'
-      else
-        dSet_ckInOut_mwork_num.AsString := work_num;
+      type_ := Trim(dSet_ckInOut_m.FieldByName('type_').AsString);
+      memo := Trim(dSet_ckInOut_m.FieldByName('memo').AsString);
+      work_num := Trim(dSet_ckInOut_m.FieldByName('work_num').AsString);
 
       // 姓名
       checkInOut_modify_F.edt_name.Text := Trim(dSet_ckInOutname.AsString);
       // 员工编号
-      dSet_ckInOut_mbadgenumber.AsString :=
-        Trim(dSet_ckInOutbadgenumber.AsString);
+      dSet_ckInOut_m.Edit;
+      dSet_ckInOut_mbadgenumber.AsString := badgenumber;
+      // 签到日期
+      dSet_ckInOut_mcheck_time.AsString := check_time;
+      // 备注
+      dSet_ckInOut_mmemo.AsString := memo;
+      // 工时
+      if work_num <> '' then
+        dSet_ckInOut_mwork_num.AsString := work_num
+      else
+        dSet_ckInOut_mwork_num.AsString := '1';
 
       // 类型
       with checkInOut_modify_F do
       begin
         sql := 'SELECT distinct type_ FROM ck_type ORDER BY type_';
         DropDown_DB(dm.dSet_pub, dbCbb_type, sql, 'type_');
-
+        // 默认为数据库中数据
         dbCbb_type.Text := type_;
       end;
 

@@ -29,6 +29,8 @@ type
     dbEdt_czy: TDBEdit;
     lbl_name: TLabel;
     edt_name: TEdit;
+    lbl_change_time: TLabel;
+    dbedt_change_time: TDBEdit;
     procedure FormShow(Sender: TObject);
     procedure tBtn_saveClick(Sender: TObject);
     procedure tBtn_exitClick(Sender: TObject);
@@ -83,6 +85,13 @@ var
   ckTime, badgeNO, czy, workCount, workType, memo: string;
   sql: string;
 begin
+  // TODO 判断修改日期 必须小于等于数据库当前日期
+  if True then
+  begin
+    msg_info('暂时不能修改未来的数据。');
+    Exit;
+  end;
+
   // 不把鼠标移开，下面的值获取不到
   edt_name.SetFocus;
 

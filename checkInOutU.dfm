@@ -117,10 +117,6 @@ object checkInOutF: TcheckInOutF
       TabOrder = 0
       object tab1: TTabSheet
         Caption = 'tab1'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
@@ -548,6 +544,9 @@ object checkInOutF: TcheckInOutF
     object dSet_ckInOut_mmemo: TStringField
       FieldName = 'memo'
       Size = 10
+    end
+    object dSet_ckInOut_mchange_time: TStringField
+      FieldName = 'change_time'
     end
   end
   object dSource_ckInOut_m: TDataSource
