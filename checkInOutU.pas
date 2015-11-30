@@ -129,10 +129,26 @@ type
     dSet_ckInOut_mbadgenumber: TStringField;
     dSet_ckInOut_mcheck_time: TStringField;
     dSet_ckInOut_mwork_num: TStringField;
-    dSet_ckInOut_mtype_: TStringField;
+    dSet_ckInOut_mtype1: TStringField;
+    dSet_ckInOut_mtype2: TStringField;
     dSet_ckInOut_mczy: TStringField;
-    dSet_ckInOut_mmemo: TStringField;
     dSet_ckInOut_mchange_time: TStringField;
+    dSet_ckInOut_mmemo: TStringField;
+    cbb_name: TComboBox;
+    lbl_name: TLabel;
+    tab2: TTabSheet;
+    cxGrid2: TcxGrid;
+    cxGridDBTableView1: TcxGridDBTableView;
+    cxGridLevel1: TcxGridLevel;
+    lbl_tip: TLabel;
+    cxGridDBTableView1Column2deptId: TcxGridDBColumn;
+    cxGridDBTableView1Column3name: TcxGridDBColumn;
+    cxGridDBTableView1Column4badgenumber: TcxGridDBColumn;
+    cxGridDBTableView1Column5noCK_count: TcxGridDBColumn;
+    cxGridDBTableView1Column6noCK_days: TcxGridDBColumn;
+    cxGridDBTableView1Column1deptName: TcxGridDBColumn;
+    cxGridDBTableView1Column2NO: TcxGridDBColumn;
+    tab3: TTabSheet;
     procedure btn_tjClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
 
@@ -144,6 +160,8 @@ type
     procedure cxGrid1DBTableView1CustomDrawCell(Sender: TcxCustomGridTableView;
       ACanvas: TcxCanvas; AViewInfo: TcxGridTableDataCellViewInfo;
       var ADone: Boolean);
+    procedure cbb_nameDropDown(Sender: TObject);
+    procedure cbb_bmKeyPress(Sender: TObject; var Key: Char);
   private
     drawCellList: TStringList;
     { Private declarations }
@@ -195,15 +213,15 @@ end;
 procedure TcheckInOutF.btn_tjClick(Sender: TObject);
 var
   sql: string;
-  yf, bm: string;
+  yf, bm, name: string;
   I: Integer;
 begin
   try
     paintBox.Canvas.TextOut(5, 10, '开始统计...');
 
     yf := FormatDateTime('yyyy-mm', dtp1.Date);
-
     bm := Trim(cbb_bm.Text);
+    name := Trim(cbb_name.Text);
 
     if bm = '' then
     begin
@@ -215,37 +233,49 @@ begin
       Exit;
     end;
 
-    sql := 'EXEC SP_KaoQin_tj ''' + yf + ''',''' + bm + ''' ';
+    if pg_ctl.ActivePage = tab1 then
+    begin
+      sql := 'EXEC SP_KaoQin_tj ''' + yf + ''',''' + bm + ''',''' +
+        name + ''' ';
 
-    DataSet_Open(dSet_ckInOut, sql);
+      DataSet_Open(dSet_ckInOut, sql);
+
+      try
+        // 为 突出显示已修改数据 做准备
+        if Assigned(drawCellList) then
+          FreeAndNil(drawCellList);
+
+        drawCellList := TStringList.Create;
+        {
+          -- 此存储过程返回的表结构。某个月，某个部门的已修改考勤记录。
+          -- badgenumber  days
+          -- 000000784	D02,D04
+        }
+        sql := 'EXEC SP_get_KaoQin_modifid_Days ''' + yf + ''',''' + bm + ''' ';
+
+        GetList(drawCellList, sql, 'badgenumber', 'days');
+
+        // for I := 0 to drawCellList.Count - 1 do
+        // begin
+        // ValueListEditor1.InsertRow(drawCellList.Names[I],
+        // drawCellList.ValueFromIndex[I], true);
+        // end;
+
+      except
+        on e: Exception do
+          msg_err('突出显示已修改数据失败');
+      end;
+    end
+    else if pg_ctl.ActivePage = tab2 then
+    begin
+      sql := 'EXEC sp_KaoQin_yiDong_tj ''' + yf + ''',''' + bm + ''',''' +
+        name + ''' ';
+
+      DataSet_Open(dm.dSet_pubForGrid, sql);
+    end;
 
     paintBox.Canvas.TextOut(5, 10, '统计完成...');
 
-    try
-      // 为 突出显示已修改数据 做准备
-      if Assigned(drawCellList) then
-        FreeAndNil(drawCellList);
-
-      drawCellList := TStringList.Create;
-      {
-        -- 此存储过程返回的表结构。某个月，某个部门的已修改考勤记录。
-        -- badgenumber  days
-        -- 000000784	D02,D04
-      }
-      sql := 'EXEC SP_get_KaoQin_modifid_Days ''' + yf + ''',''' + bm + ''' ';
-
-      GetList(drawCellList, sql, 'badgenumber', 'days');
-
-      // for I := 0 to drawCellList.Count - 1 do
-      // begin
-      // ValueListEditor1.InsertRow(drawCellList.Names[I],
-      // drawCellList.ValueFromIndex[I], true);
-      // end;
-
-    except
-      on e: Exception do
-        msg_err('突出显示已修改数据失败');
-    end;
   except
     on e: Exception do
     begin
@@ -284,7 +314,7 @@ end;
 // 双击弹出考勤修改页面
 procedure TcheckInOutF.cxGrid1DBTableView1DblClick(Sender: TObject);
 var
-  badgenumber, check_time, type_, memo, work_num: string;
+  badgenumber, check_time, type1, type2, memo, work_num: string;
   sql, selectedField: string;
 begin
   if not dSet_ckInOut.Active then
@@ -295,44 +325,63 @@ begin
 
   try
     try
-      checkInOut_modify_F := TcheckInOut_modify_F.Create(checkInOut_modify_F);
       // 用来查 数据
       badgenumber := Trim(dSet_ckInOutbadgenumber.AsString);
-
       selectedField :=
         RightStr(cxGrid1DBTableView1.Controller.FocusedColumn.Caption, 2);
       check_time := Trim(dSet_ckInOutyf.AsString) + '-' + Trim(selectedField);
+
+      // 未来日期不可修改
+      sql := 'SELECT CONVERT(CHAR(15), GETDATE(),23) AS today';
+      DataSet_Open(dm.dSet_pub, sql);
+      if dm.dSet_pub.FieldByName('today').AsString <= check_time then
+      begin
+        msg_info('暂时不能修改未来的数据。');
+        Exit;
+      end;
 
       sql := 'SELECT * FROM checkinout_modified ' + ' WHERE badgenumber=''' +
         badgenumber + ''' AND check_time=''' + check_time + ''' ';
       DataSet_Open(dSet_ckInOut_m, sql);
 
-      type_ := Trim(dSet_ckInOut_m.FieldByName('type_').AsString);
-      memo := Trim(dSet_ckInOut_m.FieldByName('memo').AsString);
-      work_num := Trim(dSet_ckInOut_m.FieldByName('work_num').AsString);
-
-      // 姓名
+      checkInOut_modify_F := TcheckInOut_modify_F.Create(nil);
+      // 系统填写：姓名 部门 员工编号 签到日期
       checkInOut_modify_F.edt_name.Text := Trim(dSet_ckInOutname.AsString);
-      // 员工编号
+      checkInOut_modify_F.edt_bm.Text := Trim(dSet_ckInOutdeptName.AsString);
       dSet_ckInOut_m.Edit;
       dSet_ckInOut_mbadgenumber.AsString := badgenumber;
-      // 签到日期
       dSet_ckInOut_mcheck_time.AsString := check_time;
-      // 备注
-      dSet_ckInOut_mmemo.AsString := memo;
-      // 工时
-      if work_num <> '' then
-        dSet_ckInOut_mwork_num.AsString := work_num
-      else
-        dSet_ckInOut_mwork_num.AsString := '1';
+
+
+      // 人工填写 分类 类型 工时 备注
+
+      // work_num := Trim(dSet_ckInOut_m.FieldByName('work_num').AsString);
+      // if work_num = '' then
+      // begin
+      // dSet_ckInOut_mwork_num.AsString := '1';
+      // end;
 
       // 类型
       with checkInOut_modify_F do
       begin
-        sql := 'SELECT distinct type_ FROM ck_type ORDER BY type_';
-        DropDown_DB(dm.dSet_pub, dbCbb_type, sql, 'type_');
         // 默认为数据库中数据
-        dbCbb_type.Text := type_;
+        type1 := dSet_ckInOut_m.FieldByName('type1').AsString;
+        type2 := dSet_ckInOut_m.FieldByName('type2').AsString;
+
+        if type1 = 'JB' then // 加班
+        begin
+          radioG.ItemIndex := 1;
+        end
+        else if type1 = 'QJ' then // 请假
+        begin
+          radioG.ItemIndex := 2;
+        end
+        else
+        begin
+          radioG.ItemIndex := 0;
+        end;
+
+        dbCbb_type.Text := type2;
       end;
 
       checkInOut_modify_F.Visible := False;
@@ -364,8 +413,24 @@ begin
   dtp1.Format := 'yyyy-MM';
   dtp1.Date := StartOfTheMonth(Now);
 
+  tab1.Show;
+
   DropDown_(dm.dSet_pub, cbb_bm,
     'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
+end;
+
+procedure TcheckInOutF.cbb_bmKeyPress(Sender: TObject; var Key: Char);
+begin
+  Key := #0;
+end;
+
+procedure TcheckInOutF.cbb_nameDropDown(Sender: TObject);
+var
+  sql: string;
+begin
+  sql := 'SELECT distinct name FROM user_departments_v WHERE deptName=''' +
+    Trim(cbb_bm.Text) + ''' ';
+  DropDown_(dm.dSet_pub, cbb_name, sql, 'name');
 end;
 
 end.

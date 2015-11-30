@@ -31,11 +31,15 @@ type
     edt_name: TEdit;
     lbl_change_time: TLabel;
     dbedt_change_time: TDBEdit;
+    lbl_bm: TLabel;
+    edt_bm: TEdit;
+    radioG: TRadioGroup;
+    lbl_msg: TLabel;
     procedure FormShow(Sender: TObject);
     procedure tBtn_saveClick(Sender: TObject);
-    procedure tBtn_exitClick(Sender: TObject);
     procedure dbEdt_work_numKeyPress(Sender: TObject; var Key: Char);
     procedure dbCbb_typeKeyPress(Sender: TObject; var Key: Char);
+    procedure radioGClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,36 +75,64 @@ begin
   if dbEdt_work_num.CanFocus then
     dbEdt_work_num.Focused;
 
-  // DropDown_DB(dm.dSet_pub, dbCbb_type,
-  // 'SELECT distinct type_ FROM checkInOut_modified', 'deptname');
 end;
 
-procedure TcheckInOut_modify_F.tBtn_exitClick(Sender: TObject);
+procedure TcheckInOut_modify_F.radioGClick(Sender: TObject);
+var
+  sql: string;
 begin
-  //
+  dbCbb_type.Items.Clear;
+
+  case radioG.ItemIndex of
+    0:
+      begin
+        dbCbb_type.Text := '';
+      end;
+    1:
+      begin
+        sql := 'SELECT type2 FROM ck_type WHERE type1=''JB'' ORDER BY type1';
+        DropDown_DB(dm.dSet_pub, dbCbb_type, sql, 'type2');
+      end;
+    2:
+      begin
+        sql := 'SELECT type2 FROM ck_type WHERE type1=''QJ'' ORDER BY type1';
+        DropDown_DB(dm.dSet_pub, dbCbb_type, sql, 'type2');
+      end;
+  end;
 end;
 
 procedure TcheckInOut_modify_F.tBtn_saveClick(Sender: TObject);
 var
-  ckTime, badgeNO, czy, workCount, workType, memo: string;
+  ckTime, badgeNO, czy, czsj, workCount, type1, type2, memo: string;
   sql: string;
 begin
-  // TODO 判断修改日期 必须小于等于数据库当前日期
-  if True then
-  begin
-    msg_info('暂时不能修改未来的数据。');
-    Exit;
-  end;
-
   // 不把鼠标移开，下面的值获取不到
   edt_name.SetFocus;
 
   ckTime := Trim(checkInOutF.dSet_ckInOut_mcheck_time.AsString);
   badgeNO := Trim(checkInOutF.dSet_ckInOut_mbadgenumber.AsString);
-  czy := Trim(checkInOutF.dSet_ckInOut_mczy.AsString);
-  workCount := Trim(checkInOutF.dSet_ckInOut_mwork_num.AsString);
-  workType := Trim(checkInOutF.dSet_ckInOut_mtype_.AsString);
   memo := Trim(checkInOutF.dSet_ckInOut_mmemo.AsString);
+
+  workCount := Trim(dbEdt_work_num.Text);
+  type2 := Trim(dbCbb_type.Text);
+  case radioG.ItemIndex of
+    0:
+      type1 := 'ZC';
+    1:
+      type1 := 'JB';
+    2:
+      type1 := 'QJ';
+  end;
+
+  if (radioG.ItemIndex <> 0) AND (type2 = '') then
+  begin
+    msg_info('请选择类型');
+
+    if dbCbb_type.CanFocus then
+      dbCbb_type.Focused;
+
+    Exit;
+  end;
 
   if workCount = '' then
   begin
@@ -114,26 +146,17 @@ begin
   else
   begin
     try
+
       // 判断 工时输入合法性
-      if (StrToFloat(workCount) < 2) AND ((StrToFloat(workCount) < -1)) then
+      if (-1 > StrToFloat(workCount)) OR (StrToFloat(workCount) > 2) then
       begin
-        msg_err('工时不能大于或等于2,也不同小于-1');
+        msg_err('工时不能大于2,也不同小于-1');
         Exit;
       end;
     except
       msg_err('工时格式错误');
       Exit;
     end;
-  end;
-
-  if workType = '' then
-  begin
-    msg_info('请填写类型');
-
-    if dbCbb_type.CanFocus then
-      dbCbb_type.Focused;
-
-    Exit;
   end;
 
   sql := 'SELECT COUNT(badgenumber) upORins FROM checkInOut_modified WHERE badgenumber ='''
@@ -144,14 +167,16 @@ begin
   begin
     // ckTime, badgeNO, czy, workCount, workType, memo:
     // badgenumber  check_time  work_num  type_  czy  memo
-    sql := 'INSERT INTO checkInOut_modified(badgenumber,check_time,work_num,type_,czy,memo) VALUES('''
-      + badgeNO + ''',''' + ckTime + ''',''' + workCount + ''',''' + workType +
-      ''',''' + czy + ''',''' + memo + ''' ) ';
+    sql := 'INSERT INTO checkInOut_modified(badgenumber,check_time,work_num,type1,type2,czy,change_time,memo) VALUES('''
+      + badgeNO + ''',''' + ckTime + ''',''' + workCount + ''',''' + type1 +
+      ''',''' + type2 + ''',''' + czy + ''',''' + czsj + ''',''' + memo
+      + ''' ) ';
   end
   else
   begin
     sql := 'UPDATE checkInOut_modified SET work_num =''' + workCount +
-      ''', type_=''' + workType + ''', czy=''' + czy + ''', memo=''' + memo +
+      ''', type1=''' + type1 + ''', type2=''' + type2 + ''', czy=''' + czy +
+      ''', memo=''' + memo + ''', change_time=''' + czsj +
       ''' WHERE badgenumber=''' + badgeNO + ''' AND check_time=''' +
       ckTime + ''' ';
   end;
@@ -161,7 +186,9 @@ begin
     // checkInOutF.dSet_ckInOut_m.Post;
 
     if Command_Exec(sql) then
-      msg_info('   保存完成   ');
+      msg_info('保存完成')
+    else
+      msg_info('保存失败');
 
     checkInOutF.btn_tjClick(checkInOutF);
 

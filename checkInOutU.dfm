@@ -2,8 +2,8 @@ object checkInOutF: TcheckInOutF
   Left = 0
   Top = 0
   Caption = #26376#24230#32771#21220#32479#35745
-  ClientHeight = 390
-  ClientWidth = 796
+  ClientHeight = 469
+  ClientWidth = 709
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,38 +21,61 @@ object checkInOutF: TcheckInOutF
   object pan_up: TPanel
     Left = 0
     Top = 0
-    Width = 796
-    Height = 41
+    Width = 709
+    Height = 81
     Align = alTop
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 777
     object lbl1: TLabel
-      Left = 32
-      Top = 12
+      Left = 16
+      Top = 22
       Width = 24
       Height = 13
       Caption = #26376#20221
     end
     object lbl3: TLabel
-      Left = 176
-      Top = 12
+      Left = 136
+      Top = 22
       Width = 24
       Height = 13
       Caption = #37096#38376
     end
     object paintBox: TPaintBox
-      Left = 642
+      Left = 555
       Top = 1
       Width = 153
-      Height = 39
+      Height = 79
       Align = alRight
       ExplicitLeft = 656
       ExplicitHeight = 63
     end
+    object lbl_name: TLabel
+      Left = 328
+      Top = 22
+      Width = 24
+      Height = 13
+      Caption = #22995#21517
+    end
+    object lbl_tip: TLabel
+      Left = 16
+      Top = 56
+      Width = 336
+      Height = 13
+      Caption = #24322#21160#25968#25454#26469#28304#30001#32771#21220#26426#25552#20379#65292#22914#24403#22825#26410#25353#35201#27714#25171#21345#65292#21363#20026#24322#21160#12290
+      Color = clSilver
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentColor = False
+      ParentFont = False
+    end
     object dtp1: TDateTimePicker
-      Left = 70
-      Top = 11
+      Left = 44
+      Top = 14
       Width = 70
       Height = 21
       Date = 42324.452836851850000000
@@ -62,7 +85,7 @@ object checkInOutF: TcheckInOutF
       TabOrder = 3
     end
     object btn_tj: TButton
-      Left = 362
+      Left = 482
       Top = 10
       Width = 75
       Height = 25
@@ -71,7 +94,7 @@ object checkInOutF: TcheckInOutF
       OnClick = btn_tjClick
     end
     object btn_export: TButton
-      Left = 443
+      Left = 565
       Top = 10
       Width = 75
       Height = 25
@@ -80,17 +103,18 @@ object checkInOutF: TcheckInOutF
       OnClick = btn_exportClick
     end
     object cbb_bm: TComboBox
-      Left = 216
-      Top = 11
+      Left = 164
+      Top = 14
       Width = 140
       Height = 21
       DropDownCount = 20
       TabOrder = 4
+      OnKeyPress = cbb_bmKeyPress
       Items.Strings = (
         #22612#29260#25991#21270#20013#24515)
     end
     object btn_empty: TButton
-      Left = 544
+      Left = 648
       Top = 10
       Width = 75
       Height = 25
@@ -98,32 +122,52 @@ object checkInOutF: TcheckInOutF
       TabOrder = 2
       OnClick = btn_emptyClick
     end
+    object cbb_name: TComboBox
+      Left = 356
+      Top = 14
+      Width = 80
+      Height = 21
+      DropDownCount = 20
+      TabOrder = 5
+      OnDropDown = cbb_nameDropDown
+      OnKeyPress = cbb_bmKeyPress
+      Items.Strings = (
+        #22612#29260#25991#21270#20013#24515)
+    end
   end
   object pan_down: TPanel
     Left = 0
-    Top = 41
-    Width = 796
-    Height = 349
+    Top = 81
+    Width = 709
+    Height = 388
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
+    ExplicitLeft = 16
+    ExplicitTop = 65
+    ExplicitWidth = 777
+    ExplicitHeight = 431
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
-      Width = 794
-      Height = 347
+      Width = 707
+      Height = 386
       ActivePage = tab1
       Align = alClient
       TabOrder = 0
       object tab1: TTabSheet
-        Caption = 'tab1'
+        Caption = #32771#21220#26126#32454
+        ExplicitWidth = 786
+        ExplicitHeight = 319
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
-          Width = 786
-          Height = 319
+          Width = 699
+          Height = 358
           Align = alClient
           TabOrder = 0
+          ExplicitWidth = 786
+          ExplicitHeight = 319
           object cxGrid1DBTableView1: TcxGridDBTableView
             OnDblClick = cxGrid1DBTableView1DblClick
             Navigator.Buttons.CustomButtons = <>
@@ -335,12 +379,82 @@ object checkInOutF: TcheckInOutF
           end
         end
       end
+      object tab2: TTabSheet
+        Caption = #24322#21160#26126#32454
+        ImageIndex = 1
+        ExplicitWidth = 767
+        ExplicitHeight = 401
+        object cxGrid2: TcxGrid
+          Left = 0
+          Top = 0
+          Width = 699
+          Height = 358
+          Align = alClient
+          TabOrder = 0
+          ExplicitWidth = 786
+          ExplicitHeight = 319
+          object cxGridDBTableView1: TcxGridDBTableView
+            OnDblClick = cxGrid1DBTableView1DblClick
+            Navigator.Buttons.CustomButtons = <>
+            OnCustomDrawCell = cxGrid1DBTableView1CustomDrawCell
+            DataController.DataSource = dm.dSource_pubForGrid
+            DataController.Summary.DefaultGroupSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <>
+            DataController.Summary.SummaryGroups = <>
+            OptionsData.Deleting = False
+            OptionsData.Editing = False
+            OptionsData.Inserting = False
+            OptionsView.GroupByBox = False
+            Styles.Background = cxStyle_bg
+            Styles.Content = cxStyle_cont
+            object cxGridDBTableView1Column2NO: TcxGridDBColumn
+              DataBinding.FieldName = 'NO'
+              Width = 40
+            end
+            object cxGridDBTableView1Column1deptName: TcxGridDBColumn
+              Caption = #37096#38376
+              DataBinding.FieldName = 'deptName'
+              Width = 100
+            end
+            object cxGridDBTableView1Column2deptId: TcxGridDBColumn
+              DataBinding.FieldName = 'deptId'
+              Visible = False
+            end
+            object cxGridDBTableView1Column3name: TcxGridDBColumn
+              Caption = #22995#21517
+              DataBinding.FieldName = 'name'
+              Width = 80
+            end
+            object cxGridDBTableView1Column4badgenumber: TcxGridDBColumn
+              DataBinding.FieldName = 'badgenumber'
+              Visible = False
+            end
+            object cxGridDBTableView1Column5noCK_count: TcxGridDBColumn
+              Caption = #24322#21160#22825#25968
+              DataBinding.FieldName = 'noCK_count'
+              Width = 55
+            end
+            object cxGridDBTableView1Column6noCK_days: TcxGridDBColumn
+              Caption = #24322#21160#35814#24773
+              DataBinding.FieldName = 'noCK_days'
+              Width = 700
+            end
+          end
+          object cxGridLevel1: TcxGridLevel
+            GridView = cxGridDBTableView1
+          end
+        end
+      end
+      object tab3: TTabSheet
+        Caption = #32771#21220#32771#26680#27719#24635
+        ImageIndex = 2
+      end
     end
     object ValueListEditor1: TValueListEditor
-      Left = 485
-      Top = 176
+      Left = 29
+      Top = 208
       Width = 306
-      Height = 65
+      Height = 17
       TabOrder = 1
       Visible = False
     end
@@ -350,8 +464,8 @@ object checkInOutF: TcheckInOutF
     CursorType = ctStatic
     CommandTimeout = 15
     Parameters = <>
-    Left = 104
-    Top = 130
+    Left = 64
+    Top = 322
     object dSet_ckInOutyf: TStringField
       DisplayLabel = #26376#20221
       FieldName = 'yf'
@@ -512,16 +626,16 @@ object checkInOutF: TcheckInOutF
   end
   object dSource_ckInOut: TDataSource
     DataSet = dSet_ckInOut
-    Left = 210
-    Top = 232
+    Left = 178
+    Top = 384
   end
   object dSet_ckInOut_m: TADODataSet
     Connection = dm.DB_Con
     CursorType = ctStatic
     CommandTimeout = 15
     Parameters = <>
-    Left = 208
-    Top = 128
+    Left = 176
+    Top = 328
     object dSet_ckInOut_mbadgenumber: TStringField
       FieldName = 'badgenumber'
       Size = 15
@@ -533,30 +647,33 @@ object checkInOutF: TcheckInOutF
       FieldName = 'work_num'
       Size = 10
     end
-    object dSet_ckInOut_mtype_: TStringField
-      FieldName = 'type_'
+    object dSet_ckInOut_mtype1: TStringField
+      FieldName = 'type1'
       Size = 10
+    end
+    object dSet_ckInOut_mtype2: TStringField
+      FieldName = 'type2'
     end
     object dSet_ckInOut_mczy: TStringField
       FieldName = 'czy'
       Size = 30
     end
+    object dSet_ckInOut_mchange_time: TStringField
+      FieldName = 'change_time'
+    end
     object dSet_ckInOut_mmemo: TStringField
       FieldName = 'memo'
       Size = 10
     end
-    object dSet_ckInOut_mchange_time: TStringField
-      FieldName = 'change_time'
-    end
   end
   object dSource_ckInOut_m: TDataSource
     DataSet = dSet_ckInOut_m
-    Left = 96
-    Top = 228
+    Left = 64
+    Top = 380
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 352
-    Top = 136
+    Left = 312
+    Top = 328
     PixelsPerInch = 96
     object cxStyle_bg: TcxStyle
       AssignedValues = [svColor]

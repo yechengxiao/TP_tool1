@@ -57,7 +57,7 @@ end;
 
 procedure msg_info(msg: string);
 begin
-  Application.MessageBox(PChar(msg), '提示', MB_OK);
+  Application.MessageBox(PChar(msg), '提示', MB_OK + MB_ICONINFORMATION);
 end;
 
 procedure msg_err(msg: string);

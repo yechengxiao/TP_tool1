@@ -4,6 +4,7 @@ object dm: Tdm
   Width = 450
   object DB_Con: TADOConnection
     CommandTimeout = 10
+    Connected = True
     ConnectionString = 
       'Provider=SQLOLEDB.1;Password=tp797979;Persist Security Info=True' +
       ';User ID=ycx;Initial Catalog=ZK2015-2-6;Data Source=DESKTOP-QMT4' +
@@ -95,7 +96,18 @@ object dm: Tdm
   object DB_com: TADOCommand
     Connection = DB_Con
     Parameters = <>
+    Left = 40
+    Top = 256
+  end
+  object dSet_pubForGrid: TADODataSet
+    Connection = DB_Con
+    Parameters = <>
     Left = 280
-    Top = 112
+    Top = 106
+  end
+  object dSource_pubForGrid: TDataSource
+    DataSet = dSet_pubForGrid
+    Left = 288
+    Top = 196
   end
 end

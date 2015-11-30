@@ -25,6 +25,8 @@ type
     dSet_carcashszmanage_amount: TBCDField;
     dSet_carcashszhj: TBCDField;
     DB_com: TADOCommand;
+    dSet_pubForGrid: TADODataSet;
+    dSource_pubForGrid: TDataSource;
   private
     { Private declarations }
   public

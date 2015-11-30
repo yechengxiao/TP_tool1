@@ -16,7 +16,7 @@ object startF: TstartF
   TextHeight = 13
   object Image1: TImage
     Left = 0
-    Top = 14
+    Top = 0
     Width = 676
     Height = 368
     Align = alClient
@@ -1710,10 +1710,11 @@ object startF: TstartF
   end
   object paintBox: TPaintBox
     Left = 0
-    Top = 0
+    Top = 368
     Width = 676
     Height = 14
-    Align = alTop
+    Align = alBottom
+    Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
     Font.Height = -11
