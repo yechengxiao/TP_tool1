@@ -23,7 +23,7 @@ uses
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
   Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, Data.Win.ADODB, StrUtils, Vcl.Grids,
-  Vcl.ValEdit;
+  Vcl.ValEdit, cxGridBandedTableView, cxGridDBBandedTableView;
 
 type
   TcheckInOutF = class(TForm)
@@ -125,7 +125,6 @@ type
     cxGrid1DBTableView1NO: TcxGridDBColumn;
     dSet_ckInOutNO: TLargeintField;
     btn_empty: TButton;
-    ValueListEditor1: TValueListEditor;
     dSet_ckInOut_mbadgenumber: TStringField;
     dSet_ckInOut_mcheck_time: TStringField;
     dSet_ckInOut_mwork_num: TStringField;
@@ -149,6 +148,84 @@ type
     cxGridDBTableView1Column1deptName: TcxGridDBColumn;
     cxGridDBTableView1Column2NO: TcxGridDBColumn;
     tab3: TTabSheet;
+    cxGrid3: TcxGrid;
+    cxGridDBTableView2: TcxGridDBTableView;
+    cxGridLevel2: TcxGridLevel;
+    dSource_kaohe: TDataSource;
+    dSet_kaohe: TADODataSet;
+    dSet_kaohemonth_: TStringField;
+    dSet_kaohedeptName: TStringField;
+    dSet_kaohedeptID: TStringField;
+    dSet_kaohename: TStringField;
+    dSet_kaohebadgenumber: TStringField;
+    dSet_kaoheczy: TStringField;
+    dSet_kaoheczsj: TStringField;
+    dSet_kaohechuQin: TBCDField;
+    dSet_kaoheQJ_shiJia: TBCDField;
+    dSet_kaoheQJ_bingJia: TBCDField;
+    dSet_kaoheQJ_hunJia: TBCDField;
+    dSet_kaoheQJ_chanJia: TBCDField;
+    dSet_kaoheQJ_sangJia: TBCDField;
+    dSet_kaoheQJ_gongShang: TBCDField;
+    dSet_kaoheQJ_diaoXiu: TBCDField;
+    dSet_kaoheQJ_nianXiu: TBCDField;
+    dSet_kaoheQJ_qiTa: TBCDField;
+    dSet_kaoheJB_pingShi: TBCDField;
+    dSet_kaoheJB_shuangXiu: TBCDField;
+    dSet_kaoheJB_faDing: TBCDField;
+    dSet_kaoheJB_teShu: TBCDField;
+    dSet_kaoheJB_banShu: TBCDField;
+    dSet_kaohemeals_zao: TBCDField;
+    dSet_kaohemeals_zhong: TBCDField;
+    dSet_kaohemeals_wan: TBCDField;
+    dSet_kaoheallowance_jiLu: TBCDField;
+    dSet_kaoheallowance_kaiPa: TBCDField;
+    dSet_kaoheallowance_linFan: TBCDField;
+    dSet_kaoheallowance_duiZhuang: TBCDField;
+    dSet_kaoheallowance_jiZha: TBCDField;
+    dSet_kaoheallowance_xieXinTan: TBCDField;
+    dSet_kaoheallowance_laChenTan: TBCDField;
+    dSet_kaoheallowance_queGong: TBCDField;
+    dSet_kaoheallowance_total: TBCDField;
+    dSet_kaohememo: TStringField;
+    cxGrid3DBBandedTableView1: TcxGridDBBandedTableView;
+    cxGrid3DBBandedTableView1month_: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1deptName: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1deptID: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1name: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1badgenumber: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1czy: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1czsj: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1chuQin: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1QJ_shiJia: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1QJ_bingJia: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1QJ_hunJia: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1QJ_chanJia: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1QJ_sangJia: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1QJ_gongShang: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1QJ_diaoXiu: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1QJ_nianXiu: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1QJ_qiTa: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1JB_pingShi: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1JB_shuangXiu: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1JB_faDing: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1JB_teShu: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1JB_banShu: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1meals_zao: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1meals_zhong: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1meals_wan: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1allowance_jiLu: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1allowance_kaiPa: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1allowance_linFan: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1allowance_duiZhuang: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1allowance_jiZha: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1allowance_xieXinTan: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1allowance_laChenTan: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1allowance_queGong: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1allowance_total: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1memo: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1NO: TcxGridDBBandedColumn;
+    dSet_kaoheNO: TLargeintField;
     procedure btn_tjClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
 
@@ -181,7 +258,18 @@ procedure TcheckInOutF.btn_emptyClick(Sender: TObject);
 begin
   try
     // 清空表格数据
-    cxGrid1DBTableView1.DataController.DataSource.DataSet.Close;
+    if pg_ctl.ActivePage = tab1 then
+    begin
+      cxGrid1DBTableView1.DataController.DataSource.DataSet.Close;
+    end
+    else if pg_ctl.ActivePage = tab2 then
+    begin
+      cxGridDBTableView1.DataController.DataSource.DataSet.Close;
+    end
+    else if pg_ctl.ActivePage = tab3 then
+    begin
+      cxGrid3DBBandedTableView1.DataController.DataSource.DataSet.Close;
+    end;
   except
     on e: Exception do
       msg_err('出错了：' + e.Message);
@@ -193,21 +281,51 @@ var
   b: Boolean;
   SaveDialog: TSaveDialog;
 begin
-  if cxGrid1DBTableView1.DataController.DataSource.DataSet.IsEmpty then
-  begin
-    msg_info('没有数据...');
-    Exit;
+
+  try
+    // 清空表格数据
+    if pg_ctl.ActivePage = tab1 then
+    begin
+      if cxGrid1DBTableView1.DataController.DataSource.DataSet.IsEmpty then
+      begin
+        msg_info('没有数据...');
+        Exit;
+      end;
+      b := ExportData(cxGrid1);
+    end
+    else if pg_ctl.ActivePage = tab2 then
+    begin
+      if cxGridDBTableView1.DataController.DataSource.DataSet.IsEmpty then
+      begin
+        msg_info('没有数据...');
+        Exit;
+      end;
+      b := ExportData(cxGrid2);
+    end
+    else if pg_ctl.ActivePage = tab3 then
+    begin
+      if cxGrid3DBBandedTableView1.DataController.DataSource.DataSet.IsEmpty
+      then
+      begin
+        msg_info('没有数据...');
+        Exit;
+      end;
+      b := ExportData(cxGrid3);
+    end;
+
+    if b then
+    begin
+      msg_info('导出完成...');
+    end
+    else if b then
+    begin
+      msg_info('导出未完成...');
+    end;
+  except
+    on e: Exception do
+      msg_err('出错了：' + e.Message);
   end;
 
-  b := ExportData(cxGrid1);
-  if b then
-  begin
-    msg_info('导出完成...');
-  end
-  else if b then
-  begin
-    msg_info('导出未完成...');
-  end;
 end;
 
 procedure TcheckInOutF.btn_tjClick(Sender: TObject);
@@ -217,7 +335,6 @@ var
   I: Integer;
 begin
   try
-    paintBox.Canvas.TextOut(5, 10, '开始统计...');
 
     yf := FormatDateTime('yyyy-mm', dtp1.Date);
     bm := Trim(cbb_bm.Text);
@@ -232,6 +349,8 @@ begin
 
       Exit;
     end;
+
+    paintBox.Canvas.TextOut(5, 10, '开始统计...');
 
     if pg_ctl.ActivePage = tab1 then
     begin
@@ -272,6 +391,13 @@ begin
         name + ''' ';
 
       DataSet_Open(dm.dSet_pubForGrid, sql);
+    end
+    else if pg_ctl.ActivePage = tab3 then
+    begin
+      sql := 'EXEC SP_KaoQin_KaoHe_tj ''' + yf + ''',''' + bm + ''',''' +
+        name + ''' ';
+
+      DataSet_Open(dSet_kaohe, sql);
     end;
 
     paintBox.Canvas.TextOut(5, 10, '统计完成...');
@@ -351,7 +477,6 @@ begin
       dSet_ckInOut_m.Edit;
       dSet_ckInOut_mbadgenumber.AsString := badgenumber;
       dSet_ckInOut_mcheck_time.AsString := check_time;
-
 
       // 人工填写 分类 类型 工时 备注
 

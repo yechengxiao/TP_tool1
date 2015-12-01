@@ -43,6 +43,7 @@ type
   private
     { Private declarations }
   public
+    msg: string;
     { Public declarations }
   end;
 
@@ -70,11 +71,19 @@ begin
 end;
 
 procedure TcheckInOut_modify_F.FormShow(Sender: TObject);
+var
+  tip: string;
 begin
 
   if dbEdt_work_num.CanFocus then
     dbEdt_work_num.Focused;
 
+  msg := '事假、病假、婚假、产假、丧假、工伤必填负数' + #10#13 + '工时输入说明：' + #10#13 +
+    '1.分类选正常，工时填1，类型空着； ' + #10#13 + '2.分类选加班，按实际情况选择类型、工时，' + #10#13 +
+    '例：双休，工时1.5，表示加班0.5天，正常上班1天；' + #10#13 + '3.分类选请假，按实际情况选择类型、工时，' + #10#13
+    + '例：病假，工时-0.5，表示请假0.5天；';
+
+  lbl_msg.Caption := msg;
 end;
 
 procedure TcheckInOut_modify_F.radioGClick(Sender: TObject);
@@ -104,7 +113,7 @@ end;
 procedure TcheckInOut_modify_F.tBtn_saveClick(Sender: TObject);
 var
   ckTime, badgeNO, czy, czsj, workCount, type1, type2, memo: string;
-  sql: string;
+  sql, tmpType: string;
 begin
   // 不把鼠标移开，下面的值获取不到
   edt_name.SetFocus;
@@ -146,42 +155,51 @@ begin
   else
   begin
     try
-
-      // 判断 工时输入合法性
-      if (-1 > StrToFloat(workCount)) OR (StrToFloat(workCount) > 2) then
+      if StrToFloat(workCount) = 0 then
       begin
-        msg_err('工时不能大于2,也不同小于-1');
+        msg_info('工时不能为零');
         Exit;
       end;
+
+      tmpType := dbCbb_type.Text;
+      // '事假、病假、婚假、产假、丧假、工伤填写为负数';
+      if (Pos('假', tmpType) > 0) or (Pos('伤', tmpType) > 0) then
+      begin
+        if StrToFloat(workCount) >= 0 then
+        begin
+          msg_info(msg);
+          Exit;
+        end;
+      end;
     except
-      msg_err('工时格式错误');
-      Exit;
+      on E: Exception do
+        msg_err('出错了：' + E.Message);
     end;
   end;
-
-  sql := 'SELECT COUNT(badgenumber) upORins FROM checkInOut_modified WHERE badgenumber ='''
-    + badgeNO + ''' AND check_time=''' + ckTime + ''' ';
-  DataSet_Open(dm.dSet_pub, sql);
-
-  if dm.dSet_pub.FieldByName('upORins').AsInteger = 0 then
-  begin
-    // ckTime, badgeNO, czy, workCount, workType, memo:
-    // badgenumber  check_time  work_num  type_  czy  memo
-    sql := 'INSERT INTO checkInOut_modified(badgenumber,check_time,work_num,type1,type2,czy,change_time,memo) VALUES('''
-      + badgeNO + ''',''' + ckTime + ''',''' + workCount + ''',''' + type1 +
-      ''',''' + type2 + ''',''' + czy + ''',''' + czsj + ''',''' + memo
-      + ''' ) ';
-  end
-  else
-  begin
-    sql := 'UPDATE checkInOut_modified SET work_num =''' + workCount +
-      ''', type1=''' + type1 + ''', type2=''' + type2 + ''', czy=''' + czy +
-      ''', memo=''' + memo + ''', change_time=''' + czsj +
-      ''' WHERE badgenumber=''' + badgeNO + ''' AND check_time=''' +
-      ckTime + ''' ';
-  end;
-
   try
+    sql := 'SELECT COUNT(badgenumber) upORins FROM checkInOut_modified WHERE badgenumber ='''
+      + badgeNO + ''' AND check_time=''' + ckTime + ''' ';
+    DataSet_Open(dm.dSet_pub, sql);
+
+    if dm.dSet_pub.FieldByName('upORins').AsInteger = 0 then
+    begin
+      // ckTime, badgeNO, czy, workCount, workType, memo:
+      // badgenumber  check_time  work_num  type_  czy  memo
+      sql := 'INSERT INTO checkInOut_modified(badgenumber,check_time,work_num,type1,type2,czy,change_time,memo) VALUES('''
+        + badgeNO + ''',''' + ckTime + ''',''' + workCount + ''',''' + type1 +
+        ''',''' + type2 + ''',''' + czy + ''',''' + czsj + ''',''' + memo
+        + ''' ) ';
+    end
+    else
+    begin
+      sql := 'UPDATE checkInOut_modified SET work_num =''' + workCount +
+        ''', type1=''' + type1 + ''', type2=''' + type2 + ''', czy=''' + czy +
+        ''', memo=''' + memo + ''', change_time=''' + czsj +
+        ''' WHERE badgenumber=''' + badgeNO + ''' AND check_time=''' +
+        ckTime + ''' ';
+    end;
+
+
     // 这里不能不存，要用SQL语句
     // checkInOutF.dSet_ckInOut_m.Post;
 

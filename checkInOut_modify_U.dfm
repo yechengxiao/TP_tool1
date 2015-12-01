@@ -2,8 +2,8 @@ object checkInOut_modify_F: TcheckInOut_modify_F
   Left = 0
   Top = 0
   Caption = #32771#21220#20462#25913
-  ClientHeight = 368
-  ClientWidth = 422
+  ClientHeight = 463
+  ClientWidth = 453
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,91 +20,91 @@ object checkInOut_modify_F: TcheckInOut_modify_F
   object pan1: TPanel
     Left = 0
     Top = 21
-    Width = 422
-    Height = 347
+    Width = 453
+    Height = 442
     Align = alClient
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 426
+    ExplicitLeft = 8
     object lbl_badgenumber: TLabel
-      Left = 219
+      Left = 227
       Top = 59
       Width = 48
       Height = 13
       Caption = #20154#21592#32534#21495
     end
     object lbl_check_time: TLabel
-      Left = 19
+      Left = 27
       Top = 59
       Width = 48
       Height = 13
       Caption = #32771#21220#26085#26399
     end
     object lbl_work_num: TLabel
-      Left = 243
+      Left = 251
       Top = 143
       Width = 24
       Height = 13
       Caption = #24037#26102
     end
     object lbl_type_: TLabel
-      Left = 43
+      Left = 51
       Top = 143
       Width = 24
       Height = 13
       Caption = #31867#22411
     end
     object lbl_memo: TLabel
-      Left = 43
-      Top = 180
+      Left = 51
+      Top = 284
       Width = 24
       Height = 13
       Caption = #22791#27880
     end
     object lbl_czy: TLabel
-      Left = 31
-      Top = 302
+      Left = 39
+      Top = 406
       Width = 36
       Height = 13
       Caption = #25805#20316#21592
     end
     object lbl_name: TLabel
-      Left = 243
+      Left = 251
       Top = 21
       Width = 24
       Height = 13
       Caption = #22995#21517
     end
     object lbl_change_time: TLabel
-      Left = 219
-      Top = 302
+      Left = 227
+      Top = 406
       Width = 48
       Height = 13
       Caption = #25805#20316#26085#26399
     end
     object lbl_bm: TLabel
-      Left = 43
+      Left = 51
       Top = 21
       Width = 24
       Height = 13
       Caption = #37096#38376
     end
     object lbl_msg: TLabel
-      Left = 243
+      Left = 81
       Top = 162
-      Width = 84
-      Height = 13
-      Caption = #35831#20551#22635#36127#25968#65311#65311
+      Width = 24
+      Height = 16
+      Caption = 'msg'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clRed
-      Font.Height = -11
+      Font.Height = -13
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
     end
     object dbEdt_badgenumber: TDBEdit
-      Left = 273
+      Left = 281
       Top = 51
       Width = 121
       Height = 21
@@ -115,7 +115,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       TabOrder = 3
     end
     object dbEdt_ckTime: TDBEdit
-      Left = 73
+      Left = 81
       Top = 51
       Width = 121
       Height = 21
@@ -126,7 +126,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       TabOrder = 2
     end
     object dbEdt_work_num: TDBEdit
-      Left = 273
+      Left = 281
       Top = 135
       Width = 121
       Height = 21
@@ -136,7 +136,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       OnKeyPress = dbEdt_work_numKeyPress
     end
     object dbCbb_type: TDBComboBox
-      Left = 73
+      Left = 81
       Top = 135
       Width = 121
       Height = 21
@@ -147,8 +147,8 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       OnKeyPress = dbCbb_typeKeyPress
     end
     object dbEdt_czy: TDBEdit
-      Left = 73
-      Top = 294
+      Left = 81
+      Top = 398
       Width = 121
       Height = 21
       Color = clScrollBar
@@ -158,7 +158,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       TabOrder = 8
     end
     object edt_name: TEdit
-      Left = 273
+      Left = 281
       Top = 13
       Width = 121
       Height = 21
@@ -167,8 +167,8 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       TabOrder = 1
     end
     object dbMemo: TDBMemo
-      Left = 73
-      Top = 180
+      Left = 81
+      Top = 284
       Width = 321
       Height = 89
       DataField = 'memo'
@@ -176,8 +176,8 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       TabOrder = 7
     end
     object dbedt_change_time: TDBEdit
-      Left = 273
-      Top = 294
+      Left = 281
+      Top = 398
       Width = 121
       Height = 21
       Color = clScrollBar
@@ -187,7 +187,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       TabOrder = 9
     end
     object edt_bm: TEdit
-      Left = 73
+      Left = 81
       Top = 13
       Width = 121
       Height = 21
@@ -196,7 +196,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       TabOrder = 0
     end
     object radioG: TRadioGroup
-      Left = 73
+      Left = 81
       Top = 83
       Width = 321
       Height = 38
@@ -214,7 +214,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
   object tlBar: TToolBar
     Left = 0
     Top = 0
-    Width = 422
+    Width = 453
     Height = 21
     AutoSize = True
     ButtonHeight = 21
@@ -223,7 +223,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
     ParentColor = False
     ShowCaptions = True
     TabOrder = 0
-    ExplicitWidth = 426
+    ExplicitWidth = 422
     object tBtn_save: TToolButton
       Left = 0
       Top = 0
