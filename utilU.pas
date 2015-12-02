@@ -182,6 +182,12 @@ begin
                   Result := False;
                 end;
             end;
+          end
+          else
+          begin
+            ExportGridToExcel(SaveDialog.FileName, cxGrid, True, True,
+              True, 'xls');
+            Result := True;
           end;
         end;
       end;
