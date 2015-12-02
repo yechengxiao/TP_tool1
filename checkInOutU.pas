@@ -226,6 +226,32 @@ type
     cxGrid3DBBandedTableView1memo: TcxGridDBBandedColumn;
     cxGrid3DBBandedTableView1NO: TcxGridDBBandedColumn;
     dSet_kaoheNO: TLargeintField;
+    lbl_color: TLabel;
+    cxGrid_tip: TcxGrid;
+    cxGridDBTableView3: TcxGridDBTableView;
+    cxGridLevel3: TcxGridLevel;
+    dSet_tip: TADODataSet;
+    dSource_tip: TDataSource;
+    dSet_tipbadgenumber: TStringField;
+    dSet_tipcheck_time: TStringField;
+    dSet_tipwork_num: TStringField;
+    dSet_tiptype1: TStringField;
+    dSet_tiptype2: TStringField;
+    dSet_tipczy: TStringField;
+    dSet_tipchange_time: TStringField;
+    dSet_tipmemo: TStringField;
+    cxGridDBTableView3badgenumber: TcxGridDBColumn;
+    cxGridDBTableView3check_time: TcxGridDBColumn;
+    cxGridDBTableView3work_num: TcxGridDBColumn;
+    cxGridDBTableView3type1: TcxGridDBColumn;
+    cxGridDBTableView3type2: TcxGridDBColumn;
+    cxGridDBTableView3czy: TcxGridDBColumn;
+    cxGridDBTableView3change_time: TcxGridDBColumn;
+    cxGridDBTableView3memo: TcxGridDBColumn;
+    cxGridDBTableView3Column1name: TcxGridDBColumn;
+    dSet_tipname: TStringField;
+    cxGrid3DBBandedTableView1Column1: TcxGridDBBandedColumn;
+    cxGrid3DBBandedTableView1Column2: TcxGridDBBandedColumn;
     procedure btn_tjClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
 
@@ -239,8 +265,13 @@ type
       var ADone: Boolean);
     procedure cbb_nameDropDown(Sender: TObject);
     procedure cbb_bmKeyPress(Sender: TObject; var Key: Char);
+    procedure cxGrid1DBTableView1CellClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure dSet_tiptype1GetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
   private
-    drawCellList: TStringList;
+    QJ_List, JB_List, ZC_List: TStringList;
     { Private declarations }
   public
     { Public declarations }
@@ -331,11 +362,10 @@ end;
 procedure TcheckInOutF.btn_tjClick(Sender: TObject);
 var
   sql: string;
-  yf, bm, name: string;
+  yf, bm, name, type1: string;
   I: Integer;
 begin
   try
-
     yf := FormatDateTime('yyyy-mm', dtp1.Date);
     bm := Trim(cbb_bm.Text);
     name := Trim(cbb_name.Text);
@@ -361,23 +391,43 @@ begin
 
       try
         // 为 突出显示已修改数据 做准备
-        if Assigned(drawCellList) then
-          FreeAndNil(drawCellList);
+        if Assigned(QJ_List) then
+          FreeAndNil(QJ_List);
 
-        drawCellList := TStringList.Create;
+        if Assigned(JB_List) then
+          FreeAndNil(JB_List);
+
+        if Assigned(ZC_List) then
+          FreeAndNil(ZC_List);
+
+        ZC_List := TStringList.Create;
+        JB_List := TStringList.Create;
+        QJ_List := TStringList.Create;
+
         {
           -- 此存储过程返回的表结构。某个月，某个部门的已修改考勤记录。
           -- badgenumber  days
           -- 000000784	D02,D04
         }
-        sql := 'EXEC SP_get_KaoQin_modifid_Days ''' + yf + ''',''' + bm + ''' ';
+        type1 := 'QJ';
+        sql := 'EXEC SP_get_KaoQin_modifid_Days ''' + yf + ''',''' + bm +
+          ''',''' + type1 + ''' ';
+        GetList(QJ_List, sql, 'badgenumber', 'days');
 
-        GetList(drawCellList, sql, 'badgenumber', 'days');
+        type1 := 'JB';
+        sql := 'EXEC SP_get_KaoQin_modifid_Days ''' + yf + ''',''' + bm +
+          ''',''' + type1 + ''' ';
+        GetList(JB_List, sql, 'badgenumber', 'days');
 
-        // for I := 0 to drawCellList.Count - 1 do
+        type1 := 'ZC';
+        sql := 'EXEC SP_get_KaoQin_modifid_Days ''' + yf + ''',''' + bm +
+          ''',''' + type1 + ''' ';
+        GetList(ZC_List, sql, 'badgenumber', 'days');
+
+        // for I := 0 to QJ_List.Count - 1 do
         // begin
-        // ValueListEditor1.InsertRow(drawCellList.Names[I],
-        // drawCellList.ValueFromIndex[I], true);
+        // ValueListEditor1.InsertRow(QJ_List.Names[I],
+        // QJ_List.ValueFromIndex[I], true);
         // end;
 
       except
@@ -411,26 +461,57 @@ begin
   end;
 end;
 
+procedure TcheckInOutF.cxGrid1DBTableView1CellClick
+  (Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+var
+  bm, badgeNO, ckDay, day, sql: string;
+begin
+  // 点击当前单元格，显示详情
+
+  day := UpperCase(TcxGridDBColumn(ACellViewInfo.Item).DataBinding.FieldName);
+
+  ckDay := FormatDateTime('yyyy-mm', dtp1.Date) + '-' + RightStr(day, 2);
+  bm := cbb_bm.Text;
+  badgeNO := UpperCase(ACellViewInfo.GridRecord.DisplayTexts
+    [cxGrid1DBTableView1badgenumber.index]);
+
+  sql := 'SELECT u.name,ck.* FROM checkinout_modified ck  ' +
+    ' LEFT JOIN user_departments_v u ' + ' ON ck.badgenumber=u.badgenumber ' +
+    ' WHERE u.deptName=''' + bm + ''' AND ck.badgenumber=''' + badgeNO +
+    ''' AND ck.check_time=''' + ckDay + ''' ';
+  DataSet_Open(dSet_tip, sql);
+
+end;
+
 procedure TcheckInOutF.cxGrid1DBTableView1CustomDrawCell
   (Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 var
-  field, badgeNO, daysFromDB: string;
+  day, badgeNO, daysQJ, daysJB, daysZC: string;
 begin
   // 将人工修改过的记录标记出来
   // 这个函数怎么运行的? 扫描全部单元格？
+  // -- badgenumber  days
+  // - -000000784 D02, D04
   try
-    // field := TcxGridDBColumn(AViewInfo.Item).Caption;
-    field := UpperCase(TcxGridDBColumn(AViewInfo.Item).DataBinding.FieldName);
+    day := UpperCase(TcxGridDBColumn(AViewInfo.Item).DataBinding.FieldName);
 
     badgeNO := UpperCase(AViewInfo.GridRecord.DisplayTexts
       [cxGrid1DBTableView1badgenumber.index]);
 
-    daysFromDB := drawCellList.Values[badgeNO];
+    daysQJ := QJ_List.Values[badgeNO];
+    daysJB := JB_List.Values[badgeNO];
+    daysZC := ZC_List.Values[badgeNO];
 
-    if Pos(field, daysFromDB) > 0 then
+    if Pos(day, daysQJ) > 0 then
     begin
       ACanvas.Brush.Color := clRed;
+      ACanvas.Font.Color := clBlack;
+    end
+    else if Pos(day, daysJB) > 0 then
+    begin
+      ACanvas.Brush.Color := clSkyBlue;
       ACanvas.Font.Color := clBlack;
     end;
   except
@@ -519,6 +600,23 @@ begin
       end;
     end;
   finally
+  end;
+end;
+
+procedure TcheckInOutF.dSet_tiptype1GetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  if Sender.AsString = 'ZC' then
+  begin
+    Text := '正常';
+  end
+  else if Sender.AsString = 'JB' then
+  begin
+    Text := '加班';
+  end
+  else if Sender.AsString = 'QJ' then
+  begin
+    Text := '请假';
   end;
 end;
 

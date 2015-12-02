@@ -18,7 +18,7 @@ object dm: Tdm
   object dSet_pub: TADODataSet
     Connection = DB_Con
     Parameters = <>
-    Left = 56
+    Left = 48
     Top = 106
   end
   object dSource_pub: TDataSource
@@ -103,12 +103,18 @@ object dm: Tdm
   object dSet_pubForGrid: TADODataSet
     Connection = DB_Con
     Parameters = <>
-    Left = 280
+    Left = 296
     Top = 106
   end
   object dSource_pubForGrid: TDataSource
     DataSet = dSet_pubForGrid
-    Left = 288
+    Left = 296
     Top = 196
+  end
+  object Timer1: TTimer
+    Interval = 30000
+    OnTimer = Timer1Timer
+    Left = 168
+    Top = 264
   end
 end

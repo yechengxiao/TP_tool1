@@ -27,6 +27,8 @@ type
     DB_com: TADOCommand;
     dSet_pubForGrid: TADODataSet;
     dSource_pubForGrid: TDataSource;
+    Timer1: TTimer;
+    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,8 +40,20 @@ var
 
 implementation
 
+uses utilU;
 { %CLASSGROUP 'Vcl.Controls.TControl' }
 
 {$R *.dfm}
+
+procedure Tdm.Timer1Timer(Sender: TObject);
+begin
+  try
+    if dSet_pub.Active then
+      dSet_pub.Close;
+  except
+    on E: Exception do
+      msg_info('dSet_pub πÿ±’ ß∞‹');
+  end;
+end;
 
 end.

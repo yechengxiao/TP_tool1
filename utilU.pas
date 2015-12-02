@@ -167,9 +167,22 @@ begin
         Filter := '*.xls|*.xls';
         if Execute then
         begin
-          ExportGridToExcel(SaveDialog.FileName, cxGrid, True, True,
-            True, 'xls');
-          Result := True;
+          if FileExists(SaveDialog.FileName) then
+          begin
+            case Application.MessageBox('文件已存在，是否覆盖？', '请问',
+              MB_OKCANCEL + MB_ICONQUESTION) of
+              IDOK:
+                begin
+                  ExportGridToExcel(SaveDialog.FileName, cxGrid, True, True,
+                    True, 'xls');
+                  Result := True;
+                end;
+              IDCANCEL:
+                begin
+                  Result := False;
+                end;
+            end;
+          end;
         end;
       end;
     except
