@@ -507,13 +507,19 @@ begin
     if Pos(day, daysQJ) > 0 then
     begin
       ACanvas.Brush.Color := clRed;
-      ACanvas.Font.Color := clBlack;
+      ACanvas.Font.Color := clWindow;
     end
     else if Pos(day, daysJB) > 0 then
     begin
-      ACanvas.Brush.Color := clSkyBlue;
+      ACanvas.Brush.Color := clBlue;
+      ACanvas.Font.Color := clWindow;
+    end
+    else if Pos(day, daysZC) > 0 then
+    begin
+      ACanvas.Brush.Color := clLime;
       ACanvas.Font.Color := clBlack;
     end;
+
   except
   end;
 end;
@@ -637,9 +643,6 @@ begin
   dtp1.Date := StartOfTheMonth(Now);
 
   tab1.Show;
-
-  DropDown_(dm.dSet_pub, cbb_bm,
-    'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
 end;
 
 procedure TcheckInOutF.cbb_bmKeyPress(Sender: TObject; var Key: Char);

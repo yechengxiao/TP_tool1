@@ -2,8 +2,8 @@ object startF: TstartF
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  ClientHeight = 382
-  ClientWidth = 676
+  ClientHeight = 401
+  ClientWidth = 665
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,13 +12,14 @@ object startF: TstartF
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 676
-    Height = 368
+    Width = 665
+    Height = 401
     Align = alClient
     Picture.Data = {
       0D546478536D617274496D616765FFD8FFE000104A4649460001010100000000
@@ -1703,26 +1704,64 @@ object startF: TstartF
       082A2D22D6D9E645D046C70AAAB3A4D0AAB2140DAED49D1212E1936F08B55D8A
       EB851686C1DF832EAD3468B8FF00F2A7FFD9}
     Stretch = True
-    ExplicitLeft = 272
-    ExplicitTop = 112
-    ExplicitWidth = 105
-    ExplicitHeight = 105
+    ExplicitLeft = -8
+    ExplicitTop = 5
+    ExplicitHeight = 392
   end
-  object paintBox: TPaintBox
-    Left = 0
-    Top = 368
-    Width = 676
-    Height = 14
-    Align = alBottom
-    Color = clBtnFace
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clRed
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentColor = False
-    ParentFont = False
-    ExplicitLeft = -32
-    ExplicitTop = 56
+  object lbl_bm: TLabel
+    Left = 256
+    Top = 291
+    Width = 24
+    Height = 13
+    Caption = #37096#38376
+  end
+  object lbl_pass: TLabel
+    Left = 256
+    Top = 318
+    Width = 24
+    Height = 13
+    Caption = #23494#30721
+  end
+  object lbl_msg: TLabel
+    Left = 256
+    Top = 373
+    Width = 35
+    Height = 13
+    Caption = 'lbl_msg'
+  end
+  object edt_pass: TEdit
+    Left = 286
+    Top = 315
+    Width = 120
+    Height = 21
+    PasswordChar = '*'
+    TabOrder = 1
+  end
+  object cbb_bm: TComboBox
+    Left = 286
+    Top = 288
+    Width = 120
+    Height = 21
+    DropDownCount = 15
+    TabOrder = 0
+    OnKeyPress = cbb_bmKeyPress
+  end
+  object btn_login: TButton
+    Left = 256
+    Top = 342
+    Width = 65
+    Height = 25
+    Caption = #30331#24405
+    TabOrder = 2
+    OnClick = btn_loginClick
+  end
+  object btn_exit: TButton
+    Left = 341
+    Top = 342
+    Width = 65
+    Height = 25
+    Caption = #36864#20986
+    TabOrder = 3
+    OnClick = btn_exitClick
   end
 end

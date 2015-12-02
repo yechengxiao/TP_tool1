@@ -27,7 +27,6 @@ object checkInOutF: TcheckInOutF
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 924
     object lbl1: TLabel
       Left = 16
       Top = 22
@@ -75,9 +74,9 @@ object checkInOutF: TcheckInOutF
     object lbl_color: TLabel
       Left = 16
       Top = 60
-      Width = 396
+      Width = 328
       Height = 13
-      Caption = #32771#21220#26126#32454#65306#40644#33394#34920#31034#20154#20026#20462#25913#30340#27491#24120#20986#21220#12289#32418#33394#34920#31034#35831#20551#12289#32511#33394#34920#31034#21152#29677#12290
+      Caption = #34013#33394#65306#21152#29677#12289#32418#33394#65306#35831#20551'/'#35843#20241#12289#32511#33394#65306#20154#20026#20462#25913#30340#27491#24120#20986#21220#12290
       Color = clSilver
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -158,8 +157,6 @@ object checkInOutF: TcheckInOutF
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
-    ExplicitWidth = 924
-    ExplicitHeight = 388
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
@@ -168,12 +165,8 @@ object checkInOutF: TcheckInOutF
       ActivePage = tab1
       Align = alClient
       TabOrder = 0
-      ExplicitWidth = 922
-      ExplicitHeight = 386
       object tab1: TTabSheet
         Caption = #32771#21220#26126#32454
-        ExplicitWidth = 914
-        ExplicitHeight = 358
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
@@ -181,8 +174,6 @@ object checkInOutF: TcheckInOutF
           Height = 288
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 914
-          ExplicitHeight = 209
           object cxGrid1DBTableView1: TcxGridDBTableView
             OnDblClick = cxGrid1DBTableView1DblClick
             Navigator.Buttons.CustomButtons = <>
@@ -477,8 +468,6 @@ object checkInOutF: TcheckInOutF
       object tab2: TTabSheet
         Caption = #24322#21160#26126#32454
         ImageIndex = 1
-        ExplicitWidth = 914
-        ExplicitHeight = 358
         object cxGrid2: TcxGrid
           Left = 0
           Top = 0
@@ -486,8 +475,6 @@ object checkInOutF: TcheckInOutF
           Height = 371
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 914
-          ExplicitHeight = 358
           object cxGridDBTableView1: TcxGridDBTableView
             OnDblClick = cxGrid1DBTableView1DblClick
             Navigator.Buttons.CustomButtons = <>
@@ -543,8 +530,6 @@ object checkInOutF: TcheckInOutF
       object tab3: TTabSheet
         Caption = #32771#21220#32771#26680#27719#24635
         ImageIndex = 2
-        ExplicitWidth = 914
-        ExplicitHeight = 358
         object cxGrid3: TcxGrid
           Left = 0
           Top = 0
@@ -552,8 +537,6 @@ object checkInOutF: TcheckInOutF
           Height = 371
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 914
-          ExplicitHeight = 358
           object cxGridDBTableView2: TcxGridDBTableView
             OnDblClick = cxGrid1DBTableView1DblClick
             Navigator.Buttons.CustomButtons = <>
