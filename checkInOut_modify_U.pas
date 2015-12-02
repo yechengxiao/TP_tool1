@@ -138,7 +138,7 @@ begin
       type1 := 'QJ';
   end;
 
-  if (radioG.ItemIndex <> 0) AND (type2 = '') then
+  if (type2 = '') then
   begin
     msg_info('«Î—°‘Ò¿‡–Õ');
 
