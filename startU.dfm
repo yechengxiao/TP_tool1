@@ -1742,9 +1742,9 @@ object startF: TstartF
     Top = 288
     Width = 120
     Height = 21
+    Style = csDropDownList
     DropDownCount = 15
     TabOrder = 0
-    OnKeyPress = cbb_bmKeyPress
   end
   object btn_login: TButton
     Left = 256

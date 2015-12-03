@@ -120,6 +120,7 @@ object checkInOutF: TcheckInOutF
       Top = 14
       Width = 140
       Height = 21
+      Style = csDropDownList
       DropDownCount = 20
       TabOrder = 3
       OnKeyPress = cbb_bmKeyPress
@@ -141,6 +142,7 @@ object checkInOutF: TcheckInOutF
       Top = 14
       Width = 80
       Height = 21
+      Style = csDropDownList
       DropDownCount = 20
       TabOrder = 4
       OnDropDown = cbb_nameDropDown
@@ -433,7 +435,7 @@ object checkInOutF: TcheckInOutF
               AlternateCaption = '60'
               DataBinding.FieldName = 'type2'
               HeaderAlignmentHorz = taCenter
-              Width = 60
+              Width = 100
             end
             object cxGridDBTableView3work_num: TcxGridDBColumn
               AlternateCaption = '60'

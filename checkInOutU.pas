@@ -274,6 +274,7 @@ type
     QJ_List, JB_List, ZC_List: TStringList;
     { Private declarations }
   public
+    bm: string;
     { Public declarations }
   end;
 
@@ -287,24 +288,26 @@ uses dmU, utilU, mainU, checkInOut_modify_U;
 
 procedure TcheckInOutF.btn_emptyClick(Sender: TObject);
 begin
-  try
+  {
+    try
     // 清空表格数据
     if pg_ctl.ActivePage = tab1 then
     begin
-      cxGrid1DBTableView1.DataController.DataSource.DataSet.Close;
+    cxGrid1DBTableView1.DataController.DataSource.DataSet.Close;
     end
     else if pg_ctl.ActivePage = tab2 then
     begin
-      cxGridDBTableView1.DataController.DataSource.DataSet.Close;
+    cxGridDBTableView1.DataController.DataSource.DataSet.Close;
     end
     else if pg_ctl.ActivePage = tab3 then
     begin
-      cxGrid3DBBandedTableView1.DataController.DataSource.DataSet.Close;
+    cxGrid3DBBandedTableView1.DataController.DataSource.DataSet.Close;
     end;
-  except
+    except
     on e: Exception do
-      msg_err('出错了：' + e.Message);
-  end;
+    msg_err('出错了：' + e.Message);
+    end;
+  }
 end;
 
 procedure TcheckInOutF.btn_exportClick(Sender: TObject);
@@ -314,7 +317,6 @@ var
 begin
 
   try
-    // 清空表格数据
     if pg_ctl.ActivePage = tab1 then
     begin
       if cxGrid1DBTableView1.DataController.DataSource.DataSet.IsEmpty then
@@ -565,15 +567,7 @@ begin
       dSet_ckInOut_mbadgenumber.AsString := badgenumber;
       dSet_ckInOut_mcheck_time.AsString := check_time;
 
-      // 人工填写 分类 类型 工时 备注
-
-      // work_num := Trim(dSet_ckInOut_m.FieldByName('work_num').AsString);
-      // if work_num = '' then
-      // begin
-      // dSet_ckInOut_mwork_num.AsString := '1';
-      // end;
-
-      // 类型
+      // 人工填写 分类 类型
       with checkInOut_modify_F do
       begin
         // 默认为数据库中数据

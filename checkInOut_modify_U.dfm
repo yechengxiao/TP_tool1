@@ -3,7 +3,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
   Top = 0
   Caption = #32771#21220#20462#25913
   ClientHeight = 463
-  ClientWidth = 453
+  ClientWidth = 445
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,18 +14,20 @@ object checkInOut_modify_F: TcheckInOut_modify_F
   Position = poDesktopCenter
   PrintScale = poNone
   Visible = True
+  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pan1: TPanel
     Left = 0
     Top = 21
-    Width = 453
+    Width = 445
     Height = 442
     Align = alClient
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 1
+    ExplicitWidth = 453
     object lbl_badgenumber: TLabel
       Left = 227
       Top = 59
@@ -201,7 +203,6 @@ object checkInOut_modify_F: TcheckInOut_modify_F
       Height = 38
       Caption = #20998#31867
       Columns = 3
-      ItemIndex = 0
       Items.Strings = (
         #27491#24120
         #21152#29677
@@ -213,7 +214,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
   object tlBar: TToolBar
     Left = 0
     Top = 0
-    Width = 453
+    Width = 445
     Height = 21
     AutoSize = True
     ButtonHeight = 21
@@ -222,6 +223,7 @@ object checkInOut_modify_F: TcheckInOut_modify_F
     ParentColor = False
     ShowCaptions = True
     TabOrder = 0
+    ExplicitWidth = 453
     object tBtn_save: TToolButton
       Left = 0
       Top = 0

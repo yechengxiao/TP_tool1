@@ -40,6 +40,7 @@ type
     procedure dbEdt_work_numKeyPress(Sender: TObject; var Key: Char);
     procedure dbCbb_typeKeyPress(Sender: TObject; var Key: Char);
     procedure radioGClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -68,6 +69,13 @@ begin
   if Key <> #8 then
     if not((Key in ['0' .. '9']) or (Key = #46) or (Key = #45)) then
       Key := #0
+end;
+
+procedure TcheckInOut_modify_F.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  checkInOutF.btn_tjClick(checkInOutF);
+  Action := caFree;
 end;
 
 procedure TcheckInOut_modify_F.FormShow(Sender: TObject);
@@ -182,6 +190,11 @@ begin
     end;
   end;
   try
+    sql := 'SELECT CONVERT(CHAR(20), GETDATE(),20) AS czsj';
+    DataSet_Open(dm.dSet_pub, sql);
+    czsj := dm.dSet_pub.FieldByName('czsj').AsString;
+    czy := checkInOutF.bm; // 谁登录就取谁
+
     sql := 'SELECT COUNT(badgenumber) upORins FROM checkInOut_modified WHERE badgenumber ='''
       + badgeNO + ''' AND check_time=''' + ckTime + ''' ';
     DataSet_Open(dm.dSet_pub, sql);
@@ -205,15 +218,16 @@ begin
     end;
 
 
-    // 这里不能不存，要用SQL语句
-    // checkInOutF.dSet_ckInOut_m.Post;
+    // 这里要用SQL语句 checkInOutF.dSet_ckInOut_m.Post;
 
     if Command_Exec(sql) then
-      msg_info('保存完成')
+    begin
+      msg_info('保存完成');
+    end
     else
+    begin
       msg_info('保存失败');
-
-    checkInOutF.btn_tjClick(checkInOutF);
+    end;
 
     Close;
   except

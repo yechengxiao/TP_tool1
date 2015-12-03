@@ -21,7 +21,6 @@ type
     procedure btn_loginClick(Sender: TObject);
     procedure btn_exitClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure cbb_bmKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -42,85 +41,87 @@ var
   bm, pass, sql: string;
   logined: Boolean;
 begin
-  bm := Trim(cbb_bm.Text);
-  pass := Trim(edt_pass.Text);
+  try
+    btn_login.Enabled := False;
 
-  if (bm = '') or (pass = '') then
-  begin
-    msg_err('请选择部门，并填写密码 ');
-    Exit;
-  end;
+    bm := Trim(cbb_bm.Text);
+    pass := Trim(edt_pass.Text);
 
-  sql := 'SELECT TOP 1 status, limit_num, status_memo FROM tp_tool_ver WHERE ver='''
-    + ver + ''' ';
-
-  DataSet_Open(dm.dSet_pub, sql);
-
-  stau := Trim(dm.dSet_pub.FieldByName('status').AsString);
-  stau_memo := dm.dSet_pub.FieldByName('status_memo').AsString;
-  limit := dm.dSet_pub.FieldByName('limit_num').AsString; // TODO 登录数限制
-
-  if (stau = '1') then
-  begin
-
-    sql := 'SELECT COUNT(department) is_login FROM user_login WHERE department='''
-      + bm + ''' AND pass=''' + pass + '''  ';
-    DataSet_Open(dm.dSet_pub, sql);
-
-    logined := False;
-    if dm.dSet_pub.FieldByName('is_login').AsString = '1' then
+    if (bm = '') or (pass = '') then
     begin
-      logined := True;
-    end
-    else
-    begin
-      msg_err('请正确选择部门，并填写正确的密码');
+      msg_err('请选择部门，并填写密码 ');
       Exit;
     end;
 
-    if logined then
+    sql := 'SELECT TOP 1 status, limit_num, status_memo FROM tp_tool_ver WHERE ver='''
+      + ver + ''' ';
+
+    DataSet_Open(dm.dSet_pub, sql);
+
+    stau := Trim(dm.dSet_pub.FieldByName('status').AsString);
+    stau_memo := dm.dSet_pub.FieldByName('status_memo').AsString;
+    limit := dm.dSet_pub.FieldByName('limit_num').AsString; // TODO 登录数限制
+
+    if (stau = '1') then
     begin
-      Delay(1500); // 启动画面窗口显示一秒钟
-      startF.Hide; // 隐藏启动画面窗口
-      startF.Free; // 释放启动画面窗口
 
-      Application.CreateForm(TcheckInOutF, checkInOutF);
+      sql := 'SELECT COUNT(department) is_login FROM user_login WHERE department='''
+        + bm + ''' AND pass=''' + pass + '''  ';
+      DataSet_Open(dm.dSet_pub, sql);
 
-      if bm = '人力资源部' then
+      logined := False;
+      if dm.dSet_pub.FieldByName('is_login').AsString = '1' then
       begin
-        DropDown_(dm.dSet_pub, checkInOutF.cbb_bm,
-          'SELECT deptname FROM departments ORDER BY deptname DESC',
-          'deptname');
+        logined := True;
       end
       else
       begin
-        checkInOutF.cbb_bm.Style := csSimple;
-        checkInOutF.cbb_bm.Text := bm;
+        msg_err('请正确选择部门，并填写正确的密码');
+        btn_login.Enabled := True;
+        Exit;
       end;
 
-      checkInOutF.Show;
-    end;
-  end
-  else
-  begin
-    if stau_memo <> '' then
-    begin
-      lbl_msg.Caption := stau_memo + ' 将自动关闭...';
+      if logined then
+      begin
+        Delay(1500); // 启动画面窗口显示一秒钟
+        startF.Hide; // 隐藏启动画面窗口
+        startF.Free; // 释放启动画面窗口
+
+        Application.CreateForm(TcheckInOutF, checkInOutF);
+
+        checkInOutF.bm := bm; // 修改操作的czy为部门名称
+        if bm = '人力资源部' then
+        begin
+          DropDown_(dm.dSet_pub, checkInOutF.cbb_bm,
+            'SELECT deptname FROM departments ORDER BY deptname DESC',
+            'deptname');
+        end
+        else
+        begin
+          checkInOutF.cbb_bm.Style := csSimple;
+          checkInOutF.cbb_bm.Text := bm;
+        end;
+
+        checkInOutF.Show;
+      end;
     end
     else
     begin
-      lbl_msg.Caption := '此版本已停用!! ' + ' 将自动关闭...';
+      if stau_memo <> '' then
+      begin
+        lbl_msg.Caption := stau_memo + ' 将自动关闭...';
+      end
+      else
+      begin
+        lbl_msg.Caption := '此版本已停用!! ' + ' 将自动关闭...';
+      end;
+
+      Delay(5000);
+      Application.Terminate;
     end;
+  finally
 
-    Delay(5000);
-    Application.Terminate;
   end;
-
-end;
-
-procedure TstartF.cbb_bmKeyPress(Sender: TObject; var Key: Char);
-begin
-  Key := #0;
 end;
 
 procedure TstartF.btn_exitClick(Sender: TObject);
