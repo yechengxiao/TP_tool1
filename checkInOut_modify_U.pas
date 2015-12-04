@@ -74,8 +74,8 @@ end;
 procedure TcheckInOut_modify_F.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  checkInOutF.btn_tjClick(checkInOutF);
-  Action := caFree;
+  checkInOutF.btn_tj.Click;
+  // Action := caFree;
 end;
 
 procedure TcheckInOut_modify_F.FormShow(Sender: TObject);
@@ -168,9 +168,18 @@ begin
   else
   begin
     try
-      if StrToFloat(workCount) = 0 then
-      begin
+      {
+        if StrToFloat(workCount) = 0 then
+        begin
         msg_info('工时不能为零');
+        Exit;
+        end;
+      }
+
+      // 判断是否为数字
+      if StrToFloat(workCount) < -100 then
+      begin
+        msg_info('输入的工时不正确');
         Exit;
       end;
 
@@ -186,14 +195,18 @@ begin
       end;
     except
       on E: Exception do
+      begin
         msg_err('出错了：' + E.Message);
+        Exit;
+      end;
     end;
   end;
+
   try
     sql := 'SELECT CONVERT(CHAR(20), GETDATE(),20) AS czsj';
     DataSet_Open(dm.dSet_pub, sql);
     czsj := dm.dSet_pub.FieldByName('czsj').AsString;
-    czy := checkInOutF.bm; // 谁登录就取谁
+    czy := bm_logined; // 谁登录就取谁
 
     sql := 'SELECT COUNT(badgenumber) upORins FROM checkInOut_modified WHERE badgenumber ='''
       + badgeNO + ''' AND check_time=''' + ckTime + ''' ';

@@ -173,9 +173,10 @@ object checkInOutF: TcheckInOutF
           Left = 0
           Top = 0
           Width = 947
-          Height = 288
+          Height = 248
           Align = alClient
           TabOrder = 0
+          ExplicitHeight = 288
           object cxGrid1DBTableView1: TcxGridDBTableView
             OnDblClick = cxGrid1DBTableView1DblClick
             Navigator.Buttons.CustomButtons = <>
@@ -389,9 +390,9 @@ object checkInOutF: TcheckInOutF
         end
         object cxGrid_tip: TcxGrid
           Left = 0
-          Top = 288
+          Top = 248
           Width = 947
-          Height = 83
+          Height = 123
           Align = alBottom
           TabOrder = 1
           object cxGridDBTableView3: TcxGridDBTableView
@@ -419,11 +420,11 @@ object checkInOutF: TcheckInOutF
               HeaderAlignmentHorz = taCenter
               Width = 60
             end
-            object cxGridDBTableView3check_time: TcxGridDBColumn
+            object cxGridDBTableView3ck_day: TcxGridDBColumn
               AlternateCaption = '60'
-              DataBinding.FieldName = 'check_time'
+              DataBinding.FieldName = 'ck_day'
               HeaderAlignmentHorz = taCenter
-              Width = 60
+              Width = 120
             end
             object cxGridDBTableView3type1: TcxGridDBColumn
               AlternateCaption = '60'
@@ -459,7 +460,7 @@ object checkInOutF: TcheckInOutF
               AlternateCaption = '60'
               DataBinding.FieldName = 'change_time'
               HeaderAlignmentHorz = taCenter
-              Width = 80
+              Width = 120
             end
           end
           object cxGridLevel3: TcxGridLevel
@@ -1353,7 +1354,7 @@ object checkInOutF: TcheckInOutF
     end
     object dSet_tipcheck_time: TStringField
       DisplayLabel = #31614#21040#26085#26399
-      FieldName = 'check_time'
+      FieldName = 'ck_day'
     end
     object dSet_tipwork_num: TStringField
       DisplayLabel = #24037#26102

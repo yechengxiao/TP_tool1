@@ -241,7 +241,7 @@ type
     dSet_tipchange_time: TStringField;
     dSet_tipmemo: TStringField;
     cxGridDBTableView3badgenumber: TcxGridDBColumn;
-    cxGridDBTableView3check_time: TcxGridDBColumn;
+    cxGridDBTableView3ck_day: TcxGridDBColumn;
     cxGridDBTableView3work_num: TcxGridDBColumn;
     cxGridDBTableView3type1: TcxGridDBColumn;
     cxGridDBTableView3type2: TcxGridDBColumn;
@@ -274,7 +274,6 @@ type
     QJ_List, JB_List, ZC_List: TStringList;
     { Private declarations }
   public
-    bm: string;
     { Public declarations }
   end;
 
@@ -369,8 +368,11 @@ var
 begin
   try
     yf := FormatDateTime('yyyy-mm', dtp1.Date);
-    bm := Trim(cbb_bm.Text);
     name := Trim(cbb_name.Text);
+    bm := Trim(cbb_bm.Text);
+
+    if bm = '' then
+      bm := bm_logined;
 
     if bm = '' then
     begin
@@ -471,17 +473,21 @@ var
 begin
   // 点击当前单元格，显示详情
 
+  Sleep(300);
+
   day := UpperCase(TcxGridDBColumn(ACellViewInfo.Item).DataBinding.FieldName);
 
   ckDay := FormatDateTime('yyyy-mm', dtp1.Date) + '-' + RightStr(day, 2);
   bm := cbb_bm.Text;
+  if bm = '' then
+    bm := bm_logined;
+
   badgeNO := UpperCase(ACellViewInfo.GridRecord.DisplayTexts
     [cxGrid1DBTableView1badgenumber.index]);
 
-  sql := 'SELECT u.name,ck.* FROM checkinout_modified ck  ' +
-    ' LEFT JOIN user_departments_v u ' + ' ON ck.badgenumber=u.badgenumber ' +
-    ' WHERE u.deptName=''' + bm + ''' AND ck.badgenumber=''' + badgeNO +
-    ''' AND ck.check_time=''' + ckDay + ''' ';
+  sql := 'SELECT name, badgenumber, ck_day ,work_num,type1,type2,czy,change_time,memo '
+    + ' FROM checkInOut_v  WHERE deptName=''' + bm + ''' AND badgenumber=''' +
+    badgeNO + ''' AND ck_day LIKE ''' + ckDay + '%'' ';
   DataSet_Open(dSet_tip, sql);
 
 end;
@@ -559,7 +565,9 @@ begin
         badgenumber + ''' AND check_time=''' + check_time + ''' ';
       DataSet_Open(dSet_ckInOut_m, sql);
 
-      checkInOut_modify_F := TcheckInOut_modify_F.Create(nil);
+      if not Assigned(checkInOut_modify_F) then
+        checkInOut_modify_F := TcheckInOut_modify_F.Create(nil);
+
       // 系统填写：姓名 部门 员工编号 签到日期
       checkInOut_modify_F.edt_name.Text := Trim(dSet_ckInOutname.AsString);
       checkInOut_modify_F.edt_bm.Text := Trim(dSet_ckInOutdeptName.AsString);
@@ -617,6 +625,10 @@ begin
   else if Sender.AsString = 'QJ' then
   begin
     Text := '请假';
+  end
+  else
+  begin
+    Text := Sender.AsString;
   end;
 end;
 

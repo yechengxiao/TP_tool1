@@ -6,6 +6,9 @@ uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, Forms,
   Data.Win.ADODB, Vcl.DBGrids, ClipBrd, ComObj, Vcl.Dialogs, cxGridExportLink,
   cxGrid, Vcl.StdCtrls, System.Classes, Vcl.DBCtrls;
 
+var
+  bm_logined: string;
+
 procedure Delay(dwMilliseconds: DWORD);
 function ExportData(cxGrid: TcxGrid): Boolean;
 function DropDown_(dset: TADODataSet; combobox: TComboBox;

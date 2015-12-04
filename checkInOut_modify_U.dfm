@@ -27,7 +27,6 @@ object checkInOut_modify_F: TcheckInOut_modify_F
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 453
     object lbl_badgenumber: TLabel
       Left = 227
       Top = 59
@@ -223,7 +222,6 @@ object checkInOut_modify_F: TcheckInOut_modify_F
     ParentColor = False
     ShowCaptions = True
     TabOrder = 0
-    ExplicitWidth = 453
     object tBtn_save: TToolButton
       Left = 0
       Top = 0

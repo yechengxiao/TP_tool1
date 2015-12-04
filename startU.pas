@@ -89,7 +89,7 @@ begin
 
         Application.CreateForm(TcheckInOutF, checkInOutF);
 
-        checkInOutF.bm := bm; // 修改操作的czy为部门名称
+        bm_logined := bm; // 修改操作的czy为部门名称
         if bm = '人力资源部' then
         begin
           DropDown_(dm.dSet_pub, checkInOutF.cbb_bm,
@@ -136,7 +136,7 @@ begin
   sql := 'SELECT department FROM user_login ORDER BY department DESC';
   DropDown_(dm.dSet_pub, cbb_bm, sql, 'department');
 
-  ver := '20151202_dev';
+  ver := '20151204_dev';
 
   lbl_msg.Caption := UpperCase(ver);
 end;
