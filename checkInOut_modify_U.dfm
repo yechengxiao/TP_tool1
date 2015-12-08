@@ -1,7 +1,7 @@
 object checkInOut_modify_F: TcheckInOut_modify_F
   Left = 0
   Top = 0
-  Caption = #32771#21220#20462#25913
+  Caption = #26376#24230#32771#21220#20462#25913
   ClientHeight = 463
   ClientWidth = 445
   Color = clBtnFace

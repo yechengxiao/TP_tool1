@@ -639,8 +639,19 @@ end;
 
 procedure TcheckInOutF.FormCreate(Sender: TObject);
 begin
-  checkInOutF.Position := poScreenCenter;
-  checkInOutF.WindowState := wsMaximized;
+  // Self.Position := poScreenCenter;
+  // Self.WindowState := wsMaximized;
+
+  if bm_logined = '人力资源部' then
+  begin
+    DropDown_(dm.dSet_pub, cbb_bm,
+      'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
+  end
+  else
+  begin
+    cbb_bm.Style := csSimple;
+    cbb_bm.Text := bm_logined;
+  end;
 end;
 
 procedure TcheckInOutF.FormShow(Sender: TObject);

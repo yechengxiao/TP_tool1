@@ -33,7 +33,7 @@ var
 
 implementation
 
-uses dmU, mainU, utilU, checkInOutU;
+uses dmU, mainU, utilU, checkInOutU, menuU;
 {$R *.dfm}
 
 procedure TstartF.btn_loginClick(Sender: TObject);
@@ -64,7 +64,6 @@ begin
 
     if (stau = '1') then
     begin
-
       sql := 'SELECT COUNT(department) is_login FROM user_login WHERE department='''
         + bm + ''' AND pass=''' + pass + '''  ';
       DataSet_Open(dm.dSet_pub, sql);
@@ -83,26 +82,14 @@ begin
 
       if logined then
       begin
-        Delay(1500); // 启动画面窗口显示一秒钟
+        Delay(1000); // 启动画面窗口显示一秒钟
         startF.Hide; // 隐藏启动画面窗口
         startF.Free; // 释放启动画面窗口
 
-        Application.CreateForm(TcheckInOutF, checkInOutF);
-
         bm_logined := bm; // 修改操作的czy为部门名称
-        if bm = '人力资源部' then
-        begin
-          DropDown_(dm.dSet_pub, checkInOutF.cbb_bm,
-            'SELECT deptname FROM departments ORDER BY deptname DESC',
-            'deptname');
-        end
-        else
-        begin
-          checkInOutF.cbb_bm.Style := csSimple;
-          checkInOutF.cbb_bm.Text := bm;
-        end;
 
-        checkInOutF.Show;
+        Application.CreateForm(TmenuF, menuF);
+        menuF.Show;
       end;
     end
     else

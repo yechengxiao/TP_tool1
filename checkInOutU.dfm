@@ -10,7 +10,6 @@ object checkInOutF: TcheckInOutF
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  FormStyle = fsMDIForm
   OldCreateOrder = False
   Position = poDesktopCenter
   OnClose = FormClose
@@ -125,7 +124,7 @@ object checkInOutF: TcheckInOutF
       TabOrder = 3
       OnKeyPress = cbb_bmKeyPress
       Items.Strings = (
-        #22612#29260#25991#21270#20013#24515)
+        '')
     end
     object btn_empty: TButton
       Left = 736
@@ -176,7 +175,6 @@ object checkInOutF: TcheckInOutF
           Height = 248
           Align = alClient
           TabOrder = 0
-          ExplicitHeight = 288
           object cxGrid1DBTableView1: TcxGridDBTableView
             OnDblClick = cxGrid1DBTableView1DblClick
             Navigator.Buttons.CustomButtons = <>
@@ -471,6 +469,10 @@ object checkInOutF: TcheckInOutF
       object tab2: TTabSheet
         Caption = #24322#21160#26126#32454
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object cxGrid2: TcxGrid
           Left = 0
           Top = 0
@@ -533,6 +535,10 @@ object checkInOutF: TcheckInOutF
       object tab3: TTabSheet
         Caption = #32771#21220#32771#26680#27719#24635
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object cxGrid3: TcxGrid
           Left = 0
           Top = 0

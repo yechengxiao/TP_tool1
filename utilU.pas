@@ -21,10 +21,39 @@ function Command_Exec(sql: string): Boolean;
 procedure DataSet_Open(dset: TADODataSet; sql: string);
 // 查询数据，将数据装入list
 function GetList(var list: TStringList; sql, key, value: string): Boolean;
+// 获取系统当前用户时间格式
+function GetDateTimeFormat(): string;
 
 implementation
 
 uses dmU;
+
+function GetDateTimeFormat(): string;
+var
+  buf: pchar;
+  i: integer;
+  GPrevShortDate, GPrevLongDate, GPrevTimeFormat: string;
+begin
+  GetMem(buf, 20);
+  i := 20; // i必须在调用前赋值为buf缓冲区的长度。如果设为0或负值，将取不到设置的值
+  GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SSHORTDATE, buf, i);
+  // 取当前用户设置，短日期格式。
+  GPrevShortDate := string(buf);
+  FreeMem(buf);
+
+  if Pos('/', GPrevShortDate) > 0 then
+  begin
+    Result := 'yyyy/mm/dd';
+  end
+  else if Pos('.', GPrevShortDate) > 0 then
+  begin
+    Result := 'yyyy.mm.dd';
+  end
+  else if Pos('-', GPrevShortDate) > 0 then
+  begin
+    Result := 'yyyy-mm-dd';
+  end;
+end;
 
 function GetList(var list: TStringList; sql, key, value: string): Boolean;
 begin
@@ -60,12 +89,12 @@ end;
 
 procedure msg_info(msg: string);
 begin
-  Application.MessageBox(PChar(msg), '提示', MB_OK + MB_ICONINFORMATION);
+  Application.MessageBox(pchar(msg), '提示', MB_OK + MB_ICONINFORMATION);
 end;
 
 procedure msg_err(msg: string);
 begin
-  Application.MessageBox(PChar(msg), '出错了', MB_OK + MB_ICONSTOP);
+  Application.MessageBox(pchar(msg), '出错了', MB_OK + MB_ICONSTOP);
 end;
 
 // 延时
@@ -197,7 +226,7 @@ begin
     except
       on e: Exception do
       begin
-        Application.MessageBox(PChar('出错了：' + e.Message), '提示',
+        Application.MessageBox(pchar('出错了：' + e.Message), '提示',
           MB_OK + MB_ICONSTOP);
       end;
     end;

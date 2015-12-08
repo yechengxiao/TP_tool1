@@ -1,4 +1,4 @@
-unit mainU;
+unit carCashSZU;
 
 interface
 
@@ -85,7 +85,6 @@ uses dmU, utilU, DateUtils, cxGridExportLink;
 procedure TcarCashSZ_F.btn_exportClick(Sender: TObject);
 var
   b: Boolean;
-  SaveDialog: TSaveDialog;
 begin
   if dm.dSet_carCashSZ.IsEmpty then
   begin

@@ -71,6 +71,7 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=;LastCompiledTime=2015/12/08 15:57:55</VerInfo_Keys>
         <Icon_MainIcon>TP_tool_Icon2.ico</Icon_MainIcon>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -86,9 +87,6 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="mainU.pas">
-            <Form>mainF</Form>
-        </DCCReference>
         <DCCReference Include="dmU.pas">
             <Form>dm</Form>
             <DesignClass>TDataModule</DesignClass>
@@ -102,6 +100,18 @@
         </DCCReference>
         <DCCReference Include="checkInOut_modify_U.pas">
             <Form>checkInOut_modify_F</Form>
+        </DCCReference>
+        <DCCReference Include="salaryU.pas">
+            <Form>salaryF</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="carCashSZU.pas">
+            <Form>carCashSZ_F</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="menuU.pas">
+            <Form>menuF</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
