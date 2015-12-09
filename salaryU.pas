@@ -39,58 +39,114 @@ type
     pan_down: TPanel;
     pg_ctl: TPageControl;
     tab_mx: TTabSheet;
-    dSet_ckInOut: TADODataSet;
-    dSet_ckInOutyf: TStringField;
-    dSet_ckInOutdeptName: TStringField;
-    dSet_ckInOutdeptID: TStringField;
-    dSet_ckInOutname: TStringField;
-    dSet_ckInOutbadgenumber: TStringField;
-    dSet_ckInOutD01: TStringField;
-    dSet_ckInOutD02: TStringField;
-    dSet_ckInOutD03: TStringField;
-    dSet_ckInOutD04: TStringField;
-    dSet_ckInOutD05: TStringField;
-    dSet_ckInOutD06: TStringField;
-    dSet_ckInOutD07: TStringField;
-    dSet_ckInOutD08: TStringField;
-    dSet_ckInOutD09: TStringField;
-    dSet_ckInOutD10: TStringField;
-    dSet_ckInOutD11: TStringField;
-    dSet_ckInOutD12: TStringField;
-    dSet_ckInOutD13: TStringField;
-    dSet_ckInOutD14: TStringField;
-    dSet_ckInOutD15: TStringField;
-    dSet_ckInOutD16: TStringField;
-    dSet_ckInOutD17: TStringField;
-    dSet_ckInOutD18: TStringField;
-    dSet_ckInOutD19: TStringField;
-    dSet_ckInOutD20: TStringField;
-    dSet_ckInOutD21: TStringField;
-    dSet_ckInOutD22: TStringField;
-    dSet_ckInOutD23: TStringField;
-    dSet_ckInOutD24: TStringField;
-    dSet_ckInOutD25: TStringField;
-    dSet_ckInOutD26: TStringField;
-    dSet_ckInOutD27: TStringField;
-    dSet_ckInOutD28: TStringField;
-    dSet_ckInOutD29: TStringField;
-    dSet_ckInOutD30: TStringField;
-    dSet_ckInOutD31: TStringField;
-    dSet_ckInOutmemo: TStringField;
-    dSet_ckInOutNO: TLargeintField;
-    dSource_ckInOut: TDataSource;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle_bg: TcxStyle;
     cxStyle_cont: TcxStyle;
-    cxGrid1: TcxGrid;
-    cxGrid1DBTableView1: TcxGridDBTableView;
-    cxGrid1Level1: TcxGridLevel;
+    cxGrid_mx: TcxGrid;
+    cxGrid_mxDBTableView1: TcxGridDBTableView;
+    cxGrid_mxLevel1: TcxGridLevel;
     lbl: TLabel;
     dtp2: TDateTimePicker;
     btn_template: TButton;
     tab1: TTabSheet;
     tab2: TTabSheet;
+    dSet_salary: TADODataSet;
+    dSource_salary: TDataSource;
+    dSet_salaryname: TWideStringField;
+    dSet_salarydeptName: TWideStringField;
+    dSet_salaryyf: TStringField;
+    dSet_salarydeptID: TStringField;
+    dSet_salarybadgenumber: TStringField;
+    dSet_salarygangWeiGZ: TBCDField;
+    dSet_salarytongXunBT: TBCDField;
+    dSet_salaryjiangJin: TBCDField;
+    dSet_salaryqiTaFa: TBCDField;
+    dSet_salarynianGongGZ: TBCDField;
+    dSet_salaryxueLiJT: TBCDField;
+    dSet_salaryzhiChengBT: TBCDField;
+    dSet_salaryyaoFei: TBCDField;
+    dSet_salaryjiXiaoJJ: TBCDField;
+    dSet_salarygeLeiBT: TBCDField;
+    dSet_salaryfuZhuJT: TBCDField;
+    dSet_salaryzhiBanFei: TBCDField;
+    dSet_salarygaoWenFei: TBCDField;
+    dSet_salaryjiaBanNum: TBCDField;
+    dSet_salaryjiaBanFei: TBCDField;
+    dSet_salaryyeCanFei: TBCDField;
+    dSet_salaryqiTaBF: TBCDField;
+    dSet_salaryshuBaoFei: TBCDField;
+    dSet_salaryjia1: TBCDField;
+    dSet_salaryjia2: TBCDField;
+    dSet_salaryjia3: TBCDField;
+    dSet_salarysuoDeShui: TBCDField;
+    dSet_salaryyangLao: TBCDField;
+    dSet_salaryshiYe: TBCDField;
+    dSet_salarygongJi: TBCDField;
+    dSet_salaryyiBao: TBCDField;
+    dSet_salaryshiJia: TBCDField;
+    dSet_salarybingJia: TBCDField;
+    dSet_salarychanHunSangJia: TBCDField;
+    dSet_salaryqiTaKou: TBCDField;
+    dSet_salaryshuiDian: TBCDField;
+    dSet_salaryfangZu: TBCDField;
+    dSet_salaryshouJi: TBCDField;
+    dSet_salarydaiKou: TBCDField;
+    dSet_salarygongHui: TBCDField;
+    dSet_salarynianJin: TBCDField;
+    dSet_salaryjian1: TBCDField;
+    dSet_salaryjian2: TBCDField;
+    dSet_salaryjian3: TBCDField;
+    dSet_salaryshiFa: TBCDField;
+    dSet_salarymemo: TStringField;
+    cxGrid_mxDBTableView1name: TcxGridDBColumn;
+    cxGrid_mxDBTableView1deptName: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yf: TcxGridDBColumn;
+    cxGrid_mxDBTableView1deptID: TcxGridDBColumn;
+    cxGrid_mxDBTableView1badgenumber: TcxGridDBColumn;
+    cxGrid_mxDBTableView1gangWeiGZ: TcxGridDBColumn;
+    cxGrid_mxDBTableView1tongXunBT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jiangJin: TcxGridDBColumn;
+    cxGrid_mxDBTableView1qiTaFa: TcxGridDBColumn;
+    cxGrid_mxDBTableView1nianGongGZ: TcxGridDBColumn;
+    cxGrid_mxDBTableView1xueLiJT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1zhiChengBT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yaoFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jiXiaoJJ: TcxGridDBColumn;
+    cxGrid_mxDBTableView1geLeiBT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1fuZhuJT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1zhiBanFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1gaoWenFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jiaBanNum: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jiaBanFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yeCanFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1qiTaBF: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shuBaoFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jia1: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jia2: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jia3: TcxGridDBColumn;
+    cxGrid_mxDBTableView1suoDeShui: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yangLao: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shiYe: TcxGridDBColumn;
+    cxGrid_mxDBTableView1gongJi: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yiBao: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shiJia: TcxGridDBColumn;
+    cxGrid_mxDBTableView1bingJia: TcxGridDBColumn;
+    cxGrid_mxDBTableView1chanHunSangJia: TcxGridDBColumn;
+    cxGrid_mxDBTableView1qiTaKou: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shuiDian: TcxGridDBColumn;
+    cxGrid_mxDBTableView1fangZu: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shouJi: TcxGridDBColumn;
+    cxGrid_mxDBTableView1daiKou: TcxGridDBColumn;
+    cxGrid_mxDBTableView1gongHui: TcxGridDBColumn;
+    cxGrid_mxDBTableView1nianJin: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jian1: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jian2: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jian3: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shiFa: TcxGridDBColumn;
+    cxGrid_mxDBTableView1memo: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
+    procedure btn_templateClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -102,8 +158,68 @@ var
 
 implementation
 
-uses utilU;
+uses utilU, dmU;
 {$R *.dfm}
+
+procedure TsalaryF.btn_templateClick(Sender: TObject);
+var
+  bm, yf: string;
+  b: Boolean;
+begin
+  //
+  bm := Trim(cbb_bm.Text);
+  yf := FormatDateTime('yyyy-mm', dtp1.Date);
+
+  if bm = '' then
+  begin
+    msg_err('请选择部门');
+    Exit;
+  end;
+
+  try
+    if pg_ctl.ActivePage = tab_mx then
+    begin
+      // if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
+      // begin
+      // msg_info('没有数据...');
+      // Exit;
+      // end;
+
+      if msg_query('部门：' + bm + '，月份：' + yf + ' 确定导出模板？') then
+      begin
+        ExportData(cxGrid_mx);
+      end;
+      b := ExportData(cxGrid_mx);
+    end;
+
+    if b then
+    begin
+      msg_info('导出完成...');
+    end
+    else if b then
+    begin
+      msg_info('导出未完成...');
+    end;
+  except
+    on e: Exception do
+      msg_err('出错了：' + e.Message);
+  end;
+
+end;
+
+procedure TsalaryF.FormCreate(Sender: TObject);
+begin
+  if bm_logined = '人力资源部' then
+  begin
+    DropDown_(dm.dSet_pub, cbb_bm,
+      'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
+  end;
+  // else
+  // begin
+  // cbb_bm.Style := csSimple;
+  // cbb_bm.Text := bm_logined;
+  // end;
+end;
 
 procedure TsalaryF.FormShow(Sender: TObject);
 var

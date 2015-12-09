@@ -17,6 +17,7 @@ function DropDown_DB(dset: TADODataSet; cbb: TDBComboBox;
   sql, field: string): Boolean;
 procedure msg_info(msg: string);
 procedure msg_err(msg: string);
+function msg_query(msg: string): Boolean;
 function Command_Exec(sql: string): Boolean;
 procedure DataSet_Open(dset: TADODataSet; sql: string);
 // 查询数据，将数据装入list
@@ -95,6 +96,20 @@ end;
 procedure msg_err(msg: string);
 begin
   Application.MessageBox(pchar(msg), '出错了', MB_OK + MB_ICONSTOP);
+end;
+
+function msg_query(msg: string): Boolean;
+begin
+  case Application.MessageBox(pchar(msg), '请问', MB_YESNO + MB_ICONQUESTION) of
+    IDYES:
+      begin
+        Result := True;
+      end;
+    IDNO:
+      begin
+        Result := False;
+      end;
+  end;
 end;
 
 // 延时

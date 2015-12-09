@@ -123,7 +123,7 @@ begin
   sql := 'SELECT department FROM user_login ORDER BY department DESC';
   DropDown_(dm.dSet_pub, cbb_bm, sql, 'department');
 
-  ver := '20151204_dev';
+  ver := '20151209_dev';
 
   lbl_msg.Caption := UpperCase(ver);
 end;

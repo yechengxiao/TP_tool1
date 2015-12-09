@@ -312,7 +312,6 @@ end;
 procedure TcheckInOutF.btn_exportClick(Sender: TObject);
 var
   b: Boolean;
-  SaveDialog: TSaveDialog;
 begin
 
   try
@@ -357,7 +356,6 @@ begin
     on e: Exception do
       msg_err('ณ๖ดํมหฃบ' + e.Message);
   end;
-
 end;
 
 procedure TcheckInOutF.btn_tjClick(Sender: TObject);
