@@ -4,8 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics, StrUtils,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
   dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
   dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
@@ -22,7 +22,8 @@ uses
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxClasses,
-  Data.Win.ADODB, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, System.DateUtils;
+  Data.Win.ADODB, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, System.DateUtils,
+  ComObj, System.StrUtils;
 
 type
   TsalaryF = class(TForm)
@@ -144,12 +145,25 @@ type
     cxGrid_mxDBTableView1jian3: TcxGridDBColumn;
     cxGrid_mxDBTableView1shiFa: TcxGridDBColumn;
     cxGrid_mxDBTableView1memo: TcxGridDBColumn;
+    tab_template: TTabSheet;
+    cxGrid_template: TcxGrid;
+    cxGrid_templateDBTableView1: TcxGridDBTableView;
+    cxGridLevel1: TcxGridLevel;
+    dSet_salaryNO: TLargeintField;
+    cxGrid_mxDBTableView1NO: TcxGridDBColumn;
+    btn_setting_tmplate: TButton;
+    btn_import: TButton;
+    openDLG: TOpenDialog;
     procedure FormShow(Sender: TObject);
     procedure btn_templateClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btn_setting_tmplateClick(Sender: TObject);
+    procedure btn_importClick(Sender: TObject);
   private
     { Private declarations }
   public
+    UnvisiableFieldIndexList: TStringList;
+    fieldMap: TStringList;
     { Public declarations }
   end;
 
@@ -158,15 +172,202 @@ var
 
 implementation
 
-uses utilU, dmU;
+uses utilU, dmU, salary_setting_templateU;
 {$R *.dfm}
+
+procedure TsalaryF.btn_importClick(Sender: TObject);
+var
+  eclapp, workbook, excelSheet: variant;
+  sql_update, str_insert: string;
+  hang, lie, num: integer; // 行、列、操作excel后的提示信息
+  fieldValue_List: TStringList;
+  bh, tmp: string;
+
+  fieldsStr, valuesStr, field, value, sql_select, sql_insert: string;
+  high: integer;
+  yf, deptId, badgenumber: string;
+const // 数据库字段
+  FIELDS_ARRAY: array [0 .. 3] of string = ('bh', 'xq', 'qy', 'memo');
+  TABLE_NAME = 'salary_t';
+  lie_tips = 50; // 列提示位置
+begin
+  if openDLG.Execute then
+  begin
+    if Trim(openDLG.FileName) <> '' then
+    begin
+      try
+        // 打开EXCEL
+        eclapp := createoleobject('excel.application');
+        workbook := createoleobject('excel.sheet');
+        workbook := eclapp.workbooks.open(openDLG.FileName);
+        eclapp.workbooks.item[1].Activate;
+        excelSheet := workbook.sheets[1];
+      except
+        msg_err('读取Excel出错！！');
+        Exit;
+      end;
+
+      try
+        // fieldValue_List := TStringList.create;
+
+        // 通过EXCEL标题，来判断出需要导入的字段
+        fieldsStr := '';
+        high := fieldMap.Count;
+        try
+          for lie := 1 to high do
+          begin
+            field := Trim(excelSheet.cells.item[1, lie]);
+
+            if (field <> '') AND (LowerCase(field) <> 'no') AND
+              ((field) <> '姓名') AND ((field) <> '部门') then
+            begin
+              fieldsStr := fieldsStr + ',' + fieldMap.Values[field];
+            end;
+          end;
+          fieldsStr := '(' + RightStr(fieldsStr, Length(fieldsStr) - 1) + ')';
+        Except
+          msg_err('非本工具的模板，无法导入');
+          Exit;
+        end;
+
+        { ===========================初始化数据===================================== }
+
+        hang := 2; // 第n行开始取
+        valuesStr := '';
+        while Trim(excelSheet.cells.item[hang, 1]) <> '' do
+        begin
+
+          // 循环获取整行数据
+          high := fieldMap.Count;
+          for lie := 1 to high do
+          begin
+            field := Trim(excelSheet.cells.item[1, lie]);
+            value := Trim(excelSheet.cells.item[hang, lie]);
+
+            if (field = '') or (LowerCase(field) = 'no') or ((field) = '姓名') or
+              ((field) = '部门') then
+            begin
+              Continue;
+              Exit;
+            end
+            else if ((field) = '月份') or ((field) = '部门ID') or ((field) = '员工ID')
+            then
+            begin
+              if value = '' then
+              begin
+                excelSheet.cells(hang, lie_tips) := '月份、部门ID、员工ID不能为空';
+                Inc(hang);
+                Break;
+                Exit;
+              end
+              else
+              begin
+                valuesStr := valuesStr + ',' + QuotedStr(value);
+
+                if ((field) = '月份') then
+                  yf := value;
+                if ((field) = '部门ID') then
+                  deptId := value;
+                if ((field) = '员工ID') then
+                  badgenumber := value;
+              end;
+            end
+            else
+            begin
+              try
+                if value = '' then
+                  value := '0'
+                else
+                  value := (Trim(excelSheet.cells.item[hang, lie]));
+
+                valuesStr := valuesStr + ',' + QuotedStr(value);
+              except
+                excelSheet.cells(hang, lie_tips) := '列 ' + field + ' ' + value +
+                  '， 数据有数，无法导入';
+                Inc(hang);
+                Break;
+                Exit;
+              end;
+            end;
+          end;
+
+          valuesStr := '(' + RightStr(valuesStr, Length(valuesStr) - 1) + ')';
+
+          sql_insert := 'INSERT INTO ' + TABLE_NAME + fieldsStr + ' VALUES ' +
+            valuesStr;
+
+          if Command_Exec(sql_insert) then
+          begin
+            msg_info('完成');
+          end
+          else
+          begin
+            msg_info('失败');
+          end;
+
+          Inc(hang); // hang递增
+          // fieldValue_List.Clear;
+        end;
+        eclapp.visible := True;
+
+      finally
+        // FreeAndNil(fieldValue_List);
+      end;
+    end;
+  end;
+end;
+
+procedure TsalaryF.btn_setting_tmplateClick(Sender: TObject);
+var
+  I, high, index: integer;
+begin
+  // 设置导出模板的字段可见性
+  try
+    if not Assigned(UnvisiableFieldIndexList) then
+      UnvisiableFieldIndexList := TStringList.create;
+
+    high := fieldMap.Count - 1;
+    if high >= 0 then
+    begin
+      salary_setting_templateF := Tsalary_setting_templateF.create(nil);
+
+      // 添加可选的字段
+      for I := 0 to high do
+      begin
+        salary_setting_templateF.ckListBox.Items.Add(fieldMap.Names[I]);
+        // 显示模板grid列全可见，再设置某些不可见
+        cxGrid_templateDBTableView1.Columns[I].visible := True;
+      end;
+
+      // 已设置为不显示的字段要打勾
+      high := UnvisiableFieldIndexList.Count - 1;
+      for index := 0 to high do
+      begin
+        I := StrToInt(UnvisiableFieldIndexList[index]);
+        salary_setting_templateF.ckListBox.Checked[I] := True;
+      end;
+
+      salary_setting_templateF.ShowModal;
+
+      // 设置 模板字段的 visible
+      high := UnvisiableFieldIndexList.Count - 1;
+      for index := 0 to high do
+      begin
+        I := StrToInt(UnvisiableFieldIndexList[index]);
+        cxGrid_templateDBTableView1.Columns[I].visible := False;
+      end;
+    end;
+  except
+    on e: Exception do
+      msg_info('出错了:' + e.Message);
+  end;
+end;
 
 procedure TsalaryF.btn_templateClick(Sender: TObject);
 var
-  bm, yf: string;
+  bm, yf, sql: string;
   b: Boolean;
 begin
-  //
   bm := Trim(cbb_bm.Text);
   yf := FormatDateTime('yyyy-mm', dtp1.Date);
 
@@ -177,37 +378,37 @@ begin
   end;
 
   try
-    if pg_ctl.ActivePage = tab_mx then
+    if msg_query('部门：' + bm + '  月份：' + yf + ' 确定导出模板？') then
     begin
-      // if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
-      // begin
-      // msg_info('没有数据...');
-      // Exit;
-      // end;
+      sql := ' EXEC SP_salary_template ''' + yf + ''',''' + bm + ''' ';
+      DataSet_Open(dm.dSet_pubForGrid, sql);
 
-      if msg_query('部门：' + bm + '，月份：' + yf + ' 确定导出模板？') then
-      begin
-        ExportData(cxGrid_mx);
-      end;
-      b := ExportData(cxGrid_mx);
+      b := ExportData(cxGrid_template);
     end;
+
+    // if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
+    // begin
+    // msg_info('没有数据...');
+    // Exit;
+    // end;
 
     if b then
     begin
-      msg_info('导出完成...');
+      msg_info('模板完成...');
     end
-    else if b then
+    else
     begin
-      msg_info('导出未完成...');
+      msg_info('模板未完成...');
     end;
   except
     on e: Exception do
       msg_err('出错了：' + e.Message);
   end;
-
 end;
 
 procedure TsalaryF.FormCreate(Sender: TObject);
+var
+  dtFormat: string;
 begin
   if bm_logined = '人力资源部' then
   begin
@@ -219,17 +420,43 @@ begin
   // cbb_bm.Style := csSimple;
   // cbb_bm.Text := bm_logined;
   // end;
-end;
 
-procedure TsalaryF.FormShow(Sender: TObject);
-var
-  dtFormat: string;
-begin
   dtFormat := LeftStr(GetDateTimeFormat, 8);
 
   // 取当前用户设置，短日期格式。
   dtp1.Date := StrToDate(FormatDateTime(dtFormat + '20', IncMonth(Now, -1)));
   dtp2.Date := StrToDate(FormatDateTime(dtFormat + '20', Now));
+end;
+
+procedure TsalaryF.FormShow(Sender: TObject);
+var
+  I, High, width: integer;
+  fieldName, caption_: string;
+begin
+  // 模板不用显示
+  tab_template.TabVisible := False;
+
+  if not Assigned(fieldMap) then
+    fieldMap := TStringList.create;
+
+  fieldMap.Clear;
+
+  High := cxGrid_mxDBTableView1.ColumnCount - 1;
+
+  for I := 0 to High do
+  begin
+    // 一定要保证字段的统一性
+    fieldName := cxGrid_mxDBTableView1.Columns[I].DataBinding.fieldName;
+    caption_ := cxGrid_mxDBTableView1.Columns[I].Caption;
+    width := cxGrid_mxDBTableView1.Columns[I].width;
+
+    cxGrid_templateDBTableView1.CreateColumn;
+    cxGrid_templateDBTableView1.Columns[I].DataBinding.fieldName := fieldName;
+    cxGrid_templateDBTableView1.Columns[I].Caption := caption_;
+    cxGrid_templateDBTableView1.Columns[I].width := width;
+
+    fieldMap.Add(caption_ + '=' + fieldName);
+  end;
 end;
 
 end.

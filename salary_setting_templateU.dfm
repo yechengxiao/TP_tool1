@@ -1,0 +1,67 @@
+object salary_setting_templateF: Tsalary_setting_templateF
+  Left = 0
+  Top = 0
+  Caption = #27169#26495#35774#32622
+  ClientHeight = 481
+  ClientWidth = 291
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object ckListBox: TCheckListBox
+    Left = 0
+    Top = 41
+    Width = 291
+    Height = 440
+    Align = alClient
+    ItemHeight = 13
+    TabOrder = 2
+    ExplicitLeft = 80
+    ExplicitTop = 136
+    ExplicitWidth = 121
+    ExplicitHeight = 97
+  end
+  object pan1: TPanel
+    Left = 0
+    Top = 21
+    Width = 291
+    Height = 20
+    Align = alTop
+    Caption = #23383#27573#25171#21246#65292#34920#31034#19981#22312'EXCEL'#20013#26174#31034
+    Ctl3D = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentCtl3D = False
+    ParentFont = False
+    TabOrder = 1
+  end
+  object toolBar: TToolBar
+    Left = 0
+    Top = 0
+    Width = 291
+    Height = 21
+    AutoSize = True
+    ButtonHeight = 21
+    ButtonWidth = 55
+    Caption = 'toolBar'
+    ShowCaptions = True
+    TabOrder = 0
+    object btn_sure: TToolButton
+      Left = 0
+      Top = 0
+      Caption = #30830#35748#20462#25913
+      ImageIndex = 0
+      OnClick = btn_sureClick
+    end
+  end
+end

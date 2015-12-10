@@ -2,8 +2,8 @@ object salaryF: TsalaryF
   Left = 0
   Top = 0
   Caption = #21592#24037#24037#36164#32479#35745
-  ClientHeight = 380
-  ClientWidth = 867
+  ClientHeight = 439
+  ClientWidth = 916
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,12 +18,13 @@ object salaryF: TsalaryF
   object pan_up: TPanel
     Left = 0
     Top = 0
-    Width = 867
+    Width = 916
     Height = 81
     Align = alTop
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 876
     object lbl1: TLabel
       Left = 16
       Top = 22
@@ -39,7 +40,7 @@ object salaryF: TsalaryF
       Caption = #37096#38376
     end
     object paintBox: TPaintBox
-      Left = 647
+      Left = 696
       Top = 1
       Width = 219
       Height = 79
@@ -47,7 +48,7 @@ object salaryF: TsalaryF
       ExplicitLeft = 704
     end
     object lbl_name: TLabel
-      Left = 208
+      Left = 239
       Top = 54
       Width = 24
       Height = 13
@@ -72,20 +73,20 @@ object salaryF: TsalaryF
       TabOrder = 3
     end
     object btn_tj: TButton
-      Left = 582
+      Left = 267
       Top = 10
-      Width = 75
+      Width = 80
       Height = 25
       Caption = #32479#35745
-      TabOrder = 2
+      TabOrder = 0
     end
     object btn_export: TButton
-      Left = 493
-      Top = 10
-      Width = 75
+      Left = 627
+      Top = 41
+      Width = 80
       Height = 25
       Caption = #23548#20986
-      TabOrder = 1
+      TabOrder = 6
     end
     object cbb_bm: TComboBox
       Left = 44
@@ -94,17 +95,17 @@ object salaryF: TsalaryF
       Height = 21
       Style = csDropDownList
       DropDownCount = 20
-      TabOrder = 5
+      TabOrder = 7
       Items.Strings = (
         '')
     end
     object cbb_name: TComboBox
-      Left = 236
+      Left = 267
       Top = 46
       Width = 80
       Height = 21
       DropDownCount = 20
-      TabOrder = 6
+      TabOrder = 8
       Items.Strings = (
         #22612#29260#25991#21270#20013#24515)
     end
@@ -119,41 +120,68 @@ object salaryF: TsalaryF
       TabOrder = 4
     end
     object btn_template: TButton
-      Left = 405
+      Left = 541
       Top = 10
-      Width = 75
+      Width = 80
       Height = 25
       Caption = #27169#26495
-      TabOrder = 0
+      TabOrder = 1
       OnClick = btn_templateClick
+    end
+    object btn_setting_tmplate: TButton
+      Left = 541
+      Top = 41
+      Width = 80
+      Height = 25
+      Caption = #35774#32622#27169#26495#23383#27573
+      TabOrder = 5
+      OnClick = btn_setting_tmplateClick
+    end
+    object btn_import: TButton
+      Left = 627
+      Top = 10
+      Width = 80
+      Height = 25
+      Caption = #23548#20837
+      TabOrder = 2
+      OnClick = btn_importClick
     end
   end
   object pan_down: TPanel
     Left = 0
     Top = 81
-    Width = 867
-    Height = 299
+    Width = 916
+    Height = 358
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
+    ExplicitWidth = 867
+    ExplicitHeight = 299
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
-      Width = 865
-      Height = 297
+      Width = 914
+      Height = 356
       ActivePage = tab_mx
       Align = alClient
       TabOrder = 0
+      ExplicitLeft = -103
+      ExplicitTop = 5
+      ExplicitWidth = 874
       object tab_mx: TTabSheet
         Caption = #21592#24037#24037#36164#26126#32454
         ImageIndex = 2
+        ExplicitWidth = 857
+        ExplicitHeight = 269
         object cxGrid_mx: TcxGrid
           Left = 0
           Top = 0
-          Width = 857
-          Height = 269
+          Width = 906
+          Height = 328
           Align = alClient
           TabOrder = 0
+          ExplicitWidth = 857
+          ExplicitHeight = 269
           object cxGrid_mxDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dSource_salary
@@ -166,6 +194,10 @@ object salaryF: TsalaryF
             OptionsView.GroupByBox = False
             Styles.Background = cxStyle_bg
             Styles.Content = cxStyle_cont
+            object cxGrid_mxDBTableView1NO: TcxGridDBColumn
+              DataBinding.FieldName = 'NO'
+              Width = 30
+            end
             object cxGrid_mxDBTableView1name: TcxGridDBColumn
               DataBinding.FieldName = 'name'
               HeaderAlignmentHorz = taCenter
@@ -451,18 +483,45 @@ object salaryF: TsalaryF
       object tab1: TTabSheet
         Caption = #32479#35745#65306#25353#26376#20221
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
+        ExplicitWidth = 857
+        ExplicitHeight = 311
       end
       object tab2: TTabSheet
         Caption = #32479#35745#65306#25353#37096#38376
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
+        ExplicitWidth = 857
+        ExplicitHeight = 311
+      end
+      object tab_template: TTabSheet
+        Caption = #27169#26495
+        ImageIndex = 3
+        ExplicitWidth = 866
+        object cxGrid_template: TcxGrid
+          Left = 0
+          Top = 0
+          Width = 906
+          Height = 328
+          Align = alClient
+          TabOrder = 0
+          ExplicitWidth = 857
+          ExplicitHeight = 269
+          object cxGrid_templateDBTableView1: TcxGridDBTableView
+            Navigator.Buttons.CustomButtons = <>
+            DataController.DataSource = dm.dSource_pubForGrid
+            DataController.Summary.DefaultGroupSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <>
+            DataController.Summary.SummaryGroups = <>
+            OptionsData.Deleting = False
+            OptionsData.Editing = False
+            OptionsData.Inserting = False
+            OptionsView.GroupByBox = False
+            Styles.Background = cxStyle_bg
+            Styles.Content = cxStyle_cont
+          end
+          object cxGridLevel1: TcxGridLevel
+            GridView = cxGrid_templateDBTableView1
+          end
+        end
       end
     end
   end
@@ -752,10 +811,17 @@ object salaryF: TsalaryF
       FieldName = 'memo'
       Size = 600
     end
+    object dSet_salaryNO: TLargeintField
+      FieldName = 'NO'
+    end
   end
   object dSource_salary: TDataSource
     DataSet = dSet_salary
     Left = 248
     Top = 224
+  end
+  object openDLG: TOpenDialog
+    Left = 456
+    Top = 184
   end
 end

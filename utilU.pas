@@ -250,8 +250,6 @@ begin
   end;
 
   {
-
-
     // lbl2.Caption:=DateTimeToStr(Now);
     str := '';
     dbGrid.DataSource.DataSet.DisableControls;
@@ -275,7 +273,7 @@ begin
     // str := str + dbGrid.Columns.Items[i].Field.AsString + char(9);
     end;
     str := str + #13;
-    dbGrid.DataSource.DataSet.next;
+    dbGrid.DataSource.DataSet.Next;
 
     // lbl1.Caption := IntToStr(dbGrid.DataSource.DataSet.RecNo);
     // Application.ProcessMessages;
@@ -289,7 +287,7 @@ begin
     clipboard.Close;
 
     excelapp := CreateOleObject('Excel.Application');
-    excelapp.Workbooks.add(1); // excelapp.workbooks.add(-4167);
+    excelapp.Workbooks.Add(1); // excelapp.workbooks.add(-4167);
     sheet := excelapp.Workbooks[1].Worksheets[1];
     sheet.name := 'sheet1';
     sheet.paste;
@@ -297,7 +295,7 @@ begin
     // sheet.columns.font.Name:='ËÎÌו';
     // sheet.columns.font.size:=9;
     // sheet.Columns.AutoFit;
-    excelapp.visible := true;
+    excelapp.visible := True;
     // lbl3.Caption:=DateTimeToStr(Now);
   }
 end;

@@ -10,7 +10,8 @@ uses
   checkInOut_modify_U in 'checkInOut_modify_U.pas' {checkInOut_modify_F},
   salaryU in 'salaryU.pas' {salaryF},
   carCashSZU in 'carCashSZU.pas' {carCashSZ_F},
-  menuU in 'menuU.pas' {menuF};
+  menuU in 'menuU.pas' {menuF},
+  salary_setting_templateU in 'salary_setting_templateU.pas' {salary_setting_templateF};
 
 {$R *.res}
 
