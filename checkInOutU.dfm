@@ -168,6 +168,10 @@ object checkInOutF: TcheckInOutF
       TabOrder = 0
       object tab1: TTabSheet
         Caption = #32771#21220#26126#32454
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0

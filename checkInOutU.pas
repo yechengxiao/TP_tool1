@@ -382,6 +382,7 @@ begin
       Exit;
     end;
 
+    paintBox.Refresh;
     paintBox.Canvas.TextOut(5, 10, '开始统计...');
 
     if pg_ctl.ActivePage = tab1 then
@@ -452,12 +453,14 @@ begin
       DataSet_Open(dSet_kaohe, sql);
     end;
 
+    paintBox.Refresh;
     paintBox.Canvas.TextOut(5, 10, '统计完成...');
 
   except
     on e: Exception do
     begin
       msg_err('出错了：' + e.Message);
+      paintBox.Refresh;
       paintBox.Canvas.TextOut(5, 10, '出错了...' + e.Message);
     end;
   end;
@@ -533,7 +536,7 @@ end;
 // 双击弹出考勤修改页面
 procedure TcheckInOutF.cxGrid1DBTableView1DblClick(Sender: TObject);
 var
-  badgenumber, check_time, type1, type2, memo, work_num: string;
+  badgenumber, check_time, type1, type2: string;
   sql, selectedField: string;
 begin
   if not dSet_ckInOut.Active then

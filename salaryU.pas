@@ -23,7 +23,7 @@ uses
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxClasses,
   Data.Win.ADODB, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, System.DateUtils,
-  ComObj, System.StrUtils;
+  ComObj, System.StrUtils, Vcl.Grids, Vcl.ValEdit;
 
 type
   TsalaryF = class(TForm)
@@ -178,16 +178,15 @@ uses utilU, dmU, salary_setting_templateU;
 procedure TsalaryF.btn_importClick(Sender: TObject);
 var
   eclapp, workbook, excelSheet: variant;
-  sql_update, str_insert: string;
-  hang, lie, num: integer; // 行、列、操作excel后的提示信息
-  fieldValue_List: TStringList;
-  bh, tmp: string;
 
-  fieldsStr, valuesStr, field, value, sql_select, sql_insert: string;
+  hang, lie: integer; // 行、列、操作excel后的提示信息
+  fieldValue_List: TStringList;
+
+  fieldsStr, valuesStr, field, value, sql_delete, sql_insert: string;
   high: integer;
   yf, deptId, badgenumber: string;
-const // 数据库字段
-  FIELDS_ARRAY: array [0 .. 3] of string = ('bh', 'xq', 'qy', 'memo');
+  flag: Boolean;
+const
   TABLE_NAME = 'salary_t';
   lie_tips = 50; // 列提示位置
 begin
@@ -208,8 +207,6 @@ begin
       end;
 
       try
-        // fieldValue_List := TStringList.create;
-
         // 通过EXCEL标题，来判断出需要导入的字段
         fieldsStr := '';
         high := fieldMap.Count;
@@ -230,12 +227,12 @@ begin
           Exit;
         end;
 
-        { ===========================初始化数据===================================== }
-
         hang := 2; // 第n行开始取
-        valuesStr := '';
+
+        flag := False;
         while Trim(excelSheet.cells.item[hang, 1]) <> '' do
         begin
+          valuesStr := '';
 
           // 循环获取整行数据
           high := fieldMap.Count;
@@ -244,26 +241,23 @@ begin
             field := Trim(excelSheet.cells.item[1, lie]);
             value := Trim(excelSheet.cells.item[hang, lie]);
 
+            // no 姓名 部门 字段不能导入
             if (field = '') or (LowerCase(field) = 'no') or ((field) = '姓名') or
               ((field) = '部门') then
             begin
               Continue;
-              Exit;
             end
             else if ((field) = '月份') or ((field) = '部门ID') or ((field) = '员工ID')
             then
             begin
+              // 月份、部门ID、员工ID不能为空
               if value = '' then
               begin
                 excelSheet.cells(hang, lie_tips) := '月份、部门ID、员工ID不能为空';
-                Inc(hang);
                 Break;
-                Exit;
               end
               else
               begin
-                valuesStr := valuesStr + ',' + QuotedStr(value);
-
                 if ((field) = '月份') then
                   yf := value;
                 if ((field) = '部门ID') then
@@ -272,46 +266,72 @@ begin
                   badgenumber := value;
               end;
             end
+            else if (field = '备注') then
+            begin
+              // 备注中加上操作时间
+              value := value + ' ' + GetServerTime();
+            end
             else
             begin
+              // 判断数据是否为数字
               try
                 if value = '' then
                   value := '0'
                 else
                   value := (Trim(excelSheet.cells.item[hang, lie]));
 
-                valuesStr := valuesStr + ',' + QuotedStr(value);
+                if not IsNumber(PChar(value)) then
+                begin
+                  excelSheet.cells(hang, lie_tips) := ' 行 ' + IntToStr(hang) +
+                    ' 列 ' + field + ' 值 ' + value + '， 数据有数，无法导入';
+                  Break;
+                end;
               except
-                excelSheet.cells(hang, lie_tips) := '列 ' + field + ' ' + value +
-                  '， 数据有数，无法导入';
-                Inc(hang);
+                excelSheet.cells(hang, lie_tips) := ' 行 ' + IntToStr(hang) +
+                  ' 列 ' + field + ' 值 ' + value + '， 数据有数，无法导入';
                 Break;
-                Exit;
               end;
+            end;
+
+            valuesStr := valuesStr + ',' + QuotedStr(value);
+            flag := True;
+          end;
+
+          // 执行导入
+          if flag then
+          begin
+            flag := False;
+            valuesStr := '(' + RightStr(valuesStr, Length(valuesStr) - 1) + ')';
+
+            sql_delete := ' DELETE FROM salary_t WHERE yf=''' + yf +
+              ''' AND deptId=''' + deptId + ''' AND badgenumber=''' +
+              badgenumber + ''' ';
+
+            sql_insert := sql_delete + ' INSERT INTO ' + TABLE_NAME + fieldsStr
+              + ' VALUES ' + valuesStr;
+
+            paintBox.Refresh;
+            paintBox.Canvas.TextOut(5, 10, '正在导入第 ' + IntToStr(hang - 1) + '条');
+            if Command_Exec(sql_insert) then
+            begin
+
+              excelSheet.cells(hang, lie_tips) := '导入成功';
+            end
+            else
+            begin
+              excelSheet.cells(hang, lie_tips) := '导入失败';
             end;
           end;
 
-          valuesStr := '(' + RightStr(valuesStr, Length(valuesStr) - 1) + ')';
-
-          sql_insert := 'INSERT INTO ' + TABLE_NAME + fieldsStr + ' VALUES ' +
-            valuesStr;
-
-          if Command_Exec(sql_insert) then
-          begin
-            msg_info('完成');
-          end
-          else
-          begin
-            msg_info('失败');
-          end;
-
-          Inc(hang); // hang递增
-          // fieldValue_List.Clear;
+          Inc(hang);
         end;
-        eclapp.visible := True;
-
+        try
+          eclapp.visible := True;
+        except
+        end;
       finally
-        // FreeAndNil(fieldValue_List);
+        paintBox.Refresh;
+        paintBox.Canvas.TextOut(5, 10, '共导入 ' + IntToStr(hang - 2) + ' 条');
       end;
     end;
   end;
@@ -370,6 +390,7 @@ var
 begin
   bm := Trim(cbb_bm.Text);
   yf := FormatDateTime('yyyy-mm', dtp1.Date);
+  b := False;
 
   if bm = '' then
   begin

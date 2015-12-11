@@ -24,7 +24,6 @@ object salaryF: TsalaryF
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 876
     object lbl1: TLabel
       Left = 16
       Top = 22
@@ -155,8 +154,8 @@ object salaryF: TsalaryF
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
-    ExplicitWidth = 867
-    ExplicitHeight = 299
+    ExplicitLeft = 8
+    ExplicitTop = 89
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
@@ -165,14 +164,9 @@ object salaryF: TsalaryF
       ActivePage = tab_mx
       Align = alClient
       TabOrder = 0
-      ExplicitLeft = -103
-      ExplicitTop = 5
-      ExplicitWidth = 874
       object tab_mx: TTabSheet
         Caption = #21592#24037#24037#36164#26126#32454
         ImageIndex = 2
-        ExplicitWidth = 857
-        ExplicitHeight = 269
         object cxGrid_mx: TcxGrid
           Left = 0
           Top = 0
@@ -180,8 +174,6 @@ object salaryF: TsalaryF
           Height = 328
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 857
-          ExplicitHeight = 269
           object cxGrid_mxDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dSource_salary
@@ -483,19 +475,14 @@ object salaryF: TsalaryF
       object tab1: TTabSheet
         Caption = #32479#35745#65306#25353#26376#20221
         ImageIndex = 1
-        ExplicitWidth = 857
-        ExplicitHeight = 311
       end
       object tab2: TTabSheet
         Caption = #32479#35745#65306#25353#37096#38376
         ImageIndex = 2
-        ExplicitWidth = 857
-        ExplicitHeight = 311
       end
       object tab_template: TTabSheet
         Caption = #27169#26495
         ImageIndex = 3
-        ExplicitWidth = 866
         object cxGrid_template: TcxGrid
           Left = 0
           Top = 0
@@ -503,8 +490,6 @@ object salaryF: TsalaryF
           Height = 328
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 857
-          ExplicitHeight = 269
           object cxGrid_templateDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dm.dSource_pubForGrid
@@ -526,8 +511,8 @@ object salaryF: TsalaryF
     end
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 74
-    Top = 256
+    Left = 136
+    Top = 281
     PixelsPerInch = 96
     object cxStyle_bg: TcxStyle
       AssignedValues = [svColor]
@@ -542,8 +527,8 @@ object salaryF: TsalaryF
     Connection = dm.DB_Con
     CursorType = ctStatic
     Parameters = <>
-    Left = 240
-    Top = 160
+    Left = 136
+    Top = 239
     object dSet_salaryname: TWideStringField
       DisplayLabel = #22995#21517
       FieldName = 'name'
@@ -817,11 +802,11 @@ object salaryF: TsalaryF
   end
   object dSource_salary: TDataSource
     DataSet = dSet_salary
-    Left = 248
-    Top = 224
+    Left = 136
+    Top = 323
   end
   object openDLG: TOpenDialog
-    Left = 456
-    Top = 184
+    Left = 178
+    Top = 239
   end
 end

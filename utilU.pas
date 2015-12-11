@@ -24,14 +24,52 @@ procedure DataSet_Open(dset: TADODataSet; sql: string);
 function GetList(var list: TStringList; sql, key, value: string): Boolean;
 // 获取系统当前用户时间格式
 function GetDateTimeFormat(): string;
+function IsNumber(pcString: PChar): Boolean;
+function GetServerTime(): String;
 
 implementation
 
 uses dmU;
 
+function GetServerTime(): String;
+var
+  sql: string;
+begin
+  sql := 'SELECT CONVERT(CHAR(20), GETDATE(),20) AS czsj';
+  DataSet_Open(dm.dSet_pub, sql);
+
+  Result := dm.dSet_pub.FieldByName('czsj').AsString;
+end;
+
+function IsNumber(pcString: PChar): Boolean;
+begin
+  Result := False;
+
+  if Length(pcString) = 1 then
+  begin
+    if not((pcString^ in ['0' .. '9'])) then
+      Exit;
+  end
+  else
+  begin
+    while pcString^ <> #0 do
+    begin
+      // #8 退格 #46 小数点   #45 减号
+      if not((pcString^ in ['0' .. '9']) or (pcString^ = #45) or
+        (pcString^ = #46)) then
+      begin
+        Exit;
+      end;
+      Inc(pcString);
+    end;
+  end;
+
+  Result := True;
+end;
+
 function GetDateTimeFormat(): string;
 var
-  buf: pchar;
+  buf: PChar;
   i: integer;
   GPrevShortDate, GPrevLongDate, GPrevTimeFormat: string;
 begin
@@ -90,17 +128,17 @@ end;
 
 procedure msg_info(msg: string);
 begin
-  Application.MessageBox(pchar(msg), '提示', MB_OK + MB_ICONINFORMATION);
+  Application.MessageBox(PChar(msg), '提示', MB_OK + MB_ICONINFORMATION);
 end;
 
 procedure msg_err(msg: string);
 begin
-  Application.MessageBox(pchar(msg), '出错了', MB_OK + MB_ICONSTOP);
+  Application.MessageBox(PChar(msg), '出错了', MB_OK + MB_ICONSTOP);
 end;
 
 function msg_query(msg: string): Boolean;
 begin
-  case Application.MessageBox(pchar(msg), '请问', MB_YESNO + MB_ICONQUESTION) of
+  case Application.MessageBox(PChar(msg), '请问', MB_YESNO + MB_ICONQUESTION) of
     IDYES:
       begin
         Result := True;
@@ -241,7 +279,7 @@ begin
     except
       on e: Exception do
       begin
-        Application.MessageBox(pchar('出错了：' + e.Message), '提示',
+        Application.MessageBox(PChar('出错了：' + e.Message), '提示',
           MB_OK + MB_ICONSTOP);
       end;
     end;

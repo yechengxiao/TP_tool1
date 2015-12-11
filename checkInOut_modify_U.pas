@@ -125,27 +125,14 @@ end;
 
 procedure TcheckInOut_modify_F.tBtn_saveClick(Sender: TObject);
 var
-  ckTime, badgeNO, czy, czsj, workCount, type1, type2, memo: string;
+  ckTime, badgeNO, czy, czsj, type1, type2, memo: string;
   sql, tmpType: string;
+  workCount: string;
 begin
   // 不把鼠标移开，下面的值获取不到
   edt_name.SetFocus;
 
-  ckTime := Trim(checkInOutF.dSet_ckInOut_mcheck_time.AsString);
-  badgeNO := Trim(checkInOutF.dSet_ckInOut_mbadgenumber.AsString);
-  memo := Trim(checkInOutF.dSet_ckInOut_mmemo.AsString);
-
-  workCount := Trim(dbEdt_work_num.Text);
   type2 := Trim(dbCbb_type.Text);
-  case radioG.ItemIndex of
-    0:
-      type1 := 'ZC';
-    1:
-      type1 := 'JB';
-    2:
-      type1 := 'QJ';
-  end;
-
   if (type2 = '') then
   begin
     msg_info('请选择类型');
@@ -156,6 +143,7 @@ begin
     Exit;
   end;
 
+  workCount := Trim(dbEdt_work_num.Text);
   if workCount = '' then
   begin
     msg_info('请填写工时');
@@ -168,18 +156,20 @@ begin
   else
   begin
     try
-      {
-        if StrToFloat(workCount) = 0 then
-        begin
-        msg_info('工时不能为零');
-        Exit;
-        end;
-      }
 
       // 判断是否为数字
-      if StrToFloat(workCount) < -100 then
-      begin
-        msg_info('输入的工时不正确');
+      try
+        if not IsNumber(PChar(workCount)) then
+        begin
+          msg_err('输入的工时不正确');
+          if dbEdt_work_num.CanFocus then
+            dbEdt_work_num.Focused;
+          Exit;
+        end;
+      except
+        msg_err('输入的工时不正确');
+        if dbEdt_work_num.CanFocus then
+          dbEdt_work_num.Focused;
         Exit;
       end;
 
@@ -203,9 +193,19 @@ begin
   end;
 
   try
-    sql := 'SELECT CONVERT(CHAR(20), GETDATE(),20) AS czsj';
-    DataSet_Open(dm.dSet_pub, sql);
-    czsj := dm.dSet_pub.FieldByName('czsj').AsString;
+    case radioG.ItemIndex of
+      0:
+        type1 := 'ZC';
+      1:
+        type1 := 'JB';
+      2:
+        type1 := 'QJ';
+    end;
+    ckTime := Trim(checkInOutF.dSet_ckInOut_mcheck_time.AsString);
+    badgeNO := Trim(checkInOutF.dSet_ckInOut_mbadgenumber.AsString);
+    memo := Trim(checkInOutF.dSet_ckInOut_mmemo.AsString);
+
+    czsj := GetServerTime;
     czy := bm_logined; // 谁登录就取谁
 
     sql := 'SELECT COUNT(badgenumber) upORins FROM checkInOut_modified WHERE badgenumber ='''
