@@ -9,6 +9,9 @@ uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, Forms,
 var
   bm_logined: string;
 
+const
+  admin = '人力资源部';
+
 procedure Delay(dwMilliseconds: DWORD);
 function ExportData(cxGrid: TcxGrid): Boolean;
 function DropDown_(dset: TADODataSet; combobox: TComboBox;

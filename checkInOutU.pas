@@ -643,7 +643,7 @@ begin
   // Self.Position := poScreenCenter;
   // Self.WindowState := wsMaximized;
 
-  if bm_logined = '人力资源部' then
+  if bm_logined = admin then
   begin
     DropDown_(dm.dSet_pub, cbb_bm,
       'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
@@ -670,10 +670,17 @@ end;
 
 procedure TcheckInOutF.cbb_nameDropDown(Sender: TObject);
 var
-  sql: string;
+  sql, deptName: string;
 begin
+  deptName := Trim(cbb_bm.Text);
+  if deptName = '' then
+  begin
+    cbb_name.Clear;
+    Exit;
+  end;
+
   sql := 'SELECT distinct name FROM user_departments_v WHERE deptName=''' +
-    Trim(cbb_bm.Text) + ''' ';
+    deptName + ''' ';
   DropDown_(dm.dSet_pub, cbb_name, sql, 'name');
 end;
 

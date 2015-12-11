@@ -1,7 +1,7 @@
 object salary_setting_templateF: Tsalary_setting_templateF
   Left = 0
   Top = 0
-  Caption = #27169#26495#35774#32622
+  Caption = #35774#32622
   ClientHeight = 481
   ClientWidth = 291
   Color = clBtnFace
@@ -23,10 +23,6 @@ object salary_setting_templateF: Tsalary_setting_templateF
     Align = alClient
     ItemHeight = 13
     TabOrder = 2
-    ExplicitLeft = 80
-    ExplicitTop = 136
-    ExplicitWidth = 121
-    ExplicitHeight = 97
   end
   object pan1: TPanel
     Left = 0
@@ -34,7 +30,7 @@ object salary_setting_templateF: Tsalary_setting_templateF
     Width = 291
     Height = 20
     Align = alTop
-    Caption = #23383#27573#25171#21246#65292#34920#31034#19981#22312'EXCEL'#20013#26174#31034
+    Caption = #23383#27573#25171#21246#65292#34920#31034#19981#26174#31034
     Ctl3D = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed

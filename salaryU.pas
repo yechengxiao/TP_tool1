@@ -53,52 +53,6 @@ type
     tab2: TTabSheet;
     dSet_salary: TADODataSet;
     dSource_salary: TDataSource;
-    dSet_salaryname: TWideStringField;
-    dSet_salarydeptName: TWideStringField;
-    dSet_salaryyf: TStringField;
-    dSet_salarydeptID: TStringField;
-    dSet_salarybadgenumber: TStringField;
-    dSet_salarygangWeiGZ: TBCDField;
-    dSet_salarytongXunBT: TBCDField;
-    dSet_salaryjiangJin: TBCDField;
-    dSet_salaryqiTaFa: TBCDField;
-    dSet_salarynianGongGZ: TBCDField;
-    dSet_salaryxueLiJT: TBCDField;
-    dSet_salaryzhiChengBT: TBCDField;
-    dSet_salaryyaoFei: TBCDField;
-    dSet_salaryjiXiaoJJ: TBCDField;
-    dSet_salarygeLeiBT: TBCDField;
-    dSet_salaryfuZhuJT: TBCDField;
-    dSet_salaryzhiBanFei: TBCDField;
-    dSet_salarygaoWenFei: TBCDField;
-    dSet_salaryjiaBanNum: TBCDField;
-    dSet_salaryjiaBanFei: TBCDField;
-    dSet_salaryyeCanFei: TBCDField;
-    dSet_salaryqiTaBF: TBCDField;
-    dSet_salaryshuBaoFei: TBCDField;
-    dSet_salaryjia1: TBCDField;
-    dSet_salaryjia2: TBCDField;
-    dSet_salaryjia3: TBCDField;
-    dSet_salarysuoDeShui: TBCDField;
-    dSet_salaryyangLao: TBCDField;
-    dSet_salaryshiYe: TBCDField;
-    dSet_salarygongJi: TBCDField;
-    dSet_salaryyiBao: TBCDField;
-    dSet_salaryshiJia: TBCDField;
-    dSet_salarybingJia: TBCDField;
-    dSet_salarychanHunSangJia: TBCDField;
-    dSet_salaryqiTaKou: TBCDField;
-    dSet_salaryshuiDian: TBCDField;
-    dSet_salaryfangZu: TBCDField;
-    dSet_salaryshouJi: TBCDField;
-    dSet_salarydaiKou: TBCDField;
-    dSet_salarygongHui: TBCDField;
-    dSet_salarynianJin: TBCDField;
-    dSet_salaryjian1: TBCDField;
-    dSet_salaryjian2: TBCDField;
-    dSet_salaryjian3: TBCDField;
-    dSet_salaryshiFa: TBCDField;
-    dSet_salarymemo: TStringField;
     cxGrid_mxDBTableView1name: TcxGridDBColumn;
     cxGrid_mxDBTableView1deptName: TcxGridDBColumn;
     cxGrid_mxDBTableView1yf: TcxGridDBColumn;
@@ -149,20 +103,77 @@ type
     cxGrid_template: TcxGrid;
     cxGrid_templateDBTableView1: TcxGridDBTableView;
     cxGridLevel1: TcxGridLevel;
-    dSet_salaryNO: TLargeintField;
     cxGrid_mxDBTableView1NO: TcxGridDBColumn;
     btn_setting_tmplate: TButton;
     btn_import: TButton;
     openDLG: TOpenDialog;
+    btn_mx: TButton;
+    dSet_salaryNO: TLargeintField;
+    dSet_salarydeptName: TWideStringField;
+    dSet_salaryname: TWideStringField;
+    dSet_salaryyf: TStringField;
+    dSet_salarydeptID: TStringField;
+    dSet_salarybadgenumber: TStringField;
+    dSet_salarygangWeiGZ: TStringField;
+    dSet_salarytongXunBT: TStringField;
+    dSet_salaryjiangJin: TStringField;
+    dSet_salaryqiTaFa: TStringField;
+    dSet_salarynianGongGZ: TStringField;
+    dSet_salaryxueLiJT: TStringField;
+    dSet_salaryzhiChengBT: TStringField;
+    dSet_salaryyaoFei: TStringField;
+    dSet_salaryjiXiaoJJ: TStringField;
+    dSet_salarygeLeiBT: TStringField;
+    dSet_salaryfuZhuJT: TStringField;
+    dSet_salaryzhiBanFei: TStringField;
+    dSet_salarygaoWenFei: TStringField;
+    dSet_salaryjiaBanNum: TStringField;
+    dSet_salaryjiaBanFei: TStringField;
+    dSet_salaryyeCanFei: TStringField;
+    dSet_salaryqiTaBF: TStringField;
+    dSet_salaryshuBaoFei: TStringField;
+    dSet_salaryjia1: TStringField;
+    dSet_salaryjia2: TStringField;
+    dSet_salaryjia3: TStringField;
+    dSet_salarysuoDeShui: TStringField;
+    dSet_salaryyangLao: TStringField;
+    dSet_salaryshiYe: TStringField;
+    dSet_salarygongJi: TStringField;
+    dSet_salaryyiBao: TStringField;
+    dSet_salaryshiJia: TStringField;
+    dSet_salarybingJia: TStringField;
+    dSet_salarychanHunSangJia: TStringField;
+    dSet_salaryqiTaKou: TStringField;
+    dSet_salaryshuiDian: TStringField;
+    dSet_salaryfangZu: TStringField;
+    dSet_salaryshouJi: TStringField;
+    dSet_salarydaiKou: TStringField;
+    dSet_salarygongHui: TStringField;
+    dSet_salarynianJin: TStringField;
+    dSet_salaryjian1: TStringField;
+    dSet_salaryjian2: TStringField;
+    dSet_salaryjian3: TStringField;
+    dSet_salaryshiFa: TStringField;
+    dSet_salarymemo: TStringField;
+    bnt_setting_mx: TButton;
     procedure FormShow(Sender: TObject);
     procedure btn_templateClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btn_setting_tmplateClick(Sender: TObject);
     procedure btn_importClick(Sender: TObject);
+    procedure btn_mxClick(Sender: TObject);
+    procedure cbb_nameDropDown(Sender: TObject);
+    procedure bnt_setting_mxClick(Sender: TObject);
+    function SetVisible(DBTableView1: TcxGridDBTableView;
+      list: TStringList): Boolean;
+    procedure btn_exportClick(Sender: TObject);
   private
+    myThread: TThread; // 线程
     { Private declarations }
   public
     UnvisiableFieldIndexList: TStringList;
+    UnvisiableFieldIndexList_mx: TStringList;
+    UnvisiableFieldIndexList_template: TStringList;
     fieldMap: TStringList;
     { Public declarations }
   end;
@@ -174,6 +185,83 @@ implementation
 
 uses utilU, dmU, salary_setting_templateU;
 {$R *.dfm}
+
+function TsalaryF.SetVisible(DBTableView1: TcxGridDBTableView;
+  list: TStringList): Boolean;
+var
+  I, high, index: integer;
+begin
+  // 设置导出模板的字段可见性
+  try
+    if not Assigned(UnvisiableFieldIndexList) then
+      UnvisiableFieldIndexList := TStringList.create;
+
+    // 复制list
+    UnvisiableFieldIndexList.Assign(list);
+
+    high := fieldMap.Count - 1;
+    if high >= 0 then
+    begin
+      salary_setting_templateF := Tsalary_setting_templateF.create(nil);
+
+      // 添加可选的字段
+      for I := 0 to high do
+      begin
+        salary_setting_templateF.ckListBox.Items.Add(fieldMap.Names[I]);
+        // 显示模板grid列全可见
+        DBTableView1.Columns[I].visible := True;
+      end;
+
+      // 已设置为不显示的字段要打勾
+      high := UnvisiableFieldIndexList.Count - 1;
+      for index := 0 to high do
+      begin
+        I := StrToInt(UnvisiableFieldIndexList[index]);
+        salary_setting_templateF.ckListBox.Checked[I] := True;
+      end;
+
+      salary_setting_templateF.ShowModal;
+    end;
+  except
+    on e: Exception do
+      msg_info('出错了:' + e.message);
+  end;
+end;
+
+procedure TsalaryF.btn_exportClick(Sender: TObject);
+var
+  b: Boolean;
+begin
+  try
+
+    if pg_ctl.ActivePage = tab_mx then
+    begin
+      if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
+      begin
+        msg_info('没有数据...');
+        Exit;
+      end;
+      b := ExportData(cxGrid_mx);
+    end;
+
+    if b then
+    begin
+      paintBox.Refresh;
+      paintBox.Canvas.TextOut(5, 10, '导出完成...');
+      msg_info('导出完成...');
+    end
+    else if b then
+    begin
+      msg_info('导出未完成...');
+    end;
+  except
+    on e: Exception do
+    begin
+      msg_err('出错了：' + e.message);
+      paintBox.Refresh;
+    end;
+  end;
+end;
 
 procedure TsalaryF.btn_importClick(Sender: TObject);
 var
@@ -344,49 +432,73 @@ begin
   end;
 end;
 
+procedure TsalaryF.btn_mxClick(Sender: TObject);
+var
+  sql, d1, d2, deptName, name: string;
+begin
+  d1 := FormatDateTime('yyyy-mm', dtp1.Date);
+  d2 := FormatDateTime('yyyy-mm', dtp2.Date);
+  name := Trim(cbb_name.Text);
+  deptName := Trim(cbb_bm.Text);
+
+  if deptName = '' then
+  begin
+    msg_info('请选择部门');
+    Exit;
+  end;
+
+  sql := 'SELECT row_number()over(ORDER BY lastname) AS NO, s.* FROM salary_v s  LEFT JOIN userinfo u  ON u.badgenumber=s.badgenumber '
+    + ' WHERE yf>= ''' + d1 + ''' AND yf<=''' + d2 + ''' AND s.deptName=''' +
+    deptName + ''' AND s.name LIKE ''%' + name + '%'' ';
+
+  try
+    paintBox.Refresh;
+    DataSet_Open(dSet_salary, sql);
+  except
+    on e: Exception do
+      msg_err('出了点错: ' + e.message);
+  end;
+end;
+
+procedure TsalaryF.bnt_setting_mxClick(Sender: TObject);
+var
+  I, high, index: integer;
+begin
+  if not Assigned(UnvisiableFieldIndexList_mx) then
+    UnvisiableFieldIndexList_mx := TStringList.create;
+
+  SetVisible(cxGrid_mxDBTableView1, UnvisiableFieldIndexList_mx);
+
+  // 复制list
+  UnvisiableFieldIndexList_mx.Assign(UnvisiableFieldIndexList);
+
+  // 设置 模板字段的 visible
+  high := UnvisiableFieldIndexList_mx.Count - 1;
+  for index := 0 to high do
+  begin
+    I := StrToInt(UnvisiableFieldIndexList_mx[index]);
+    cxGrid_mxDBTableView1.Columns[I].visible := False;
+  end;
+end;
+
 procedure TsalaryF.btn_setting_tmplateClick(Sender: TObject);
 var
   I, high, index: integer;
 begin
-  // 设置导出模板的字段可见性
-  try
-    if not Assigned(UnvisiableFieldIndexList) then
-      UnvisiableFieldIndexList := TStringList.create;
+  if not Assigned(UnvisiableFieldIndexList_template) then
+    UnvisiableFieldIndexList_template := TStringList.create;
 
-    high := fieldMap.Count - 1;
-    if high >= 0 then
-    begin
-      salary_setting_templateF := Tsalary_setting_templateF.create(nil);
+  SetVisible(cxGrid_templateDBTableView1, UnvisiableFieldIndexList_template);
 
-      // 添加可选的字段
-      for I := 0 to high do
-      begin
-        salary_setting_templateF.ckListBox.Items.Add(fieldMap.Names[I]);
-        // 显示模板grid列全可见，再设置某些不可见
-        cxGrid_templateDBTableView1.Columns[I].visible := True;
-      end;
+  // 复制list
+  UnvisiableFieldIndexList_template.Assign(UnvisiableFieldIndexList);
 
-      // 已设置为不显示的字段要打勾
-      high := UnvisiableFieldIndexList.Count - 1;
-      for index := 0 to high do
-      begin
-        I := StrToInt(UnvisiableFieldIndexList[index]);
-        salary_setting_templateF.ckListBox.Checked[I] := True;
-      end;
-
-      salary_setting_templateF.ShowModal;
-
-      // 设置 模板字段的 visible
-      high := UnvisiableFieldIndexList.Count - 1;
-      for index := 0 to high do
-      begin
-        I := StrToInt(UnvisiableFieldIndexList[index]);
-        cxGrid_templateDBTableView1.Columns[I].visible := False;
-      end;
-    end;
-  except
-    on e: Exception do
-      msg_info('出错了:' + e.Message);
+  // 设置 模板字段的 visible
+  high := UnvisiableFieldIndexList_template.Count - 1;
+  for index := 0 to high do
+  begin
+    I := StrToInt(UnvisiableFieldIndexList_template[index]);
+    cxGrid_templateDBTableView1.Columns[I].visible := False;
   end;
 end;
 
@@ -430,15 +542,30 @@ begin
     end;
   except
     on e: Exception do
-      msg_err('出错了：' + e.Message);
+      msg_err('出错了：' + e.message);
   end;
+end;
+
+procedure TsalaryF.cbb_nameDropDown(Sender: TObject);
+var
+  sql, deptName: string;
+begin
+  deptName := Trim(cbb_bm.Text);
+  if deptName = '' then
+  begin
+    cbb_name.Clear;
+    Exit;
+  end;
+  sql := 'SELECT distinct name FROM user_departments_v WHERE deptName=''' +
+    deptName + ''' ';
+  DropDown_(dm.dSet_pub, cbb_name, sql, 'name');
 end;
 
 procedure TsalaryF.FormCreate(Sender: TObject);
 var
   dtFormat: string;
 begin
-  if bm_logined = '人力资源部' then
+  if bm_logined = admin then
   begin
     DropDown_(dm.dSet_pub, cbb_bm,
       'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
@@ -457,34 +584,40 @@ begin
 end;
 
 procedure TsalaryF.FormShow(Sender: TObject);
-var
-  I, High, width: integer;
-  fieldName, caption_: string;
 begin
   // 模板不用显示
   tab_template.TabVisible := False;
 
-  if not Assigned(fieldMap) then
-    fieldMap := TStringList.create;
+  TThread.CreateAnonymousThread( // 直接写入方法体
+    procedure
+    var
+      I, High, width: integer;
+      fieldName, caption_: string;
+    begin
+      if not Assigned(fieldMap) then
+        fieldMap := TStringList.create;
 
-  fieldMap.Clear;
+      fieldMap.Clear;
 
-  High := cxGrid_mxDBTableView1.ColumnCount - 1;
+      High := cxGrid_mxDBTableView1.ColumnCount - 1;
 
-  for I := 0 to High do
-  begin
-    // 一定要保证字段的统一性
-    fieldName := cxGrid_mxDBTableView1.Columns[I].DataBinding.fieldName;
-    caption_ := cxGrid_mxDBTableView1.Columns[I].Caption;
-    width := cxGrid_mxDBTableView1.Columns[I].width;
+      for I := 0 to High do
+      begin
+        // 一定要保证字段的统一性  为模板使用
+        fieldName := cxGrid_mxDBTableView1.Columns[I].DataBinding.fieldName;
+        caption_ := cxGrid_mxDBTableView1.Columns[I].Caption;
+        width := cxGrid_mxDBTableView1.Columns[I].width;
 
-    cxGrid_templateDBTableView1.CreateColumn;
-    cxGrid_templateDBTableView1.Columns[I].DataBinding.fieldName := fieldName;
-    cxGrid_templateDBTableView1.Columns[I].Caption := caption_;
-    cxGrid_templateDBTableView1.Columns[I].width := width;
+        cxGrid_templateDBTableView1.CreateColumn;
+        cxGrid_templateDBTableView1.Columns[I].DataBinding.fieldName :=
+          fieldName;
+        cxGrid_templateDBTableView1.Columns[I].Caption := caption_;
+        cxGrid_templateDBTableView1.Columns[I].width := width;
 
-    fieldMap.Add(caption_ + '=' + fieldName);
-  end;
+        fieldMap.Add(caption_ + '=' + fieldName);
+      end;
+    end // 此处无分号
+    ).Start;
 end;
 
 end.

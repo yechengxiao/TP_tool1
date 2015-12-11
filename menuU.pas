@@ -40,10 +40,14 @@ begin
   treeMenu.Items.BeginUpdate;
   faNode1 := treeMenu.Items.AddFirst(nil, '人事统计');
   treeMenu.Items.AddChildFirst(faNode1, checkInOutMenu);
-  treeMenu.Items.AddChild(faNode1, salaryMenu);
 
-  faNode2 := treeMenu.Items.Add(nil, '食堂统计');
-  treeMenu.Items.AddChild(faNode2, carCashSZMenu);
+  if bm_logined = admin then
+  begin
+    treeMenu.Items.AddChild(faNode1, salaryMenu);
+
+    faNode2 := treeMenu.Items.Add(nil, '食堂统计');
+    treeMenu.Items.AddChild(faNode2, carCashSZMenu);
+  end;
 
   treeMenu.Items.EndUpdate;
   treeMenu.FullExpand;
