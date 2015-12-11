@@ -154,8 +154,6 @@ object salaryF: TsalaryF
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
-    ExplicitLeft = 8
-    ExplicitTop = 89
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
@@ -475,14 +473,26 @@ object salaryF: TsalaryF
       object tab1: TTabSheet
         Caption = #32479#35745#65306#25353#26376#20221
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
       end
       object tab2: TTabSheet
         Caption = #32479#35745#65306#25353#37096#38376
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
       end
       object tab_template: TTabSheet
         Caption = #27169#26495
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object cxGrid_template: TcxGrid
           Left = 0
           Top = 0

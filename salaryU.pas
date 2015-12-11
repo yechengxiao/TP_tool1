@@ -183,7 +183,7 @@ var
   fieldValue_List: TStringList;
 
   fieldsStr, valuesStr, field, value, sql_delete, sql_insert: string;
-  high: integer;
+  high, totalNum: integer;
   yf, deptId, badgenumber: string;
   flag: Boolean;
 const
@@ -229,9 +229,9 @@ begin
 
         hang := 2; // 第n行开始取
 
-        flag := False;
         while Trim(excelSheet.cells.item[hang, 1]) <> '' do
         begin
+          flag := False;
           valuesStr := '';
 
           // 循环获取整行数据
@@ -254,6 +254,7 @@ begin
               if value = '' then
               begin
                 excelSheet.cells(hang, lie_tips) := '月份、部门ID、员工ID不能为空';
+                flag := False;
                 Break;
               end
               else
@@ -284,11 +285,13 @@ begin
                 begin
                   excelSheet.cells(hang, lie_tips) := ' 行 ' + IntToStr(hang) +
                     ' 列 ' + field + ' 值 ' + value + '， 数据有数，无法导入';
+                  flag := False;
                   Break;
                 end;
               except
                 excelSheet.cells(hang, lie_tips) := ' 行 ' + IntToStr(hang) +
                   ' 列 ' + field + ' 值 ' + value + '， 数据有数，无法导入';
+                flag := False;
                 Break;
               end;
             end;
@@ -300,7 +303,6 @@ begin
           // 执行导入
           if flag then
           begin
-            flag := False;
             valuesStr := '(' + RightStr(valuesStr, Length(valuesStr) - 1) + ')';
 
             sql_delete := ' DELETE FROM salary_t WHERE yf=''' + yf +
@@ -312,15 +314,20 @@ begin
 
             paintBox.Refresh;
             paintBox.Canvas.TextOut(5, 10, '正在导入第 ' + IntToStr(hang - 1) + '条');
-            if Command_Exec(sql_insert) then
-            begin
-
-              excelSheet.cells(hang, lie_tips) := '导入成功';
-            end
-            else
-            begin
+            try
+              if Command_Exec(sql_insert) then
+              begin
+                totalNum := totalNum + 1;
+                excelSheet.cells(hang, lie_tips) := '导入成功';
+              end
+              else
+              begin
+                excelSheet.cells(hang, lie_tips) := '导入失败';
+              end;
+            except
               excelSheet.cells(hang, lie_tips) := '导入失败';
             end;
+
           end;
 
           Inc(hang);
@@ -331,7 +338,7 @@ begin
         end;
       finally
         paintBox.Refresh;
-        paintBox.Canvas.TextOut(5, 10, '共导入 ' + IntToStr(hang - 2) + ' 条');
+        paintBox.Canvas.TextOut(5, 10, '共导入 ' + IntToStr(totalNum) + ' 条');
       end;
     end;
   end;
