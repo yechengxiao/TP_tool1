@@ -96,11 +96,11 @@ begin
     begin
       if stau_memo <> '' then
       begin
-        lbl_msg.Caption := stau_memo + ' 将自动关闭...';
+        lbl_msg.Caption := stau_memo + ' 自动退出中...';
       end
       else
       begin
-        lbl_msg.Caption := '此版本已停用!! ' + ' 将自动关闭...';
+        lbl_msg.Caption := '此版本已停用!! ' + ' 自动退出中...';
       end;
 
       Delay(5000);
@@ -123,7 +123,7 @@ begin
   sql := 'SELECT department FROM user_login ORDER BY department DESC';
   DropDown_(dm.dSet_pub, cbb_bm, sql, 'department');
 
-  ver := '20151209_dev';
+  ver := '20160128_dev';
 
   lbl_msg.Caption := UpperCase(ver);
 end;

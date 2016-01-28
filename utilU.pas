@@ -10,7 +10,7 @@ var
   bm_logined: string;
 
 const
-  admin = '人力资源部';
+  ADMIN = '人力资源部';
 
 procedure Delay(dwMilliseconds: DWORD);
 function ExportData(cxGrid: TcxGrid): Boolean;

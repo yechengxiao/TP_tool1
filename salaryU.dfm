@@ -2,8 +2,8 @@ object salaryF: TsalaryF
   Left = 0
   Top = 0
   Caption = #21592#24037#24037#36164#32479#35745
-  ClientHeight = 439
-  ClientWidth = 916
+  ClientHeight = 492
+  ClientWidth = 810
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object salaryF: TsalaryF
   object pan_up: TPanel
     Left = 0
     Top = 0
-    Width = 916
-    Height = 81
+    Width = 810
+    Height = 121
     Align = alTop
     Color = clInfoBk
     ParentBackground = False
@@ -28,174 +28,228 @@ object salaryF: TsalaryF
     ExplicitTop = -5
     object lbl1: TLabel
       Left = 16
-      Top = 22
+      Top = 14
       Width = 24
       Height = 13
       Caption = #26376#20221
     end
     object lbl3: TLabel
       Left = 16
-      Top = 54
+      Top = 46
       Width = 24
       Height = 13
       Caption = #37096#38376
     end
     object paintBox: TPaintBox
-      Left = 696
+      Left = 590
       Top = 1
       Width = 219
-      Height = 79
+      Height = 119
       Align = alRight
       ExplicitLeft = 704
+      ExplicitHeight = 79
     end
     object lbl_name: TLabel
-      Left = 183
-      Top = 54
+      Left = 18
+      Top = 73
       Width = 24
       Height = 13
       Caption = #22995#21517
     end
     object lbl: TLabel
       Left = 136
-      Top = 22
+      Top = 14
       Width = 12
       Height = 13
       Caption = #33267
     end
     object dtp1: TDateTimePicker
       Left = 44
-      Top = 14
+      Top = 6
       Width = 80
       Height = 21
       Date = 42324.452836851850000000
       Time = 42324.452836851850000000
       MaxDate = 43100.999988425920000000
       MinDate = 41640.000000000000000000
-      TabOrder = 3
+      TabOrder = 2
     end
     object btn_tj: TButton
-      Left = 747
-      Top = 41
+      Left = 359
+      Top = 5
       Width = 80
       Height = 25
       Caption = #32479#35745
-      TabOrder = 5
+      TabOrder = 1
       Visible = False
-    end
-    object btn_export: TButton
-      Left = 579
-      Top = 42
-      Width = 80
-      Height = 25
-      Caption = #23548#20986
-      TabOrder = 8
-      OnClick = btn_exportClick
     end
     object cbb_bm: TComboBox
       Left = 44
-      Top = 46
-      Width = 117
+      Top = 38
+      Width = 130
       Height = 21
       Style = csDropDownList
       DropDownCount = 20
-      TabOrder = 9
+      TabOrder = 6
       Items.Strings = (
         '')
     end
     object cbb_name: TComboBox
-      Left = 211
-      Top = 46
-      Width = 80
+      Left = 44
+      Top = 65
+      Width = 130
       Height = 21
       Style = csDropDownList
       DropDownCount = 20
-      TabOrder = 10
+      TabOrder = 8
       OnDropDown = cbb_nameDropDown
       Items.Strings = (
         #22612#29260#25991#21270#20013#24515)
     end
     object dtp2: TDateTimePicker
       Left = 171
-      Top = 14
+      Top = 6
       Width = 80
       Height = 21
       Date = 42324.452836851850000000
       Time = 42324.452836851850000000
       MaxDate = 43100.999988425920000000
-      TabOrder = 4
-    end
-    object btn_template: TButton
-      Left = 493
-      Top = 10
-      Width = 80
-      Height = 25
-      Caption = #27169#26495
-      TabOrder = 1
-      OnClick = btn_templateClick
-    end
-    object btn_setting_tmplate: TButton
-      Left = 493
-      Top = 42
-      Width = 80
-      Height = 25
-      Caption = #27169#26495#23383#27573
-      TabOrder = 7
-      OnClick = btn_setting_tmplateClick
+      TabOrder = 3
     end
     object btn_import: TButton
-      Left = 579
-      Top = 10
+      Left = 359
+      Top = 75
       Width = 80
       Height = 25
-      Caption = #23548#20837
-      TabOrder = 2
+      Caption = #23548#20837#27169#26495#25968#25454
+      TabOrder = 9
       OnClick = btn_importClick
     end
     object btn_mx: TButton
-      Left = 321
-      Top = 10
+      Left = 273
+      Top = 5
       Width = 80
       Height = 25
-      Caption = #26126#32454
+      Caption = #26126#32454#26597#35810
       TabOrder = 0
       OnClick = btn_mxClick
     end
-    object bnt_setting_mx: TButton
-      Left = 321
+    object groupB: TGroupBox
+      Left = 526
+      Top = 6
+      Width = 73
+      Height = 94
+      Caption = #23383#27573#21487#35265#24615
+      Color = clInfoBk
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 5
+      object radioSetVisibleT: TRadioButton
+        Left = 11
+        Top = 19
+        Width = 68
+        Height = 17
+        Caption = #27169#26495
+        TabOrder = 0
+      end
+      object radioSetVisibleD: TRadioButton
+        Left = 11
+        Top = 36
+        Width = 62
+        Height = 17
+        Caption = #25968#25454
+        TabOrder = 1
+      end
+      object btn_setting_visible: TButton
+        Left = 11
+        Top = 59
+        Width = 46
+        Height = 25
+        Caption = #35774#32622
+        TabOrder = 2
+        OnClick = btn_setting_visibleClick
+      end
+    end
+    object chkBox: TCheckBox
+      Left = 180
       Top = 42
-      Width = 80
-      Height = 25
-      Caption = #26126#32454#23383#27573
-      TabOrder = 6
-      OnClick = bnt_setting_mxClick
+      Width = 65
+      Height = 17
+      Caption = #25152#26377#37096#38376
+      TabOrder = 7
+    end
+    object GroupBox1: TGroupBox
+      Left = 463
+      Top = 6
+      Width = 57
+      Height = 94
+      Caption = #23548#20986
+      Color = clInfoBk
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 4
+      object btn_export: TButton
+        Left = 3
+        Top = 59
+        Width = 46
+        Height = 25
+        Caption = #23548#20986
+        TabOrder = 2
+        OnClick = btn_exportClick
+      end
+      object radioExportT: TRadioButton
+        Left = 3
+        Top = 19
+        Width = 50
+        Height = 17
+        Caption = #27169#26495
+        TabOrder = 0
+      end
+      object radioExportD: TRadioButton
+        Left = 3
+        Top = 36
+        Width = 50
+        Height = 17
+        Caption = #25968#25454
+        TabOrder = 1
+      end
     end
   end
   object pan_down: TPanel
     Left = 0
-    Top = 81
-    Width = 916
-    Height = 358
+    Top = 121
+    Width = 810
+    Height = 371
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
+    ExplicitTop = 81
+    ExplicitWidth = 916
+    ExplicitHeight = 358
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
-      Width = 914
-      Height = 356
+      Width = 808
+      Height = 369
       ActivePage = tab_mx
       Align = alClient
       TabOrder = 0
+      ExplicitWidth = 929
+      ExplicitHeight = 265
       object tab_mx: TTabSheet
-        Caption = #21592#24037#24037#36164#26126#32454
+        Caption = #24037#36164#26126#32454
         ImageIndex = 2
+        ExplicitWidth = 906
+        ExplicitHeight = 328
         object cxGrid_mx: TcxGrid
           Left = 0
           Top = 0
-          Width = 906
-          Height = 328
+          Width = 800
+          Height = 341
           Align = alClient
           TabOrder = 0
+          ExplicitWidth = 906
+          ExplicitHeight = 328
           object cxGrid_mxDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dSource_salary
@@ -222,7 +276,7 @@ object salaryF: TsalaryF
               DataBinding.FieldName = 'deptName'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 55
+              Width = 120
             end
             object cxGrid_mxDBTableView1yf: TcxGridDBColumn
               DataBinding.FieldName = 'yf'
@@ -497,21 +551,29 @@ object salaryF: TsalaryF
       object tab1: TTabSheet
         Caption = #32479#35745#65306#25353#26376#20221
         ImageIndex = 1
+        ExplicitWidth = 906
+        ExplicitHeight = 328
       end
       object tab2: TTabSheet
         Caption = #32479#35745#65306#25353#37096#38376
         ImageIndex = 2
+        ExplicitWidth = 906
+        ExplicitHeight = 328
       end
       object tab_template: TTabSheet
         Caption = #27169#26495
         ImageIndex = 3
+        ExplicitWidth = 906
+        ExplicitHeight = 328
         object cxGrid_template: TcxGrid
           Left = 0
           Top = 0
-          Width = 906
-          Height = 328
+          Width = 800
+          Height = 341
           Align = alClient
           TabOrder = 0
+          ExplicitWidth = 906
+          ExplicitHeight = 328
           object cxGrid_templateDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dm.dSource_pubForGrid
@@ -533,8 +595,8 @@ object salaryF: TsalaryF
     end
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 136
-    Top = 281
+    Left = 344
+    Top = 265
     PixelsPerInch = 96
     object cxStyle_bg: TcxStyle
       AssignedValues = [svColor]
@@ -553,8 +615,8 @@ object salaryF: TsalaryF
       ' salary_v s  LEFT JOIN userinfo u  ON u.badgenumber=s.badgenumbe' +
       'r'
     Parameters = <>
-    Left = 136
-    Top = 215
+    Left = 40
+    Top = 319
     object dSet_salaryNO: TLargeintField
       FieldName = 'NO'
       ReadOnly = True
@@ -753,7 +815,7 @@ object salaryF: TsalaryF
     Top = 323
   end
   object openDLG: TOpenDialog
-    Left = 210
-    Top = 239
+    Left = 450
+    Top = 263
   end
 end

@@ -41,7 +41,7 @@ begin
   faNode1 := treeMenu.Items.AddFirst(nil, '人事统计');
   treeMenu.Items.AddChildFirst(faNode1, checkInOutMenu);
 
-  if bm_logined = admin then
+  if bm_logined = ADMIN then
   begin
     treeMenu.Items.AddChild(faNode1, salaryMenu);
 

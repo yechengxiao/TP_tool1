@@ -34,7 +34,6 @@ type
     lbl_name: TLabel;
     dtp1: TDateTimePicker;
     btn_tj: TButton;
-    btn_export: TButton;
     cbb_bm: TComboBox;
     cbb_name: TComboBox;
     pan_down: TPanel;
@@ -48,7 +47,6 @@ type
     cxGrid_mxLevel1: TcxGridLevel;
     lbl: TLabel;
     dtp2: TDateTimePicker;
-    btn_template: TButton;
     tab1: TTabSheet;
     tab2: TTabSheet;
     dSet_salary: TADODataSet;
@@ -104,7 +102,6 @@ type
     cxGrid_templateDBTableView1: TcxGridDBTableView;
     cxGridLevel1: TcxGridLevel;
     cxGrid_mxDBTableView1NO: TcxGridDBColumn;
-    btn_setting_tmplate: TButton;
     btn_import: TButton;
     openDLG: TOpenDialog;
     btn_mx: TButton;
@@ -155,17 +152,29 @@ type
     dSet_salaryjian3: TStringField;
     dSet_salaryshiFa: TStringField;
     dSet_salarymemo: TStringField;
-    bnt_setting_mx: TButton;
+    groupB: TGroupBox;
+    chkBox: TCheckBox;
+    radioSetVisibleT: TRadioButton;
+    radioSetVisibleD: TRadioButton;
+    btn_setting_visible: TButton;
+    GroupBox1: TGroupBox;
+    btn_export: TButton;
+    radioExportT: TRadioButton;
+    radioExportD: TRadioButton;
     procedure FormShow(Sender: TObject);
-    procedure btn_templateClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure btn_setting_tmplateClick(Sender: TObject);
     procedure btn_importClick(Sender: TObject);
     procedure btn_mxClick(Sender: TObject);
     procedure cbb_nameDropDown(Sender: TObject);
-    procedure bnt_setting_mxClick(Sender: TObject);
+
+    procedure btn_setting_visibleClick(Sender: TObject);
+    procedure SetMXVisible;
+    procedure SetTmplateVisible;
     function SetVisible(DBTableView1: TcxGridDBTableView;
       list: TStringList): Boolean;
+
+    procedure ExportD;
+    procedure ExportTemplate;
     procedure btn_exportClick(Sender: TObject);
   private
     myThread: TThread; // 线程
@@ -228,12 +237,11 @@ begin
   end;
 end;
 
-procedure TsalaryF.btn_exportClick(Sender: TObject);
+procedure TsalaryF.ExportD;
 var
   b: Boolean;
 begin
   try
-
     if pg_ctl.ActivePage = tab_mx then
     begin
       if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
@@ -260,6 +268,23 @@ begin
       msg_err('出错了：' + e.message);
       paintBox.Refresh;
     end;
+  end;
+end;
+
+procedure TsalaryF.btn_exportClick(Sender: TObject);
+begin
+  if radioExportT.Checked then
+  begin
+    ExportTemplate;
+  end
+  else if radioExportD.Checked then
+  begin
+    ExportD;
+  end
+  else
+  begin
+    msg_err('未选择操作!');
+    Exit;
   end;
 end;
 
@@ -460,7 +485,7 @@ begin
   end;
 end;
 
-procedure TsalaryF.bnt_setting_mxClick(Sender: TObject);
+procedure TsalaryF.SetMXVisible; // 设置 模板字段的 visible
 var
   I, high, index: integer;
 begin
@@ -481,7 +506,7 @@ begin
   end;
 end;
 
-procedure TsalaryF.btn_setting_tmplateClick(Sender: TObject);
+procedure TsalaryF.SetTmplateVisible; // 设置 模板字段的 visible
 var
   I, high, index: integer;
 begin
@@ -502,7 +527,24 @@ begin
   end;
 end;
 
-procedure TsalaryF.btn_templateClick(Sender: TObject);
+procedure TsalaryF.btn_setting_visibleClick(Sender: TObject);
+begin
+  if radioSetVisibleD.Checked then
+  begin
+    SetMXVisible;
+  end
+  else if radioSetVisibleT.Checked then
+  begin
+    SetTmplateVisible;
+  end
+  else
+  begin
+    msg_err('未选择操作!');
+    Exit;
+  end;
+end;
+
+procedure TsalaryF.ExportTemplate;
 var
   bm, yf, sql: string;
   b: Boolean;
@@ -565,7 +607,7 @@ procedure TsalaryF.FormCreate(Sender: TObject);
 var
   dtFormat: string;
 begin
-  if bm_logined = admin then
+  if bm_logined = ADMIN then
   begin
     DropDown_(dm.dSet_pub, cbb_bm,
       'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');

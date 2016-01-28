@@ -643,7 +643,7 @@ begin
   // Self.Position := poScreenCenter;
   // Self.WindowState := wsMaximized;
 
-  if bm_logined = admin then
+  if bm_logined = ADMIN then
   begin
     DropDown_(dm.dSet_pub, cbb_bm,
       'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
