@@ -153,7 +153,6 @@ type
     dSet_salaryshiFa: TStringField;
     dSet_salarymemo: TStringField;
     groupB: TGroupBox;
-    chkBox: TCheckBox;
     radioSetVisibleT: TRadioButton;
     radioSetVisibleD: TRadioButton;
     btn_setting_visible: TButton;
@@ -161,6 +160,7 @@ type
     btn_export: TButton;
     radioExportT: TRadioButton;
     radioExportD: TRadioButton;
+    Label1: TLabel;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btn_importClick(Sender: TObject);
@@ -178,6 +178,9 @@ type
     procedure btn_exportClick(Sender: TObject);
   private
     myThread: TThread; // 线程
+
+  const
+    ALL_DEPT = '所有部门';
     { Private declarations }
   public
     UnvisiableFieldIndexList: TStringList;
@@ -328,8 +331,8 @@ begin
           begin
             field := Trim(excelSheet.cells.item[1, lie]);
 
-            if (field <> '') AND (LowerCase(field) <> 'no') AND
-              ((field) <> '姓名') AND ((field) <> '部门') then
+            if (field <> '') AND (LowerCase(field) <> 'no') then
+            // AND  ((field) <> '姓名') AND ((field) <> '部门')
             begin
               fieldsStr := fieldsStr + ',' + fieldMap.Values[field];
             end;
@@ -355,23 +358,24 @@ begin
             value := Trim(excelSheet.cells.item[hang, lie]);
 
             // no 姓名 部门 字段不能导入
-            if (field = '') or (LowerCase(field) = 'no') or ((field) = '姓名') or
-              ((field) = '部门') then
+            if (field = '') or (LowerCase(field) = 'no') then
+            // or ((field) = '姓名') or ((field) = '部门')
             begin
               Continue;
             end
             else if ((field) = '月份') or ((field) = '部门ID') or ((field) = '员工ID')
-            then
+              or ((field) = '姓名') or ((field) = '部门') then
             begin
-              // 月份、部门ID、员工ID不能为空
+              // 月份、部门ID、员工ID。。。不能为空
               if value = '' then
               begin
-                excelSheet.cells(hang, lie_tips) := '月份、部门ID、员工ID不能为空';
+                excelSheet.cells(hang, lie_tips) := '月份、部门ID、员工ID、姓名、部门不能为空';
                 flag := False;
                 Break;
               end
               else
               begin
+                // 主键
                 if ((field) = '月份') then
                   yf := value;
                 if ((field) = '部门ID') then
@@ -470,11 +474,16 @@ begin
   begin
     msg_info('请选择部门');
     Exit;
+  end
+  else if deptName = ALL_DEPT then
+  begin
+    deptName := '';
   end;
 
-  sql := 'SELECT row_number()over(ORDER BY lastname) AS NO, s.* FROM salary_v s  LEFT JOIN userinfo u  ON u.badgenumber=s.badgenumber '
-    + ' WHERE yf>= ''' + d1 + ''' AND yf<=''' + d2 + ''' AND s.deptName=''' +
-    deptName + ''' AND s.name LIKE ''%' + name + '%'' ';
+  sql := 'SELECT row_number()over(ORDER BY s.deptName, u.lastname) AS NO, s.* FROM salary_t s  LEFT JOIN userinfo u  ON u.badgenumber=s.badgenumber '
+    + ' WHERE yf>= ''' + d1 + ''' AND yf<=''' + d2 +
+    ''' AND s.deptName LIKE ''%' + deptName + '%'' AND s.name LIKE ''%' +
+    name + '%'' ORDER BY s.deptName, u.lastname ';
 
   try
     paintBox.Refresh;
@@ -611,12 +620,13 @@ begin
   begin
     DropDown_(dm.dSet_pub, cbb_bm,
       'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
+
+    cbb_bm.Items.Add(ALL_DEPT);
+  end
+  else
+  begin
+    cbb_bm.Enabled := False;
   end;
-  // else
-  // begin
-  // cbb_bm.Style := csSimple;
-  // cbb_bm.Text := bm_logined;
-  // end;
 
   dtFormat := LeftStr(GetDateTimeFormat, 8);
 
@@ -630,6 +640,7 @@ begin
   // 模板不用显示
   tab_template.TabVisible := False;
 
+  // 线程
   TThread.CreateAnonymousThread( // 直接写入方法体
     procedure
     var
@@ -640,7 +651,7 @@ begin
         fieldMap := TStringList.create;
 
       fieldMap.Clear;
-
+      // 字段从cxGrid_mx中来
       High := cxGrid_mxDBTableView1.ColumnCount - 1;
 
       for I := 0 to High do
