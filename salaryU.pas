@@ -300,7 +300,7 @@ var
 
   fieldsStr, valuesStr, field, value, sql_delete, sql_insert: string;
   high, totalNum: integer;
-  yf, deptId, badgenumber: string;
+  yf, deptId, badgenumber, czsj: string;
   flag: Boolean;
 const
   TABLE_NAME = 'salary_t';
@@ -344,13 +344,15 @@ begin
         end;
 
         hang := 2; // 第n行开始取
+        czsj := GetServerTime();
 
+        // 行循环
         while Trim(excelSheet.cells.item[hang, 1]) <> '' do
         begin
           flag := False;
           valuesStr := '';
 
-          // 循环获取整行数据
+          // 列循环
           high := fieldMap.Count;
           for lie := 1 to high do
           begin
@@ -387,7 +389,7 @@ begin
             else if (field = '备注') then
             begin
               // 备注中加上操作时间
-              value := value + ' ' + GetServerTime();
+              value := value + ' ' + czsj;
             end
             else
             begin
@@ -482,8 +484,8 @@ begin
 
   sql := 'SELECT row_number()over(ORDER BY s.deptName, u.lastname) AS NO, s.* FROM salary_t s  LEFT JOIN userinfo u  ON u.badgenumber=s.badgenumber '
     + ' WHERE yf>= ''' + d1 + ''' AND yf<=''' + d2 +
-    ''' AND s.deptName LIKE ''%' + deptName + '%'' AND s.name LIKE ''%' +
-    name + '%'' ORDER BY s.deptName, u.lastname ';
+    ''' AND s.deptName LIKE ''%' + deptName + '%'' AND s.name LIKE ''%' + name +
+    '%'' ORDER BY s.deptName, u.lastname ';
 
   try
     paintBox.Refresh;
