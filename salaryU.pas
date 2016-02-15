@@ -23,16 +23,16 @@ uses
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxClasses,
   Data.Win.ADODB, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, System.DateUtils,
-  ComObj, System.StrUtils, Vcl.Grids, Vcl.ValEdit;
+  ComObj, System.StrUtils, Vcl.Grids, Vcl.ValEdit, cxContainer, cxTextEdit,
+  cxMaskEdit, Vcl.Mask;
 
 type
   TsalaryF = class(TForm)
     pan_up: TPanel;
     lbl1: TLabel;
-    lbl3: TLabel;
+    lbl_bm: TLabel;
     paintBox: TPaintBox;
     lbl_name: TLabel;
-    dtp1: TDateTimePicker;
     btn_tj: TButton;
     cbb_bm: TComboBox;
     cbb_name: TComboBox;
@@ -46,71 +46,20 @@ type
     cxGrid_mxDBTableView1: TcxGridDBTableView;
     cxGrid_mxLevel1: TcxGridLevel;
     lbl: TLabel;
-    dtp2: TDateTimePicker;
     tab1: TTabSheet;
     tab2: TTabSheet;
     dSet_salary: TADODataSet;
     dSource_salary: TDataSource;
-    cxGrid_mxDBTableView1name: TcxGridDBColumn;
-    cxGrid_mxDBTableView1deptName: TcxGridDBColumn;
-    cxGrid_mxDBTableView1yf: TcxGridDBColumn;
-    cxGrid_mxDBTableView1deptID: TcxGridDBColumn;
-    cxGrid_mxDBTableView1badgenumber: TcxGridDBColumn;
-    cxGrid_mxDBTableView1gangWeiGZ: TcxGridDBColumn;
-    cxGrid_mxDBTableView1tongXunBT: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jiangJin: TcxGridDBColumn;
-    cxGrid_mxDBTableView1qiTaFa: TcxGridDBColumn;
-    cxGrid_mxDBTableView1nianGongGZ: TcxGridDBColumn;
-    cxGrid_mxDBTableView1xueLiJT: TcxGridDBColumn;
-    cxGrid_mxDBTableView1zhiChengBT: TcxGridDBColumn;
-    cxGrid_mxDBTableView1yaoFei: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jiXiaoJJ: TcxGridDBColumn;
-    cxGrid_mxDBTableView1geLeiBT: TcxGridDBColumn;
-    cxGrid_mxDBTableView1fuZhuJT: TcxGridDBColumn;
-    cxGrid_mxDBTableView1zhiBanFei: TcxGridDBColumn;
-    cxGrid_mxDBTableView1gaoWenFei: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jiaBanNum: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jiaBanFei: TcxGridDBColumn;
-    cxGrid_mxDBTableView1yeCanFei: TcxGridDBColumn;
-    cxGrid_mxDBTableView1qiTaBF: TcxGridDBColumn;
-    cxGrid_mxDBTableView1shuBaoFei: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jia1: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jia2: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jia3: TcxGridDBColumn;
-    cxGrid_mxDBTableView1suoDeShui: TcxGridDBColumn;
-    cxGrid_mxDBTableView1yangLao: TcxGridDBColumn;
-    cxGrid_mxDBTableView1shiYe: TcxGridDBColumn;
-    cxGrid_mxDBTableView1gongJi: TcxGridDBColumn;
-    cxGrid_mxDBTableView1yiBao: TcxGridDBColumn;
-    cxGrid_mxDBTableView1shiJia: TcxGridDBColumn;
-    cxGrid_mxDBTableView1bingJia: TcxGridDBColumn;
-    cxGrid_mxDBTableView1chanHunSangJia: TcxGridDBColumn;
-    cxGrid_mxDBTableView1qiTaKou: TcxGridDBColumn;
-    cxGrid_mxDBTableView1shuiDian: TcxGridDBColumn;
-    cxGrid_mxDBTableView1fangZu: TcxGridDBColumn;
-    cxGrid_mxDBTableView1shouJi: TcxGridDBColumn;
-    cxGrid_mxDBTableView1daiKou: TcxGridDBColumn;
-    cxGrid_mxDBTableView1gongHui: TcxGridDBColumn;
-    cxGrid_mxDBTableView1nianJin: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jian1: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jian2: TcxGridDBColumn;
-    cxGrid_mxDBTableView1jian3: TcxGridDBColumn;
-    cxGrid_mxDBTableView1shiFa: TcxGridDBColumn;
-    cxGrid_mxDBTableView1memo: TcxGridDBColumn;
     tab_template: TTabSheet;
     cxGrid_template: TcxGrid;
     cxGrid_templateDBTableView1: TcxGridDBTableView;
     cxGridLevel1: TcxGridLevel;
-    cxGrid_mxDBTableView1NO: TcxGridDBColumn;
-    btn_import: TButton;
     openDLG: TOpenDialog;
     btn_mx: TButton;
     dSet_salaryNO: TLargeintField;
     dSet_salarydeptName: TWideStringField;
     dSet_salaryname: TWideStringField;
     dSet_salaryyf: TStringField;
-    dSet_salarydeptID: TStringField;
-    dSet_salarybadgenumber: TStringField;
     dSet_salarygangWeiGZ: TStringField;
     dSet_salarytongXunBT: TStringField;
     dSet_salaryjiangJin: TStringField;
@@ -161,8 +110,70 @@ type
     radioExportT: TRadioButton;
     radioExportD: TRadioButton;
     Label1: TLabel;
+    lbl_zw: TLabel;
+    cbb_zw: TComboBox;
+    lbl_lb: TLabel;
+    cbb_lb: TComboBox;
+    dSet_salaryid: TAutoIncField;
+    dSet_salaryleiBie: TWideStringField;
+    dSet_salaryzhiWu: TWideStringField;
+    dSet_salaryczy: TWideStringField;
+    dSet_salaryczsj: TWideStringField;
+    cxGrid_mxDBTableView1NO: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yf: TcxGridDBColumn;
+    cxGrid_mxDBTableView1deptName: TcxGridDBColumn;
+    cxGrid_mxDBTableView1name: TcxGridDBColumn;
+    cxGrid_mxDBTableView1gangWeiGZ: TcxGridDBColumn;
+    cxGrid_mxDBTableView1tongXunBT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jiangJin: TcxGridDBColumn;
+    cxGrid_mxDBTableView1qiTaFa: TcxGridDBColumn;
+    cxGrid_mxDBTableView1nianGongGZ: TcxGridDBColumn;
+    cxGrid_mxDBTableView1xueLiJT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1zhiChengBT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yaoFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jiXiaoJJ: TcxGridDBColumn;
+    cxGrid_mxDBTableView1geLeiBT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1fuZhuJT: TcxGridDBColumn;
+    cxGrid_mxDBTableView1zhiBanFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1gaoWenFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jiaBanNum: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jiaBanFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yeCanFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1qiTaBF: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shuBaoFei: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jia1: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jia2: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jia3: TcxGridDBColumn;
+    cxGrid_mxDBTableView1suoDeShui: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yangLao: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shiYe: TcxGridDBColumn;
+    cxGrid_mxDBTableView1gongJi: TcxGridDBColumn;
+    cxGrid_mxDBTableView1yiBao: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shiJia: TcxGridDBColumn;
+    cxGrid_mxDBTableView1bingJia: TcxGridDBColumn;
+    cxGrid_mxDBTableView1chanHunSangJia: TcxGridDBColumn;
+    cxGrid_mxDBTableView1qiTaKou: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shuiDian: TcxGridDBColumn;
+    cxGrid_mxDBTableView1fangZu: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shouJi: TcxGridDBColumn;
+    cxGrid_mxDBTableView1daiKou: TcxGridDBColumn;
+    cxGrid_mxDBTableView1gongHui: TcxGridDBColumn;
+    cxGrid_mxDBTableView1nianJin: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jian1: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jian2: TcxGridDBColumn;
+    cxGrid_mxDBTableView1jian3: TcxGridDBColumn;
+    cxGrid_mxDBTableView1shiFa: TcxGridDBColumn;
+    cxGrid_mxDBTableView1memo: TcxGridDBColumn;
+    cxGrid_mxDBTableView1leiBie: TcxGridDBColumn;
+    cxGrid_mxDBTableView1zhiWu: TcxGridDBColumn;
+    yf1: TMaskEdit;
+    yf2: TMaskEdit;
+    btn_del: TButton;
+    GroupBox2: TGroupBox;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    btn_import: TButton;
     procedure FormShow(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure btn_importClick(Sender: TObject);
     procedure btn_mxClick(Sender: TObject);
     procedure cbb_nameDropDown(Sender: TObject);
@@ -176,6 +187,10 @@ type
     procedure ExportD;
     procedure ExportTemplate;
     procedure btn_exportClick(Sender: TObject);
+    procedure cbb_bmDropDown(Sender: TObject);
+    procedure cbb_zwDropDown(Sender: TObject);
+    procedure cbb_lbDropDown(Sender: TObject);
+    procedure btn_delClick(Sender: TObject);
   private
     myThread: TThread; // 线程
 
@@ -274,11 +289,21 @@ begin
   end;
 end;
 
+procedure TsalaryF.btn_delClick(Sender: TObject);
+begin
+  if not msg_query('        删除此数据？') then
+  begin
+    Exit;
+  end;
+
+end;
+
 procedure TsalaryF.btn_exportClick(Sender: TObject);
 begin
   if radioExportT.Checked then
   begin
-    ExportTemplate;
+    // not used
+    // ExportTemplate;
   end
   else if radioExportD.Checked then
   begin
@@ -300,12 +325,13 @@ var
 
   fieldsStr, valuesStr, field, value, sql_delete, sql_insert: string;
   high, totalNum: integer;
-  yf, deptId, badgenumber, czsj: string;
+  yf, czsj, deptName, name: string;
   flag: Boolean;
 const
-  TABLE_NAME = 'salary_t';
+  TABLE_NAME = 'TPsalary_t';
   lie_tips = 50; // 列提示位置
 begin
+
   if openDLG.Execute then
   begin
     if Trim(openDLG.FileName) <> '' then
@@ -319,6 +345,11 @@ begin
         excelSheet := workbook.sheets[1];
       except
         msg_err('读取Excel出错！！');
+        Exit;
+      end;
+
+      if not msg_query('        导入此数据？') then
+      begin
         Exit;
       end;
 
@@ -359,19 +390,19 @@ begin
             field := Trim(excelSheet.cells.item[1, lie]);
             value := Trim(excelSheet.cells.item[hang, lie]);
 
-            // no 姓名 部门 字段不能导入
-            if (field = '') or (LowerCase(field) = 'no') then
+            // no  字段无需导入
+            if (LowerCase(field) = 'no') then
             // or ((field) = '姓名') or ((field) = '部门')
             begin
               Continue;
             end
-            else if ((field) = '月份') or ((field) = '部门ID') or ((field) = '员工ID')
-              or ((field) = '姓名') or ((field) = '部门') then
+            else if ((field) = '月份') or ((field) = '姓名') or ((field) = '部门')
+            then
             begin
               // 月份、部门ID、员工ID。。。不能为空
               if value = '' then
               begin
-                excelSheet.cells(hang, lie_tips) := '月份、部门ID、员工ID、姓名、部门不能为空';
+                excelSheet.cells(hang, lie_tips) := '月份、姓名、部门不能为空';
                 flag := False;
                 Break;
               end
@@ -380,16 +411,20 @@ begin
                 // 主键
                 if ((field) = '月份') then
                   yf := value;
-                if ((field) = '部门ID') then
-                  deptId := value;
-                if ((field) = '员工ID') then
-                  badgenumber := value;
+                if ((field) = '姓名') then
+                  name := value;
+                if ((field) = '部门') then
+                  deptName := value;
               end;
             end
             else if (field = '备注') then
             begin
               // 备注中加上操作时间
               value := value + ' ' + czsj;
+            end
+            else if ((field) = '类别') or ((field) = '职务') then
+            begin
+              value := value;
             end
             else
             begin
@@ -408,9 +443,6 @@ begin
                   Break;
                 end;
               except
-                excelSheet.cells(hang, lie_tips) := ' 行 ' + IntToStr(hang) +
-                  ' 列 ' + field + ' 值 ' + value + '， 数据有数，无法导入';
-                flag := False;
                 Break;
               end;
             end;
@@ -424,9 +456,8 @@ begin
           begin
             valuesStr := '(' + RightStr(valuesStr, Length(valuesStr) - 1) + ')';
 
-            sql_delete := ' DELETE FROM salary_t WHERE yf=''' + yf +
-              ''' AND deptId=''' + deptId + ''' AND badgenumber=''' +
-              badgenumber + ''' ';
+            sql_delete := ' DELETE FROM TPsalary_t WHERE yf=''' + yf +
+              ''' AND deptName=''' + deptName + ''' AND name=''' + name + ''' ';
 
             sql_insert := sql_delete + ' INSERT INTO ' + TABLE_NAME + fieldsStr
               + ' VALUES ' + valuesStr;
@@ -467,25 +498,27 @@ procedure TsalaryF.btn_mxClick(Sender: TObject);
 var
   sql, d1, d2, deptName, name: string;
 begin
-  d1 := FormatDateTime('yyyy-mm', dtp1.Date);
-  d2 := FormatDateTime('yyyy-mm', dtp2.Date);
+  tab_mx.Show;
+
+  d1 := yf1.Text;
+  d2 := yf2.Text;
   name := Trim(cbb_name.Text);
   deptName := Trim(cbb_bm.Text);
 
-  if deptName = '' then
-  begin
-    msg_info('请选择部门');
-    Exit;
-  end
-  else if deptName = ALL_DEPT then
-  begin
-    deptName := '';
-  end;
+  // if deptName = '' then
+  // begin
+  // msg_info('请选择部门');
+  // Exit;
+  // end
+  // else if deptName = ALL_DEPT then
+  // begin
+  // deptName := '';
+  // end;
 
-  sql := 'SELECT row_number()over(ORDER BY s.deptName, u.lastname) AS NO, s.* FROM salary_t s  LEFT JOIN userinfo u  ON u.badgenumber=s.badgenumber '
-    + ' WHERE yf>= ''' + d1 + ''' AND yf<=''' + d2 +
-    ''' AND s.deptName LIKE ''%' + deptName + '%'' AND s.name LIKE ''%' + name +
-    '%'' ORDER BY s.deptName, u.lastname ';
+  sql := 'SELECT   row_number()over(ORDER BY o.order1) AS NO, s.* FROM TPsalary_t s '
+    + '  LEFT JOIN TPsalaryOrder_t o  ON o.name=s.deptName ' + ' WHERE yf>= '''
+    + d1 + ''' AND yf<=''' + d2 + ''' AND s.deptName LIKE ''%' + deptName +
+    '%'' AND s.name LIKE ''%' + name + '%''';
 
   try
     paintBox.Refresh;
@@ -546,7 +579,8 @@ begin
   end
   else if radioSetVisibleT.Checked then
   begin
-    SetTmplateVisible;
+    // not used
+    // SetTmplateVisible;
   end
   else
   begin
@@ -560,23 +594,24 @@ var
   bm, yf, sql: string;
   b: Boolean;
 begin
-  bm := Trim(cbb_bm.Text);
-  yf := FormatDateTime('yyyy-mm', dtp1.Date);
-  b := False;
+  {
+    bm := Trim(cbb_bm.Text);
+    yf := FormatDateTime('yyyy-mm', dtp1.Date);
+    b := False;
 
-  if bm = '' then
-  begin
+    if bm = '' then
+    begin
     msg_err('请选择部门');
     Exit;
-  end;
+    end;
 
-  try
+    try
     if msg_query('部门：' + bm + '  月份：' + yf + ' 确定导出模板？') then
     begin
-      sql := ' EXEC SP_salary_template ''' + yf + ''',''' + bm + ''' ';
-      DataSet_Open(dm.dSet_pubForGrid, sql);
+    sql := ' EXEC SP_salary_template ''' + yf + ''',''' + bm + ''' ';
+    DataSet_Open(dm.dSet_pubForGrid, sql);
 
-      b := ExportData(cxGrid_template);
+    b := ExportData(cxGrid_template);
     end;
 
     // if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
@@ -587,16 +622,33 @@ begin
 
     if b then
     begin
-      msg_info('模板完成...');
+    msg_info('模板完成...');
     end
     else
     begin
-      msg_info('模板未完成...');
+    msg_info('模板未完成...');
     end;
+  }
+  try
+
   except
     on e: Exception do
       msg_err('出错了：' + e.message);
   end;
+end;
+
+procedure TsalaryF.cbb_bmDropDown(Sender: TObject);
+begin
+  DropDown_(dm.dSet_pub, cbb_bm, 'SELECT DISTINCT deptname FROM TPsalary_t',
+    'deptname');
+
+  // cbb_bm.Items.Add(ALL_DEPT);
+end;
+
+procedure TsalaryF.cbb_lbDropDown(Sender: TObject);
+begin
+  DropDown_(dm.dSet_pub, cbb_bm, 'SELECT DISTINCT leiBie FROM TPsalary_t',
+    'leiBie');
 end;
 
 procedure TsalaryF.cbb_nameDropDown(Sender: TObject);
@@ -604,43 +656,48 @@ var
   sql, deptName: string;
 begin
   deptName := Trim(cbb_bm.Text);
-  if deptName = '' then
+  // if deptName = '' then
+  // begin
+  // cbb_name.Clear;
+  // msg_info('请选择部门');
+  // Exit;
+  // end
+  // else
+  if deptName <> '' then
   begin
-    cbb_name.Clear;
-    Exit;
+    sql := 'SELECT distinct name FROM TPsalary_t WHERE deptName=''' +
+      deptName + ''' ';
+    DropDown_(dm.dSet_pub, cbb_name, sql, 'name');
   end;
-  sql := 'SELECT distinct name FROM user_departments_v WHERE deptName=''' +
-    deptName + ''' ';
-  DropDown_(dm.dSet_pub, cbb_name, sql, 'name');
+
 end;
 
-procedure TsalaryF.FormCreate(Sender: TObject);
-var
-  dtFormat: string;
+procedure TsalaryF.cbb_zwDropDown(Sender: TObject);
 begin
-  if bm_logined = ADMIN then
-  begin
-    DropDown_(dm.dSet_pub, cbb_bm,
-      'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
-
-    cbb_bm.Items.Add(ALL_DEPT);
-  end
-  else
-  begin
-    cbb_bm.Enabled := False;
-  end;
-
-  dtFormat := LeftStr(GetDateTimeFormat, 8);
-
-  // 取当前用户设置，短日期格式。
-  dtp1.Date := StrToDate(FormatDateTime(dtFormat + '20', IncMonth(Now, -1)));
-  dtp2.Date := StrToDate(FormatDateTime(dtFormat + '20', Now));
+  DropDown_(dm.dSet_pub, cbb_bm,
+    'SELECT DISTINCT zhiWu FROM TPsalary_t', 'zhiWu');
 end;
 
 procedure TsalaryF.FormShow(Sender: TObject);
+var
+  dtFormat, mask1: string;
 begin
   // 模板不用显示
   tab_template.TabVisible := False;
+
+  // 确定日期格式----------------------------------------------
+  dtFormat := LeftStr(GetDateTimeFormat, 7);
+
+  mask1 := StringReplace(dtFormat, 'y', '9', [rfReplaceAll, rfIgnoreCase]);
+  mask1 := '!' + StringReplace(mask1, 'm', '9', [rfReplaceAll, rfIgnoreCase]
+    ) + ';0;_';
+
+  yf1.EditMask := mask1;
+  yf2.EditMask := yf1.EditMask;
+
+  yf1.Text := FormatDateTime('yyyymm', IncMonth(Now, -1));
+  yf2.Text := FormatDateTime('yyyymm', Now);
+  // ----------------------------------------------
 
   // 线程
   TThread.CreateAnonymousThread( // 直接写入方法体

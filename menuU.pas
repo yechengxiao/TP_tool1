@@ -43,6 +43,7 @@ begin
 
   if bm_logined = ADMIN then
   begin
+    // 添加节点
     treeMenu.Items.AddChild(faNode1, salaryMenu);
 
     faNode2 := treeMenu.Items.Add(nil, '食堂统计');

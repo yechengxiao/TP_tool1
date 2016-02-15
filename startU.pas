@@ -96,15 +96,15 @@ begin
     begin
       if stau_memo <> '' then
       begin
-        lbl_msg.Caption := stau_memo + ' 自动退出中...';
+        lbl_msg.Caption := stau_memo + ' 单击 退出 来关闭程序...';
       end
       else
       begin
-        lbl_msg.Caption := '此版本已停用!! ' + ' 自动退出中...';
+        lbl_msg.Caption := '此版本已停用!! ' + ' 单击 退出 来关闭程序...';
       end;
 
-      Delay(5000);
-      Application.Terminate;
+      // Delay(5000);
+      // Application.Terminate;
     end;
   finally
 
