@@ -1,7 +1,7 @@
 object salaryF: TsalaryF
   Left = 0
   Top = 0
-  Caption = #21592#24037#24037#36164#32479#35745
+  Caption = #24037#36164#32479#35745
   ClientHeight = 448
   ClientWidth = 1234
   Color = clBtnFace
@@ -23,7 +23,6 @@ object salaryF: TsalaryF
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 891
     object lbl1: TLabel
       Left = 16
       Top = 17
@@ -153,7 +152,9 @@ object salaryF: TsalaryF
         Width = 62
         Height = 17
         Caption = #25968#25454
+        Checked = True
         TabOrder = 1
+        TabStop = True
       end
       object btn_setting_visible: TButton
         Left = 11
@@ -199,7 +200,9 @@ object salaryF: TsalaryF
         Width = 50
         Height = 17
         Caption = #25968#25454
+        Checked = True
         TabOrder = 1
+        TabStop = True
       end
     end
     object cbb_zw: TComboBox
@@ -259,7 +262,7 @@ object salaryF: TsalaryF
       ParentBackground = False
       ParentColor = False
       TabOrder = 4
-      object RadioButton1: TRadioButton
+      object RB_ignore: TRadioButton
         Left = 11
         Top = 19
         Width = 68
@@ -269,7 +272,7 @@ object salaryF: TsalaryF
         TabOrder = 0
         TabStop = True
       end
-      object RadioButton2: TRadioButton
+      object RB_overlap: TRadioButton
         Left = 11
         Top = 36
         Width = 62
@@ -296,8 +299,6 @@ object salaryF: TsalaryF
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
-    ExplicitWidth = 891
-    ExplicitHeight = 330
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
@@ -306,13 +307,9 @@ object salaryF: TsalaryF
       ActivePage = tab_mx
       Align = alClient
       TabOrder = 0
-      ExplicitWidth = 889
-      ExplicitHeight = 328
       object tab_mx: TTabSheet
         Caption = #24037#36164#26126#32454
         ImageIndex = 2
-        ExplicitWidth = 881
-        ExplicitHeight = 300
         object cxGrid_mx: TcxGrid
           Left = 0
           Top = 0
@@ -320,8 +317,6 @@ object salaryF: TsalaryF
           Height = 297
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 881
-          ExplicitHeight = 300
           object cxGrid_mxDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dSource_salary
@@ -331,6 +326,9 @@ object salaryF: TsalaryF
             OptionsData.Deleting = False
             OptionsData.Editing = False
             OptionsData.Inserting = False
+            OptionsSelection.InvertSelect = False
+            OptionsSelection.MultiSelect = True
+            OptionsSelection.CellMultiSelect = True
             Styles.Background = cxStyle_bg
             Styles.Content = cxStyle_cont
             object cxGrid_mxDBTableView1NO: TcxGridDBColumn
@@ -624,20 +622,14 @@ object salaryF: TsalaryF
       object tab1: TTabSheet
         Caption = #32479#35745#65306#25353#26376#20221
         ImageIndex = 1
-        ExplicitWidth = 881
-        ExplicitHeight = 300
       end
       object tab2: TTabSheet
         Caption = #32479#35745#65306#25353#37096#38376
         ImageIndex = 2
-        ExplicitWidth = 881
-        ExplicitHeight = 300
       end
       object tab_template: TTabSheet
         Caption = #27169#26495
         ImageIndex = 3
-        ExplicitWidth = 881
-        ExplicitHeight = 300
         object cxGrid_template: TcxGrid
           Left = 0
           Top = 0
@@ -645,8 +637,6 @@ object salaryF: TsalaryF
           Height = 297
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 881
-          ExplicitHeight = 300
           object cxGrid_templateDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dm.dSource_pubForGrid

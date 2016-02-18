@@ -50,6 +50,7 @@ begin
     if (bm = '') or (pass = '') then
     begin
       msg_err('请选择部门，并填写密码 ');
+      btn_login.Enabled := True;
       Exit;
     end;
 

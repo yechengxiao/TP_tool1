@@ -119,7 +119,6 @@ object checkInOutF: TcheckInOutF
       Top = 14
       Width = 140
       Height = 21
-      Style = csDropDownList
       DropDownCount = 20
       TabOrder = 3
       OnKeyPress = cbb_bmKeyPress
@@ -141,7 +140,6 @@ object checkInOutF: TcheckInOutF
       Top = 14
       Width = 80
       Height = 21
-      Style = csDropDownList
       DropDownCount = 20
       TabOrder = 4
       OnDropDown = cbb_nameDropDown

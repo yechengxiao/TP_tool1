@@ -170,8 +170,8 @@ type
     yf2: TMaskEdit;
     btn_del: TButton;
     GroupBox2: TGroupBox;
-    RadioButton1: TRadioButton;
-    RadioButton2: TRadioButton;
+    RB_ignore: TRadioButton;
+    RB_overlap: TRadioButton;
     btn_import: TButton;
     procedure FormShow(Sender: TObject);
     procedure btn_importClick(Sender: TObject);
@@ -326,7 +326,7 @@ var
   fieldsStr, valuesStr, field, value, sql_delete, sql_insert: string;
   high, totalNum: integer;
   yf, czsj, deptName, name: string;
-  flag: Boolean;
+  isSQL: Boolean;
 const
   TABLE_NAME = 'TPsalary_t';
   lie_tips = 50; // 列提示位置
@@ -380,7 +380,7 @@ begin
         // 行循环
         while Trim(excelSheet.cells.item[hang, 1]) <> '' do
         begin
-          flag := False;
+          isSQL := False;
           valuesStr := '';
 
           // 列循环
@@ -403,7 +403,7 @@ begin
               if value = '' then
               begin
                 excelSheet.cells(hang, lie_tips) := '月份、姓名、部门不能为空';
-                flag := False;
+                isSQL := False;
                 Break;
               end
               else
@@ -439,7 +439,7 @@ begin
                 begin
                   excelSheet.cells(hang, lie_tips) := ' 行 ' + IntToStr(hang) +
                     ' 列 ' + field + ' 值 ' + value + '， 数据有数，无法导入';
-                  flag := False;
+                  isSQL := False;
                   Break;
                 end;
               except
@@ -448,23 +448,56 @@ begin
             end;
 
             valuesStr := valuesStr + ',' + QuotedStr(value);
-            flag := True;
+            isSQL := True;
           end;
 
-          // 执行导入
-          if flag then
+          if isSQL then
           begin
-            valuesStr := '(' + RightStr(valuesStr, Length(valuesStr) - 1) + ')';
-
-            sql_delete := ' DELETE FROM TPsalary_t WHERE yf=''' + yf +
-              ''' AND deptName=''' + deptName + ''' AND name=''' + name + ''' ';
-
-            sql_insert := sql_delete + ' INSERT INTO ' + TABLE_NAME + fieldsStr
-              + ' VALUES ' + valuesStr;
+            sql_delete := '';
+            sql_insert := '';
 
             paintBox.Refresh;
             paintBox.Canvas.TextOut(5, 10, '正在导入第 ' + IntToStr(hang - 1) + '条');
+
             try
+              if RB_overlap.Checked then // 覆盖导入
+              begin
+                sql_delete := ' DELETE FROM TPsalary_t WHERE yf=''' + yf +
+                  ''' AND deptName=''' + deptName + ''' AND name=''' +
+                  name + ''' ';
+
+              end
+              else if RB_ignore.Checked then // 跳过导入
+              begin
+                try
+                  sql_insert := 'SELECT top 1 ID FROM TPSALARY_T WHERE yf=''' +
+                    yf + ''' AND deptName=''' + deptName + ''' AND name=''' +
+                    name + ''' ';
+
+                  DataSet_Open(dm.dSet_pub, sql_insert);
+                  if dm.dSet_pub.FieldByName('id').AsInteger > 1 then
+                  begin
+                    excelSheet.cells(hang, lie_tips) := '已跳过导入';
+                    Inc(hang);
+                    Continue;
+                  end;
+                except
+                  excelSheet.cells(hang, lie_tips) := '已跳过导入';
+                  Inc(hang);
+                  Continue;
+                end;
+              end
+              else
+              begin
+                msg_err('    请选择导入方式...');
+                Exit;
+              end;
+
+              valuesStr := '(' + RightStr(valuesStr,
+                Length(valuesStr) - 1) + ')';
+
+              sql_insert := sql_delete + ' INSERT INTO ' + TABLE_NAME +
+                fieldsStr + ' VALUES ' + valuesStr;
               if Command_Exec(sql_insert) then
               begin
                 totalNum := totalNum + 1;
@@ -482,6 +515,7 @@ begin
 
           Inc(hang);
         end;
+
         try
           eclapp.visible := True;
         except
@@ -516,8 +550,8 @@ begin
   // end;
 
   sql := 'SELECT   row_number()over(ORDER BY o.order1) AS NO, s.* FROM TPsalary_t s '
-    + '  LEFT JOIN TPsalaryOrder_t o  ON o.name=s.deptName ' + ' WHERE yf>= '''
-    + d1 + ''' AND yf<=''' + d2 + ''' AND s.deptName LIKE ''%' + deptName +
+    + '  LEFT JOIN TPdeptOrder_t o  ON o.name=s.deptName ' + ' WHERE yf>= ''' +
+    d1 + ''' AND yf<=''' + d2 + ''' AND s.deptName LIKE ''%' + deptName +
     '%'' AND s.name LIKE ''%' + name + '%''';
 
   try

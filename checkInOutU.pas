@@ -645,8 +645,9 @@ begin
 
   if bm_logined = ADMIN then
   begin
+
     DropDown_(dm.dSet_pub, cbb_bm,
-      'SELECT deptname FROM departments ORDER BY deptname DESC', 'deptname');
+      'SELECT name as deptName FROM TPdeptOrder_t ORDER BY order1', 'deptname');
   end
   else
   begin
