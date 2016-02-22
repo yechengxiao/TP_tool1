@@ -24,7 +24,7 @@ uses
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, cxClasses,
   Data.Win.ADODB, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, System.DateUtils,
   ComObj, System.StrUtils, Vcl.Grids, Vcl.ValEdit, cxContainer, cxTextEdit,
-  cxMaskEdit, Vcl.Mask;
+  cxMaskEdit, Vcl.Mask, Vcl.Buttons;
 
 type
   TsalaryF = class(TForm)
@@ -46,7 +46,7 @@ type
     cxGrid_mxDBTableView1: TcxGridDBTableView;
     cxGrid_mxLevel1: TcxGridLevel;
     lbl: TLabel;
-    tab1: TTabSheet;
+    tab_yf: TTabSheet;
     tab2: TTabSheet;
     dSet_salary: TADODataSet;
     dSource_salary: TDataSource;
@@ -56,51 +56,6 @@ type
     cxGridLevel1: TcxGridLevel;
     openDLG: TOpenDialog;
     btn_mx: TButton;
-    dSet_salaryNO: TLargeintField;
-    dSet_salarydeptName: TWideStringField;
-    dSet_salaryname: TWideStringField;
-    dSet_salaryyf: TStringField;
-    dSet_salarygangWeiGZ: TStringField;
-    dSet_salarytongXunBT: TStringField;
-    dSet_salaryjiangJin: TStringField;
-    dSet_salaryqiTaFa: TStringField;
-    dSet_salarynianGongGZ: TStringField;
-    dSet_salaryxueLiJT: TStringField;
-    dSet_salaryzhiChengBT: TStringField;
-    dSet_salaryyaoFei: TStringField;
-    dSet_salaryjiXiaoJJ: TStringField;
-    dSet_salarygeLeiBT: TStringField;
-    dSet_salaryfuZhuJT: TStringField;
-    dSet_salaryzhiBanFei: TStringField;
-    dSet_salarygaoWenFei: TStringField;
-    dSet_salaryjiaBanNum: TStringField;
-    dSet_salaryjiaBanFei: TStringField;
-    dSet_salaryyeCanFei: TStringField;
-    dSet_salaryqiTaBF: TStringField;
-    dSet_salaryshuBaoFei: TStringField;
-    dSet_salaryjia1: TStringField;
-    dSet_salaryjia2: TStringField;
-    dSet_salaryjia3: TStringField;
-    dSet_salarysuoDeShui: TStringField;
-    dSet_salaryyangLao: TStringField;
-    dSet_salaryshiYe: TStringField;
-    dSet_salarygongJi: TStringField;
-    dSet_salaryyiBao: TStringField;
-    dSet_salaryshiJia: TStringField;
-    dSet_salarybingJia: TStringField;
-    dSet_salarychanHunSangJia: TStringField;
-    dSet_salaryqiTaKou: TStringField;
-    dSet_salaryshuiDian: TStringField;
-    dSet_salaryfangZu: TStringField;
-    dSet_salaryshouJi: TStringField;
-    dSet_salarydaiKou: TStringField;
-    dSet_salarygongHui: TStringField;
-    dSet_salarynianJin: TStringField;
-    dSet_salaryjian1: TStringField;
-    dSet_salaryjian2: TStringField;
-    dSet_salaryjian3: TStringField;
-    dSet_salaryshiFa: TStringField;
-    dSet_salarymemo: TStringField;
     groupB: TGroupBox;
     radioSetVisibleT: TRadioButton;
     radioSetVisibleD: TRadioButton;
@@ -109,20 +64,73 @@ type
     btn_export: TButton;
     radioExportT: TRadioButton;
     radioExportD: TRadioButton;
-    Label1: TLabel;
     lbl_zw: TLabel;
     cbb_zw: TComboBox;
     lbl_lb: TLabel;
     cbb_lb: TComboBox;
+    yf1: TMaskEdit;
+    yf2: TMaskEdit;
+    GroupBox2: TGroupBox;
+    RB_ignore: TRadioButton;
+    RB_overlap: TRadioButton;
+    btn_import: TButton;
+    btn_del: TBitBtn;
+    dSet_salaryNO: TLargeintField;
     dSet_salaryid: TAutoIncField;
+    dSet_salaryyf: TWideStringField;
+    dSet_salarydeptName: TWideStringField;
+    dSet_salaryname: TWideStringField;
     dSet_salaryleiBie: TWideStringField;
     dSet_salaryzhiWu: TWideStringField;
+    dSet_salarygangWeiGZ: TBCDField;
+    dSet_salarytongXunBT: TBCDField;
+    dSet_salaryjiangJin: TBCDField;
+    dSet_salaryqiTaFa: TBCDField;
+    dSet_salarynianGongGZ: TBCDField;
+    dSet_salaryxueLiJT: TBCDField;
+    dSet_salaryzhiChengBT: TBCDField;
+    dSet_salaryyaoFei: TBCDField;
+    dSet_salaryjiXiaoJJ: TBCDField;
+    dSet_salarygeLeiBT: TBCDField;
+    dSet_salaryfuZhuJT: TBCDField;
+    dSet_salaryzhiBanFei: TBCDField;
+    dSet_salarygaoWenFei: TBCDField;
+    dSet_salaryjiaBanNum: TBCDField;
+    dSet_salaryjiaBanFei: TBCDField;
+    dSet_salaryyeCanFei: TBCDField;
+    dSet_salaryqiTaBF: TBCDField;
+    dSet_salaryshuBaoFei: TBCDField;
+    dSet_salaryjia1: TBCDField;
+    dSet_salaryjia2: TBCDField;
+    dSet_salaryjia3: TBCDField;
+    dSet_salarysuoDeShui: TBCDField;
+    dSet_salaryyangLao: TBCDField;
+    dSet_salaryshiYe: TBCDField;
+    dSet_salarygongJi: TBCDField;
+    dSet_salaryyiBao: TBCDField;
+    dSet_salaryshiJia: TBCDField;
+    dSet_salarybingJia: TBCDField;
+    dSet_salarychanHunSangJia: TBCDField;
+    dSet_salaryqiTaKou: TBCDField;
+    dSet_salaryshuiDian: TBCDField;
+    dSet_salaryfangZu: TBCDField;
+    dSet_salaryshouJi: TBCDField;
+    dSet_salarydaiKou: TBCDField;
+    dSet_salarygongHui: TBCDField;
+    dSet_salarynianJin: TBCDField;
+    dSet_salaryjian1: TBCDField;
+    dSet_salaryjian2: TBCDField;
+    dSet_salaryjian3: TBCDField;
+    dSet_salaryshiFa: TBCDField;
+    dSet_salarymemo: TWideStringField;
     dSet_salaryczy: TWideStringField;
     dSet_salaryczsj: TWideStringField;
     cxGrid_mxDBTableView1NO: TcxGridDBColumn;
     cxGrid_mxDBTableView1yf: TcxGridDBColumn;
     cxGrid_mxDBTableView1deptName: TcxGridDBColumn;
     cxGrid_mxDBTableView1name: TcxGridDBColumn;
+    cxGrid_mxDBTableView1leiBie: TcxGridDBColumn;
+    cxGrid_mxDBTableView1zhiWu: TcxGridDBColumn;
     cxGrid_mxDBTableView1gangWeiGZ: TcxGridDBColumn;
     cxGrid_mxDBTableView1tongXunBT: TcxGridDBColumn;
     cxGrid_mxDBTableView1jiangJin: TcxGridDBColumn;
@@ -164,15 +172,6 @@ type
     cxGrid_mxDBTableView1jian3: TcxGridDBColumn;
     cxGrid_mxDBTableView1shiFa: TcxGridDBColumn;
     cxGrid_mxDBTableView1memo: TcxGridDBColumn;
-    cxGrid_mxDBTableView1leiBie: TcxGridDBColumn;
-    cxGrid_mxDBTableView1zhiWu: TcxGridDBColumn;
-    yf1: TMaskEdit;
-    yf2: TMaskEdit;
-    btn_del: TButton;
-    GroupBox2: TGroupBox;
-    RB_ignore: TRadioButton;
-    RB_overlap: TRadioButton;
-    btn_import: TButton;
     procedure FormShow(Sender: TObject);
     procedure btn_importClick(Sender: TObject);
     procedure btn_mxClick(Sender: TObject);
@@ -191,6 +190,7 @@ type
     procedure cbb_zwDropDown(Sender: TObject);
     procedure cbb_lbDropDown(Sender: TObject);
     procedure btn_delClick(Sender: TObject);
+    procedure btn_tjClick(Sender: TObject);
   private
     myThread: TThread; // 线程
 
@@ -290,8 +290,30 @@ begin
 end;
 
 procedure TsalaryF.btn_delClick(Sender: TObject);
+var
+  yf, who, deptName, id: string;
 begin
-  if not msg_query('        删除此数据？') then
+  if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
+  begin
+    msg_info('没有数据...');
+    Exit;
+  end;
+
+  yf := dSet_salary.FieldByName('yf').AsString;
+  deptName := dSet_salary.FieldByName('deptName').AsString;
+  who := dSet_salary.FieldByName('name').AsString;
+
+  if msg_query(' 删除 ' + yf + ' 月, ' + deptName + ', ' + who + ' 的此条明细？') then
+  begin
+    id := dSet_salary.FieldByName('id').AsString;
+
+    if Command_Exec('DELETE FROM TPsalary_t WHERE id =' + id) then
+    begin
+      msg_info('   删除成功');
+      btn_mx.Click;
+    end;
+  end
+  else
   begin
     Exit;
   end;
@@ -330,6 +352,8 @@ var
 const
   TABLE_NAME = 'TPsalary_t';
   lie_tips = 50; // 列提示位置
+  strName = '人员';
+  strYF = '批次';
 begin
 
   if openDLG.Execute then
@@ -348,7 +372,7 @@ begin
         Exit;
       end;
 
-      if not msg_query('        导入此数据？') then
+      if not msg_query('        导入数据？') then
       begin
         Exit;
       end;
@@ -363,9 +387,16 @@ begin
             field := Trim(excelSheet.cells.item[1, lie]);
 
             if (field <> '') AND (LowerCase(field) <> 'no') then
-            // AND  ((field) <> '姓名') AND ((field) <> '部门')
             begin
-              fieldsStr := fieldsStr + ',' + fieldMap.Values[field];
+              if fieldMap.Values[field] <> '' then
+              begin
+                fieldsStr := fieldsStr + ',' + fieldMap.Values[field];
+              end
+              else
+              begin
+                msg_err('请确认Excel列标题是否与程序中相同。');
+                Exit;
+              end;
             end;
           end;
           fieldsStr := '(' + RightStr(fieldsStr, Length(fieldsStr) - 1) + ')';
@@ -392,26 +423,26 @@ begin
 
             // no  字段无需导入
             if (LowerCase(field) = 'no') then
-            // or ((field) = '姓名') or ((field) = '部门')
             begin
               Continue;
             end
-            else if ((field) = '月份') or ((field) = '姓名') or ((field) = '部门')
+            else if ((field) = strYF) or ((field) = strName) or ((field) = '部门')
             then
             begin
-              // 月份、部门ID、员工ID。。。不能为空
+
               if value = '' then
               begin
-                excelSheet.cells(hang, lie_tips) := '月份、姓名、部门不能为空';
+                excelSheet.cells(hang, lie_tips) := strYF + ' ' + strName +
+                  ' 部门不能为空';
                 isSQL := False;
                 Break;
               end
               else
               begin
                 // 主键
-                if ((field) = '月份') then
+                if ((field) = strYF) then
                   yf := value;
-                if ((field) = '姓名') then
+                if ((field) = strName) then
                   name := value;
                 if ((field) = '部门') then
                   deptName := value;
@@ -475,7 +506,7 @@ begin
                     name + ''' ';
 
                   DataSet_Open(dm.dSet_pub, sql_insert);
-                  if dm.dSet_pub.FieldByName('id').AsInteger > 1 then
+                  if dm.dSet_pub.FieldByName('id').AsInteger > 0 then
                   begin
                     excelSheet.cells(hang, lie_tips) := '已跳过导入';
                     Inc(hang);
@@ -621,6 +652,16 @@ begin
     msg_err('未选择操作!');
     Exit;
   end;
+end;
+
+procedure TsalaryF.btn_tjClick(Sender: TObject);
+begin
+
+  if pg_ctl.ActivePage = tab_yf then
+  begin
+
+  end;
+
 end;
 
 procedure TsalaryF.ExportTemplate;

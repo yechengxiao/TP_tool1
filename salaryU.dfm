@@ -2,8 +2,8 @@ object salaryF: TsalaryF
   Left = 0
   Top = 0
   Caption = #24037#36164#32479#35745
-  ClientHeight = 448
-  ClientWidth = 1234
+  ClientHeight = 438
+  ClientWidth = 906
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object salaryF: TsalaryF
   object pan_up: TPanel
     Left = 0
     Top = 0
-    Width = 1234
+    Width = 906
     Height = 121
     Align = alTop
     Color = clInfoBk
@@ -28,7 +28,7 @@ object salaryF: TsalaryF
       Top = 17
       Width = 24
       Height = 13
-      Caption = #26376#20221
+      Caption = #25209#27425
     end
     object lbl_bm: TLabel
       Left = 16
@@ -38,7 +38,7 @@ object salaryF: TsalaryF
       Caption = #37096#38376
     end
     object paintBox: TPaintBox
-      Left = 1014
+      Left = 686
       Top = 1
       Width = 219
       Height = 119
@@ -60,21 +60,6 @@ object salaryF: TsalaryF
       Height = 13
       Caption = #33267
     end
-    object Label1: TLabel
-      Left = 16
-      Top = 102
-      Width = 336
-      Height = 13
-      Caption = #23548#20837#26102#65292#33509#25968#25454#24050#23384#22312#65292#21017#20197#23548#20837#25968#25454#20026#20934#65292#32769#25968#25454#23558#34987#21024#38500#12290
-      Color = clInfoBk
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentColor = False
-      ParentFont = False
-    end
     object lbl_zw: TLabel
       Left = 194
       Top = 44
@@ -90,13 +75,14 @@ object salaryF: TsalaryF
       Caption = #31867#21035
     end
     object btn_tj: TButton
-      Left = 359
-      Top = 5
+      Left = 369
+      Top = 65
       Width = 80
       Height = 25
       Caption = #32479#35745
-      TabOrder = 1
-      Visible = False
+      Enabled = False
+      TabOrder = 8
+      OnClick = btn_tjClick
     end
     object cbb_bm: TComboBox
       Left = 44
@@ -104,7 +90,7 @@ object salaryF: TsalaryF
       Width = 130
       Height = 21
       DropDownCount = 20
-      TabOrder = 9
+      TabOrder = 7
       OnDropDown = cbb_bmDropDown
       Items.Strings = (
         '')
@@ -115,16 +101,16 @@ object salaryF: TsalaryF
       Width = 130
       Height = 21
       DropDownCount = 20
-      TabOrder = 11
+      TabOrder = 10
       OnDropDown = cbb_nameDropDown
     end
     object btn_mx: TButton
-      Left = 273
-      Top = 5
+      Left = 368
+      Top = 36
       Width = 80
       Height = 25
       Caption = #24037#36164#26126#32454
-      TabOrder = 0
+      TabOrder = 6
       OnClick = btn_mxClick
     end
     object groupB: TGroupBox
@@ -136,7 +122,7 @@ object salaryF: TsalaryF
       Color = clInfoBk
       ParentBackground = False
       ParentColor = False
-      TabOrder = 3
+      TabOrder = 1
       object radioSetVisibleT: TRadioButton
         Left = 11
         Top = 19
@@ -145,6 +131,7 @@ object salaryF: TsalaryF
         Caption = #27169#26495
         Enabled = False
         TabOrder = 0
+        Visible = False
       end
       object radioSetVisibleD: TRadioButton
         Left = 11
@@ -175,7 +162,7 @@ object salaryF: TsalaryF
       Color = clInfoBk
       ParentBackground = False
       ParentColor = False
-      TabOrder = 2
+      TabOrder = 0
       object btn_export: TButton
         Left = 3
         Top = 59
@@ -193,6 +180,7 @@ object salaryF: TsalaryF
         Caption = #27169#26495
         Enabled = False
         TabOrder = 0
+        Visible = False
       end
       object radioExportD: TRadioButton
         Left = 3
@@ -211,7 +199,7 @@ object salaryF: TsalaryF
       Width = 130
       Height = 21
       DropDownCount = 20
-      TabOrder = 8
+      TabOrder = 5
       OnDropDown = cbb_zwDropDown
       Items.Strings = (
         '')
@@ -222,7 +210,7 @@ object salaryF: TsalaryF
       Width = 130
       Height = 21
       DropDownCount = 20
-      TabOrder = 10
+      TabOrder = 9
       OnDropDown = cbb_lbDropDown
       Items.Strings = (
         '')
@@ -232,7 +220,7 @@ object salaryF: TsalaryF
       Top = 11
       Width = 60
       Height = 21
-      TabOrder = 5
+      TabOrder = 3
       Text = ''
     end
     object yf2: TMaskEdit
@@ -240,17 +228,8 @@ object salaryF: TsalaryF
       Top = 11
       Width = 60
       Height = 21
-      TabOrder = 6
+      TabOrder = 4
       Text = ''
-    end
-    object btn_del: TButton
-      Left = 726
-      Top = 12
-      Width = 80
-      Height = 25
-      Caption = #21333#26465#21024#38500
-      TabOrder = 7
-      OnClick = btn_delClick
     end
     object GroupBox2: TGroupBox
       Left = 611
@@ -261,7 +240,7 @@ object salaryF: TsalaryF
       Color = clInfoBk
       ParentBackground = False
       ParentColor = False
-      TabOrder = 4
+      TabOrder = 2
       object RB_ignore: TRadioButton
         Left = 11
         Top = 19
@@ -290,20 +269,76 @@ object salaryF: TsalaryF
         OnClick = btn_importClick
       end
     end
+    object btn_del: TBitBtn
+      Left = 720
+      Top = 70
+      Width = 75
+      Height = 25
+      Hint = #21024#38500#19968#26465#24037#36164#26126#32454
+      ParentCustomHint = False
+      BiDiMode = bdLeftToRight
+      Caption = 'Detele'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00020000000900000012000000180000001A0000001A00000018000000100000
+        0005000000010000000000000000000000000000000000000000000000020000
+        000D3524146A936338E5A56B3AFFA36938FFA16736FF9D6233FB633E20B70805
+        022800000006000000010000000000000000000000000000000000000008442F
+        1D78C18B59FEE1AC76FFE4C296FFB5793BFFB5793CFFB5793CFFAD7239FF7E50
+        2AD80302042A00000006000000010000000000000000000000000000000DB07D
+        4EF3E6B17AFFE9B47DFFE9B47DFFE7C79DFFB67A3DFFB57A3DFFB57A3DFF6953
+        7BFF090E5ED50001052800000006000000010000000000000000000000086A4E
+        329DEFD7B3FFE9B47DFFE9B47DFFE9B47DFFEACDA4FFB57B3EFF735C86FF313F
+        CCFF2935B8FF0B1161D501010627000000050000000100000000000000010000
+        000C745538A5F2DDBBFFE9B47DFFE9B47DFFE9B47DFFD1CEE1FF3443CEFF3443
+        CDFF3443CEFF2C39BAFF0D1463D4010106260000000500000001000000000000
+        00020000000B76583BA4F5E2C1FFE9B47DFFB5A9B8FF829FF1FFB1C9F5FF3949
+        D1FF3A4AD1FF3A49D1FF303FBDFF111767D30101062500000005000000000000
+        0000000000010000000B785B3DA3E9E1D2FF87A3F2FF87A4F1FF87A3F2FFB9D0
+        F7FF3E50D5FF3E50D5FF3F50D5FF3545C2FF141B6AD201010622000000000000
+        000000000000000000010000000A2C386FA2C9E2F9FF8CA8F3FF8DA8F3FF8CA8
+        F3FFC0D8F9FF4457D9FF4356D9FF4456D9FF3949C2FF141A61C2000000000000
+        000000000000000000000000000100000009303D74A1CFE7FBFF92ADF3FF91AD
+        F4FF92ADF4FFC6DEFAFF495EDBFF495DDCFF475AD7FF232F8BF0000000000000
+        00000000000000000000000000000000000100000008334177A0D4ECFCFF97B2
+        F5FF97B2F4FF97B3F5FFCCE4FBFF4A5FDAFF3141A4F6090C214A000000000000
+        000000000000000000000000000000000000000000010000000736457A9FD8F0
+        FDFF9DB7F5FF9CB7F5FFD9F1FEFF6B81CAF50B0E234700000006000000000000
+        0000000000000000000000000000000000000000000000000001000000063947
+        7D9EDBF3FEFFDBF3FFFF677FCFF513192C440000000500000001000000000000
+        0000000000000000000000000000000000000000000000000000000000010000
+        00053543728E4F63AACD151A2D40000000040000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0001000000030000000400000002000000000000000000000000}
+      ParentBiDiMode = False
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 11
+      OnClick = btn_delClick
+    end
   end
   object pan_down: TPanel
     Left = 0
     Top = 121
-    Width = 1234
-    Height = 327
+    Width = 906
+    Height = 317
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
-      Width = 1232
-      Height = 325
+      Width = 904
+      Height = 315
       ActivePage = tab_mx
       Align = alClient
       TabOrder = 0
@@ -313,15 +348,23 @@ object salaryF: TsalaryF
         object cxGrid_mx: TcxGrid
           Left = 0
           Top = 0
-          Width = 1224
-          Height = 297
+          Width = 896
+          Height = 287
           Align = alClient
           TabOrder = 0
           object cxGrid_mxDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dSource_salary
             DataController.Summary.DefaultGroupSummaryItems = <>
-            DataController.Summary.FooterSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1gangWeiGZ
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1tongXunBT
+              end>
             DataController.Summary.SummaryGroups = <>
             OptionsData.Deleting = False
             OptionsData.Editing = False
@@ -329,6 +372,7 @@ object salaryF: TsalaryF
             OptionsSelection.InvertSelect = False
             OptionsSelection.MultiSelect = True
             OptionsSelection.CellMultiSelect = True
+            OptionsView.Footer = True
             Styles.Background = cxStyle_bg
             Styles.Content = cxStyle_cont
             object cxGrid_mxDBTableView1NO: TcxGridDBColumn
@@ -341,271 +385,271 @@ object salaryF: TsalaryF
               DataBinding.FieldName = 'yf'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1deptName: TcxGridDBColumn
               DataBinding.FieldName = 'deptName'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
-            end
-            object cxGrid_mxDBTableView1leiBie: TcxGridDBColumn
-              DataBinding.FieldName = 'leiBie'
-              HeaderAlignmentHorz = taCenter
-              HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
-            end
-            object cxGrid_mxDBTableView1zhiWu: TcxGridDBColumn
-              DataBinding.FieldName = 'zhiWu'
-              HeaderAlignmentHorz = taCenter
-              HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 150
             end
             object cxGrid_mxDBTableView1name: TcxGridDBColumn
               DataBinding.FieldName = 'name'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
+            end
+            object cxGrid_mxDBTableView1leiBie: TcxGridDBColumn
+              DataBinding.FieldName = 'leiBie'
+              HeaderAlignmentHorz = taCenter
+              HeaderGlyphAlignmentHorz = taCenter
+              Width = 80
+            end
+            object cxGrid_mxDBTableView1zhiWu: TcxGridDBColumn
+              DataBinding.FieldName = 'zhiWu'
+              HeaderAlignmentHorz = taCenter
+              HeaderGlyphAlignmentHorz = taCenter
+              Width = 80
             end
             object cxGrid_mxDBTableView1gangWeiGZ: TcxGridDBColumn
               DataBinding.FieldName = 'gangWeiGZ'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1tongXunBT: TcxGridDBColumn
               DataBinding.FieldName = 'tongXunBT'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jiangJin: TcxGridDBColumn
               DataBinding.FieldName = 'jiangJin'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1qiTaFa: TcxGridDBColumn
               DataBinding.FieldName = 'qiTaFa'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1nianGongGZ: TcxGridDBColumn
               DataBinding.FieldName = 'nianGongGZ'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1xueLiJT: TcxGridDBColumn
               DataBinding.FieldName = 'xueLiJT'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1zhiChengBT: TcxGridDBColumn
               DataBinding.FieldName = 'zhiChengBT'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1yaoFei: TcxGridDBColumn
               DataBinding.FieldName = 'yaoFei'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jiXiaoJJ: TcxGridDBColumn
               DataBinding.FieldName = 'jiXiaoJJ'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1geLeiBT: TcxGridDBColumn
               DataBinding.FieldName = 'geLeiBT'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1fuZhuJT: TcxGridDBColumn
               DataBinding.FieldName = 'fuZhuJT'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1zhiBanFei: TcxGridDBColumn
               DataBinding.FieldName = 'zhiBanFei'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1gaoWenFei: TcxGridDBColumn
               DataBinding.FieldName = 'gaoWenFei'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jiaBanNum: TcxGridDBColumn
               DataBinding.FieldName = 'jiaBanNum'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jiaBanFei: TcxGridDBColumn
               DataBinding.FieldName = 'jiaBanFei'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1yeCanFei: TcxGridDBColumn
               DataBinding.FieldName = 'yeCanFei'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1qiTaBF: TcxGridDBColumn
               DataBinding.FieldName = 'qiTaBF'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1shuBaoFei: TcxGridDBColumn
               DataBinding.FieldName = 'shuBaoFei'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jia1: TcxGridDBColumn
               DataBinding.FieldName = 'jia1'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jia2: TcxGridDBColumn
               DataBinding.FieldName = 'jia2'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jia3: TcxGridDBColumn
               DataBinding.FieldName = 'jia3'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1suoDeShui: TcxGridDBColumn
               DataBinding.FieldName = 'suoDeShui'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1yangLao: TcxGridDBColumn
               DataBinding.FieldName = 'yangLao'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1shiYe: TcxGridDBColumn
               DataBinding.FieldName = 'shiYe'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1gongJi: TcxGridDBColumn
               DataBinding.FieldName = 'gongJi'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1yiBao: TcxGridDBColumn
               DataBinding.FieldName = 'yiBao'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1shiJia: TcxGridDBColumn
               DataBinding.FieldName = 'shiJia'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1bingJia: TcxGridDBColumn
               DataBinding.FieldName = 'bingJia'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1chanHunSangJia: TcxGridDBColumn
               DataBinding.FieldName = 'chanHunSangJia'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1qiTaKou: TcxGridDBColumn
               DataBinding.FieldName = 'qiTaKou'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1shuiDian: TcxGridDBColumn
               DataBinding.FieldName = 'shuiDian'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1fangZu: TcxGridDBColumn
               DataBinding.FieldName = 'fangZu'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1shouJi: TcxGridDBColumn
               DataBinding.FieldName = 'shouJi'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1daiKou: TcxGridDBColumn
               DataBinding.FieldName = 'daiKou'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1gongHui: TcxGridDBColumn
               DataBinding.FieldName = 'gongHui'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1nianJin: TcxGridDBColumn
               DataBinding.FieldName = 'nianJin'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jian1: TcxGridDBColumn
               DataBinding.FieldName = 'jian1'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jian2: TcxGridDBColumn
               DataBinding.FieldName = 'jian2'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1jian3: TcxGridDBColumn
               DataBinding.FieldName = 'jian3'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1shiFa: TcxGridDBColumn
               DataBinding.FieldName = 'shiFa'
               HeaderAlignmentHorz = taCenter
               HeaderGlyphAlignmentHorz = taCenter
-              Width = 100
+              Width = 80
             end
             object cxGrid_mxDBTableView1memo: TcxGridDBColumn
               DataBinding.FieldName = 'memo'
@@ -619,8 +663,8 @@ object salaryF: TsalaryF
           end
         end
       end
-      object tab1: TTabSheet
-        Caption = #32479#35745#65306#25353#26376#20221
+      object tab_yf: TTabSheet
+        Caption = #32479#35745#65306#25353#25209#27425
         ImageIndex = 1
       end
       object tab2: TTabSheet
@@ -633,8 +677,8 @@ object salaryF: TsalaryF
         object cxGrid_template: TcxGrid
           Left = 0
           Top = 0
-          Width = 1224
-          Height = 297
+          Width = 896
+          Height = 287
           Align = alClient
           TabOrder = 0
           object cxGrid_templateDBTableView1: TcxGridDBTableView
@@ -675,18 +719,24 @@ object salaryF: TsalaryF
     CursorType = ctStatic
     CommandText = 
       'SELECT TOP 0 row_number()over(ORDER BY o.order1) AS NO, s.* '#13#10'FR' +
-      'OM TPsalary_t s  '#13#10'LEFT JOIN TPsalaryOrder_t o  ON o.name=s.dept' +
-      'Name'
+      'OM TPsalary_t s  '#13#10'LEFT JOIN TPdeptOrder_t o  ON o.name=s.deptNa' +
+      'me'
     Parameters = <>
     Left = 40
-    Top = 319
+    Top = 327
     object dSet_salaryNO: TLargeintField
       FieldName = 'NO'
       ReadOnly = True
     end
-    object dSet_salaryyf: TStringField
-      DisplayLabel = #26376#20221
+    object dSet_salaryid: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldName = 'id'
+      ReadOnly = True
+    end
+    object dSet_salaryyf: TWideStringField
+      DisplayLabel = #25209#27425
       FieldName = 'yf'
+      Size = 10
     end
     object dSet_salarydeptName: TWideStringField
       DisplayLabel = #37096#38376
@@ -694,178 +744,9 @@ object salaryF: TsalaryF
       Size = 50
     end
     object dSet_salaryname: TWideStringField
-      DisplayLabel = #22995#21517
+      DisplayLabel = #20154#21592
       FieldName = 'name'
-      Size = 24
-    end
-    object dSet_salarygangWeiGZ: TStringField
-      DisplayLabel = #23703#20301#24037#36164
-      FieldName = 'gangWeiGZ'
-    end
-    object dSet_salarytongXunBT: TStringField
-      DisplayLabel = #36890#35759#34917#36148
-      FieldName = 'tongXunBT'
-    end
-    object dSet_salaryjiangJin: TStringField
-      DisplayLabel = #22870#37329
-      FieldName = 'jiangJin'
-    end
-    object dSet_salaryqiTaFa: TStringField
-      DisplayLabel = #20854#20182#21457
-      FieldName = 'qiTaFa'
-    end
-    object dSet_salarynianGongGZ: TStringField
-      DisplayLabel = #24180#21151#24037#36164
-      FieldName = 'nianGongGZ'
-    end
-    object dSet_salaryxueLiJT: TStringField
-      DisplayLabel = #23398#21382#27941#36148
-      FieldName = 'xueLiJT'
-    end
-    object dSet_salaryzhiChengBT: TStringField
-      DisplayLabel = #32844#31216#34917#36148
-      FieldName = 'zhiChengBT'
-    end
-    object dSet_salaryyaoFei: TStringField
-      DisplayLabel = #33647#36153
-      FieldName = 'yaoFei'
-    end
-    object dSet_salaryjiXiaoJJ: TStringField
-      DisplayLabel = #32489#25928#22870#37329
-      FieldName = 'jiXiaoJJ'
-    end
-    object dSet_salarygeLeiBT: TStringField
-      DisplayLabel = #21508#31867#34917#36148
-      FieldName = 'geLeiBT'
-    end
-    object dSet_salaryfuZhuJT: TStringField
-      DisplayLabel = #36741#21161#27941#36148
-      FieldName = 'fuZhuJT'
-    end
-    object dSet_salaryzhiBanFei: TStringField
-      DisplayLabel = #20540#29677#36153
-      FieldName = 'zhiBanFei'
-    end
-    object dSet_salarygaoWenFei: TStringField
-      DisplayLabel = #39640#28201#36153
-      FieldName = 'gaoWenFei'
-    end
-    object dSet_salaryjiaBanNum: TStringField
-      DisplayLabel = #21152#29677#29677#25968
-      FieldName = 'jiaBanNum'
-    end
-    object dSet_salaryjiaBanFei: TStringField
-      DisplayLabel = #21152#29677#36153
-      FieldName = 'jiaBanFei'
-    end
-    object dSet_salaryyeCanFei: TStringField
-      DisplayLabel = #22812#39184#36153
-      FieldName = 'yeCanFei'
-    end
-    object dSet_salaryqiTaBF: TStringField
-      DisplayLabel = #20854#20182#34917#21457
-      FieldName = 'qiTaBF'
-    end
-    object dSet_salaryshuBaoFei: TStringField
-      DisplayLabel = #20070#25253#36153
-      FieldName = 'shuBaoFei'
-    end
-    object dSet_salaryjia1: TStringField
-      DisplayLabel = #21152#39033'1'
-      FieldName = 'jia1'
-    end
-    object dSet_salaryjia2: TStringField
-      DisplayLabel = #21152#39033'2'
-      FieldName = 'jia2'
-    end
-    object dSet_salaryjia3: TStringField
-      DisplayLabel = #21152#39033'3'
-      FieldName = 'jia3'
-    end
-    object dSet_salarysuoDeShui: TStringField
-      DisplayLabel = #25152#24471#31246
-      FieldName = 'suoDeShui'
-    end
-    object dSet_salaryyangLao: TStringField
-      DisplayLabel = #20859#32769#37329
-      FieldName = 'yangLao'
-    end
-    object dSet_salaryshiYe: TStringField
-      DisplayLabel = #22833#19994#37329
-      FieldName = 'shiYe'
-    end
-    object dSet_salarygongJi: TStringField
-      DisplayLabel = #20844#31215#37329
-      FieldName = 'gongJi'
-    end
-    object dSet_salaryyiBao: TStringField
-      DisplayLabel = #21307#20445
-      FieldName = 'yiBao'
-    end
-    object dSet_salaryshiJia: TStringField
-      DisplayLabel = #20107#20551
-      FieldName = 'shiJia'
-    end
-    object dSet_salarybingJia: TStringField
-      DisplayLabel = #30149#20551
-      FieldName = 'bingJia'
-    end
-    object dSet_salarychanHunSangJia: TStringField
-      DisplayLabel = #20135'_'#23130'_'#20007#20551
-      FieldName = 'chanHunSangJia'
-    end
-    object dSet_salaryqiTaKou: TStringField
-      DisplayLabel = #20854#20182#25187
-      FieldName = 'qiTaKou'
-    end
-    object dSet_salaryshuiDian: TStringField
-      DisplayLabel = #27700#30005#36153
-      FieldName = 'shuiDian'
-    end
-    object dSet_salaryfangZu: TStringField
-      DisplayLabel = #25151#31199#36153
-      FieldName = 'fangZu'
-    end
-    object dSet_salaryshouJi: TStringField
-      DisplayLabel = #25163#26426#36153
-      FieldName = 'shouJi'
-    end
-    object dSet_salarydaiKou: TStringField
-      DisplayLabel = #20195#25187
-      FieldName = 'daiKou'
-    end
-    object dSet_salarygongHui: TStringField
-      DisplayLabel = #24037#20250#36153
-      FieldName = 'gongHui'
-    end
-    object dSet_salarynianJin: TStringField
-      DisplayLabel = #24180#37329
-      FieldName = 'nianJin'
-    end
-    object dSet_salaryjian1: TStringField
-      DisplayLabel = #20943#39033'1'
-      FieldName = 'jian1'
-    end
-    object dSet_salaryjian2: TStringField
-      DisplayLabel = #20943#39033'2'
-      FieldName = 'jian2'
-    end
-    object dSet_salaryjian3: TStringField
-      DisplayLabel = #20943#39033'3'
-      FieldName = 'jian3'
-    end
-    object dSet_salaryshiFa: TStringField
-      DisplayLabel = #23454#21457#37329#39069
-      FieldName = 'shiFa'
-    end
-    object dSet_salarymemo: TStringField
-      DisplayLabel = #22791#27880
-      FieldName = 'memo'
-      Size = 600
-    end
-    object dSet_salaryid: TAutoIncField
-      FieldName = 'id'
-      ReadOnly = True
+      Size = 50
     end
     object dSet_salaryleiBie: TWideStringField
       DisplayLabel = #31867#21035
@@ -876,6 +757,251 @@ object salaryF: TsalaryF
       DisplayLabel = #32844#21153
       FieldName = 'zhiWu'
       Size = 50
+    end
+    object dSet_salarygangWeiGZ: TBCDField
+      DisplayLabel = #23703#20301#24037#36164
+      FieldName = 'gangWeiGZ'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarytongXunBT: TBCDField
+      DisplayLabel = #36890#35759#34917#36148
+      FieldName = 'tongXunBT'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjiangJin: TBCDField
+      DisplayLabel = #22870#37329
+      FieldName = 'jiangJin'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryqiTaFa: TBCDField
+      DisplayLabel = #20854#20182#21457
+      FieldName = 'qiTaFa'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarynianGongGZ: TBCDField
+      DisplayLabel = #24180#21151#24037#36164
+      FieldName = 'nianGongGZ'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryxueLiJT: TBCDField
+      DisplayLabel = #23398#21382#27941#36148
+      FieldName = 'xueLiJT'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryzhiChengBT: TBCDField
+      DisplayLabel = #32844#31216#34917#36148
+      FieldName = 'zhiChengBT'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryyaoFei: TBCDField
+      DisplayLabel = #33647#36153
+      FieldName = 'yaoFei'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjiXiaoJJ: TBCDField
+      DisplayLabel = #32489#25928#22870#37329
+      FieldName = 'jiXiaoJJ'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarygeLeiBT: TBCDField
+      DisplayLabel = #21508#31867#34917#36148
+      FieldName = 'geLeiBT'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryfuZhuJT: TBCDField
+      DisplayLabel = #36741#21161#27941#36148
+      FieldName = 'fuZhuJT'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryzhiBanFei: TBCDField
+      DisplayLabel = #20540#29677#36153
+      FieldName = 'zhiBanFei'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarygaoWenFei: TBCDField
+      DisplayLabel = #39640#28201#36153
+      FieldName = 'gaoWenFei'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjiaBanNum: TBCDField
+      DisplayLabel = #21152#29677#29677#25968
+      FieldName = 'jiaBanNum'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjiaBanFei: TBCDField
+      DisplayLabel = #21152#29677#36153
+      FieldName = 'jiaBanFei'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryyeCanFei: TBCDField
+      DisplayLabel = #22812#39184#36153
+      FieldName = 'yeCanFei'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryqiTaBF: TBCDField
+      DisplayLabel = #20854#20182#34917#21457
+      FieldName = 'qiTaBF'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryshuBaoFei: TBCDField
+      DisplayLabel = #20070#25253#36153
+      FieldName = 'shuBaoFei'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjia1: TBCDField
+      DisplayLabel = #21152#39033'1'
+      FieldName = 'jia1'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjia2: TBCDField
+      DisplayLabel = #21152#39033'2'
+      FieldName = 'jia2'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjia3: TBCDField
+      DisplayLabel = #21152#39033'3'
+      FieldName = 'jia3'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarysuoDeShui: TBCDField
+      DisplayLabel = #25152#24471#31246
+      FieldName = 'suoDeShui'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryyangLao: TBCDField
+      DisplayLabel = #20859#32769#37329
+      FieldName = 'yangLao'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryshiYe: TBCDField
+      DisplayLabel = #22833#19994#37329
+      FieldName = 'shiYe'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarygongJi: TBCDField
+      DisplayLabel = #20844#31215#37329
+      FieldName = 'gongJi'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryyiBao: TBCDField
+      DisplayLabel = #21307#20445
+      FieldName = 'yiBao'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryshiJia: TBCDField
+      DisplayLabel = #20107#20551
+      FieldName = 'shiJia'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarybingJia: TBCDField
+      DisplayLabel = #30149#20551
+      FieldName = 'bingJia'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarychanHunSangJia: TBCDField
+      DisplayLabel = #20135'_'#23130'_'#20007#20551
+      FieldName = 'chanHunSangJia'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryqiTaKou: TBCDField
+      DisplayLabel = #20854#20182#25187
+      FieldName = 'qiTaKou'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryshuiDian: TBCDField
+      DisplayLabel = #27700#30005#36153
+      FieldName = 'shuiDian'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryfangZu: TBCDField
+      DisplayLabel = #25151#31199#36153
+      FieldName = 'fangZu'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryshouJi: TBCDField
+      DisplayLabel = #25163#26426#36153
+      FieldName = 'shouJi'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarydaiKou: TBCDField
+      DisplayLabel = #20195#25187
+      FieldName = 'daiKou'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarygongHui: TBCDField
+      DisplayLabel = #24037#20250#36153
+      FieldName = 'gongHui'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarynianJin: TBCDField
+      DisplayLabel = #24180#37329
+      FieldName = 'nianJin'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjian1: TBCDField
+      DisplayLabel = #20943#39033'1'
+      FieldName = 'jian1'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjian2: TBCDField
+      DisplayLabel = #20943#39033'2'
+      FieldName = 'jian2'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryjian3: TBCDField
+      DisplayLabel = #20943#39033'3'
+      FieldName = 'jian3'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salaryshiFa: TBCDField
+      DisplayLabel = #23454#21457#37329#39069
+      FieldName = 'shiFa'
+      Precision = 18
+      Size = 3
+    end
+    object dSet_salarymemo: TWideStringField
+      DisplayLabel = #22791#27880
+      FieldName = 'memo'
+      Size = 600
     end
     object dSet_salaryczy: TWideStringField
       FieldName = 'czy'
