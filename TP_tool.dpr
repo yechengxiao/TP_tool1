@@ -11,7 +11,9 @@ uses
   salaryU in 'salaryU.pas' {salaryF},
   carCashSZU in 'carCashSZU.pas' {carCashSZ_F},
   menuU in 'menuU.pas' {menuF},
-  salary_setting_templateU in 'salary_setting_templateU.pas' {salary_setting_templateF};
+  salary_setting_templateU in 'salary_setting_templateU.pas' {salary_setting_templateF},
+  changeCardNoU in 'changeCardNoU.pas' {changeCardNoF},
+  changeCardNo_modify_U in 'changeCardNo_modify_U.pas' {changeCardNo_modify_F};
 
 {$R *.res}
 

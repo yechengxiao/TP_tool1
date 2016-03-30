@@ -2,8 +2,8 @@ object carCashSZ_F: TcarCashSZ_F
   Left = 0
   Top = 0
   Caption = #39277#21345#25910#25903#32479#35745
-  ClientHeight = 506
-  ClientWidth = 784
+  ClientHeight = 411
+  ClientWidth = 777
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,12 +19,13 @@ object carCashSZ_F: TcarCashSZ_F
   object pan_up: TPanel
     Left = 0
     Top = 0
-    Width = 784
+    Width = 777
     Height = 65
     Align = alTop
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 784
     object lbl1: TLabel
       Left = 32
       Top = 12
@@ -105,32 +106,36 @@ object carCashSZ_F: TcarCashSZ_F
   object pan_down: TPanel
     Left = 0
     Top = 65
-    Width = 784
-    Height = 441
+    Width = 777
+    Height = 346
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
+    ExplicitWidth = 784
+    ExplicitHeight = 441
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
-      Width = 782
-      Height = 439
+      Width = 775
+      Height = 344
       ActivePage = tab1
       Align = alClient
       TabOrder = 0
+      ExplicitWidth = 782
+      ExplicitHeight = 439
       object tab1: TTabSheet
         Caption = 'tab1'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
+        ExplicitWidth = 774
+        ExplicitHeight = 411
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
-          Width = 774
-          Height = 411
+          Width = 767
+          Height = 316
           Align = alClient
           TabOrder = 0
+          ExplicitWidth = 774
+          ExplicitHeight = 411
           object cxGrid1DBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dm.dSource_carcashsz
