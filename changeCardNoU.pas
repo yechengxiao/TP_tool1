@@ -47,14 +47,14 @@ type
     DataSource1: TDataSource;
     ADODataSet1: TADODataSet;
     ADODataSet1deptName: TWideStringField;
-    ADODataSet1user_id: TIntegerField;
+    ADODataSet1badgenumber: TWideStringField;
     ADODataSet1name: TWideStringField;
     ADODataSet1sys_card_no: TIntegerField;
     ADODataSet1batch: TWideStringField;
     ADODataSet1is_ok: TIntegerField;
     ADODataSet1receive_date: TStringField;
     cxGrid1DBTableView1deptName: TcxGridDBColumn;
-    cxGrid1DBTableView1user_id: TcxGridDBColumn;
+    cxGrid1DBTableView1badgenumber: TcxGridDBColumn;
     cxGrid1DBTableView1name: TcxGridDBColumn;
     cxGrid1DBTableView1sys_card_no: TcxGridDBColumn;
     cxGrid1DBTableView1batch: TcxGridDBColumn;
@@ -79,16 +79,16 @@ uses dmU, utilU, changeCardNo_modify_U;
 
 procedure TchangeCardNoF.btn_selectClick(Sender: TObject);
 var
-  userId, name, sql: string;
+  badgenumber, name, sql: string;
 begin
   try
     lbl_msg.Caption := '¿ªÊ¼²éÑ¯...';
 
-    userId := Trim(edit_userId.Text);
+    badgenumber := Trim(edit_userId.Text);
     name := Trim(edit_name.Text);
 
     // id name type noNew noOld
-    sql := 'EXEC SP_changeCardNO ''' + userId + ''',''' + name +
+    sql := 'EXEC SP_changeCardNO ''' + badgenumber + ''',''' + name +
       ''',''select'','''','''' ';
 
     DataSet_Open(ADODataSet1, sql);
@@ -117,7 +117,7 @@ begin
       with changeCardNo_modify_F do
       begin
         name := ADODataSet1.FieldByName('name').AsString;
-        userId := ADODataSet1.FieldByName('user_id').AsString;
+        badgenumber := ADODataSet1.FieldByName('badgenumber').AsString;
         cardNoOld := ADODataSet1.FieldByName('sys_card_no').AsString;
         cardNoNew := '';
       end;

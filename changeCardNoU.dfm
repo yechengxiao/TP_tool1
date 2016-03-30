@@ -76,10 +76,6 @@ object changeCardNoF: TchangeCardNoF
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
-    ExplicitLeft = -151
-    ExplicitTop = -58
-    ExplicitWidth = 777
-    ExplicitHeight = 346
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
@@ -88,11 +84,8 @@ object changeCardNoF: TchangeCardNoF
       ActivePage = tab_lostCard
       Align = alClient
       TabOrder = 0
-      ExplicitHeight = 323
       object tab_lostCard: TTabSheet
         Caption = #26410#39046#39184#34917
-        ExplicitWidth = 767
-        ExplicitHeight = 316
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
@@ -100,8 +93,6 @@ object changeCardNoF: TchangeCardNoF
           Height = 311
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 767
-          ExplicitHeight = 316
           object cxGrid1DBTableView1: TcxGridDBTableView
             OnDblClick = cxGrid1DBTableView1DblClick
             Navigator.Buttons.CustomButtons = <>
@@ -137,38 +128,37 @@ object changeCardNoF: TchangeCardNoF
             object cxGrid1DBTableView1deptName: TcxGridDBColumn
               DataBinding.FieldName = 'deptName'
               HeaderAlignmentHorz = taCenter
-              Width = 100
+              Width = 90
+            end
+            object cxGrid1DBTableView1badgenumber: TcxGridDBColumn
+              DataBinding.FieldName = 'badgenumber'
+              HeaderAlignmentHorz = taCenter
+              Width = 90
             end
             object cxGrid1DBTableView1name: TcxGridDBColumn
               DataBinding.FieldName = 'name'
               HeaderAlignmentHorz = taCenter
-              Width = 100
-            end
-            object cxGrid1DBTableView1user_id: TcxGridDBColumn
-              AlternateCaption = '60'
-              DataBinding.FieldName = 'user_id'
-              HeaderAlignmentHorz = taCenter
-              Width = 60
+              Width = 90
             end
             object cxGrid1DBTableView1sys_card_no: TcxGridDBColumn
               DataBinding.FieldName = 'sys_card_no'
               HeaderAlignmentHorz = taCenter
-              Width = 65
+              Width = 90
             end
             object cxGrid1DBTableView1batch: TcxGridDBColumn
               DataBinding.FieldName = 'batch'
               HeaderAlignmentHorz = taCenter
-              Width = 60
+              Width = 90
             end
             object cxGrid1DBTableView1is_ok: TcxGridDBColumn
               DataBinding.FieldName = 'is_ok'
               HeaderAlignmentHorz = taCenter
-              Width = 100
+              Width = 90
             end
             object cxGrid1DBTableView1receive_date: TcxGridDBColumn
               DataBinding.FieldName = 'receive_date'
               HeaderAlignmentHorz = taCenter
-              Width = 150
+              Width = 90
             end
           end
           object cxGrid1Level1: TcxGridLevel
@@ -179,8 +169,8 @@ object changeCardNoF: TchangeCardNoF
     end
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 16
-    Top = 304
+    Left = 104
+    Top = 232
     PixelsPerInch = 96
     object cxStyle_content: TcxStyle
       AssignedValues = [svColor]
@@ -199,31 +189,31 @@ object changeCardNoF: TchangeCardNoF
   end
   object DataSource1: TDataSource
     DataSet = ADODataSet1
-    Left = 16
-    Top = 346
+    Left = 104
+    Top = 274
   end
   object ADODataSet1: TADODataSet
     Connection = dm.DB_Con
     CursorType = ctStatic
     Parameters = <>
-    Left = 16
-    Top = 262
+    Left = 104
+    Top = 190
     object ADODataSet1deptName: TWideStringField
       DisplayLabel = #37096#38376
       FieldName = 'deptName'
       Size = 50
     end
-    object ADODataSet1user_id: TIntegerField
+    object ADODataSet1badgenumber: TWideStringField
       DisplayLabel = #21592#24037'ID'
-      FieldName = 'user_id'
+      FieldName = 'badgenumber'
     end
     object ADODataSet1name: TWideStringField
-      DisplayLabel = #21592#24037#22995#21517
+      DisplayLabel = #22995#21517
       FieldName = 'name'
       Size = 24
     end
     object ADODataSet1sys_card_no: TIntegerField
-      DisplayLabel = #24403#21069#39184#21345#21495
+      DisplayLabel = #39184#21345#21495
       FieldName = 'sys_card_no'
     end
     object ADODataSet1batch: TWideStringField
@@ -235,7 +225,7 @@ object changeCardNoF: TchangeCardNoF
       FieldName = 'is_ok'
     end
     object ADODataSet1receive_date: TStringField
-      DisplayLabel = #39046#21462#26085#26399#13#10
+      DisplayLabel = #39046#21462#26085#26399
       FieldName = 'receive_date'
       ReadOnly = True
       Size = 30

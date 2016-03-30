@@ -124,7 +124,7 @@ begin
   sql := 'SELECT department FROM user_login ORDER BY department DESC';
   DropDown_(dm.dSet_pub, cbb_bm, sql, 'department');
 
-  ver := '20160128_dev';
+  ver := '20160330_changeCardNo';
 
   lbl_msg.Caption := UpperCase(ver);
 end;

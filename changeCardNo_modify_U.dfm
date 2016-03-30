@@ -25,7 +25,6 @@ object changeCardNo_modify_F: TchangeCardNo_modify_F
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = 27
     object Label1: TLabel
       Left = 22
       Top = 51
@@ -92,7 +91,6 @@ object changeCardNo_modify_F: TchangeCardNo_modify_F
     ParentColor = False
     ShowCaptions = True
     TabOrder = 0
-    ExplicitWidth = 445
     object tBtn_save: TToolButton
       Left = 0
       Top = 0

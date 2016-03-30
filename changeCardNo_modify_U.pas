@@ -29,7 +29,7 @@ type
   private
     { Private declarations }
   public
-    name, userId, cardNoOld, cardNoNew: string;
+    name, badgenumber, cardNoOld, cardNoNew: string;
     { Public declarations }
   end;
 
@@ -44,7 +44,7 @@ uses checkInOutU, utilU, dmU;
 procedure TchangeCardNo_modify_F.FormShow(Sender: TObject);
 begin
   edt_name.Text := name;
-  edt_userId.Text := userId;
+  edt_userId.Text := badgenumber;
   edt_cardNoOld.Text := cardNoOld;
 
   if edt_cardNoOld.CanFocus then
@@ -66,7 +66,7 @@ begin
 
   cardNoNew := edt_cardNoNew.Text;
   // id name type noNew noOld
-  sql := 'EXEC SP_changeCardNO ''' + userId + ''','''',''update'',''' +
+  sql := 'EXEC SP_changeCardNO ''' + badgenumber + ''','''',''update'',''' +
     cardNoNew + ''',''' + cardNoOld + ''' ';
 
   if Command_Exec(sql) then
