@@ -12,6 +12,7 @@ object changeCardNoF: TchangeCardNoF
   Font.Style = []
   OldCreateOrder = False
   Position = poDesigned
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pan_up: TPanel
@@ -66,6 +67,7 @@ object changeCardNoF: TchangeCardNoF
       Width = 90
       Height = 21
       TabOrder = 2
+      OnKeyPress = edit_userIdKeyPress
     end
   end
   object pan_down: TPanel
@@ -81,7 +83,7 @@ object changeCardNoF: TchangeCardNoF
       Top = 1
       Width = 811
       Height = 339
-      ActivePage = tab_lostCard
+      ActivePage = tab_record
       Align = alClient
       TabOrder = 0
       object tab_lostCard: TTabSheet
@@ -163,6 +165,83 @@ object changeCardNoF: TchangeCardNoF
           end
           object cxGrid1Level1: TcxGridLevel
             GridView = cxGrid1DBTableView1
+          end
+        end
+      end
+      object tab_record: TTabSheet
+        Caption = #20462#25913#35760#24405
+        ImageIndex = 1
+        object cxGrid2: TcxGrid
+          Left = 0
+          Top = 0
+          Width = 803
+          Height = 311
+          Align = alClient
+          TabOrder = 0
+          object cxGridDBTableView1: TcxGridDBTableView
+            Navigator.Buttons.CustomButtons = <>
+            DataController.DataSource = dm.dSource_pubForGrid
+            DataController.Summary.DefaultGroupSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <
+              item
+                Kind = skSum
+              end
+              item
+                Kind = skSum
+              end
+              item
+                Kind = skSum
+              end
+              item
+                Kind = skSum
+              end
+              item
+                Kind = skSum
+              end
+              item
+              end>
+            DataController.Summary.SummaryGroups = <>
+            OptionsData.Deleting = False
+            OptionsData.Editing = False
+            OptionsData.Inserting = False
+            OptionsView.GroupByBox = False
+            Styles.Background = cxStyle_bg
+            Styles.Content = cxStyle_content
+            Styles.Footer = cxStyle_footer
+            Styles.Header = cxStyle_header
+            object cxGridDBTableView1Column1badgenumber: TcxGridDBColumn
+              Caption = #21592#24037'ID'
+              DataBinding.FieldName = 'badgenumber'
+              HeaderAlignmentHorz = taCenter
+              Width = 90
+            end
+            object cxGridDBTableView1Column2cardIdOld: TcxGridDBColumn
+              Caption = #26087#21495
+              DataBinding.FieldName = 'cardIdOld'
+              HeaderAlignmentHorz = taCenter
+              Width = 90
+            end
+            object cxGridDBTableView1Column4cardIDNew: TcxGridDBColumn
+              Caption = #26032#21495
+              DataBinding.FieldName = 'cardIDNew'
+              HeaderAlignmentHorz = taCenter
+              Width = 90
+            end
+            object cxGridDBTableView1Column3czrq: TcxGridDBColumn
+              Caption = #25805#20316#26102#38388
+              DataBinding.FieldName = 'czrq'
+              HeaderAlignmentHorz = taCenter
+              Width = 120
+            end
+            object cxGridDBTableView1Column1msg: TcxGridDBColumn
+              Caption = #22791#27880
+              DataBinding.FieldName = 'msg'
+              HeaderAlignmentHorz = taCenter
+              Width = 200
+            end
+          end
+          object cxGridLevel1: TcxGridLevel
+            GridView = cxGridDBTableView1
           end
         end
       end

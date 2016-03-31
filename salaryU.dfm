@@ -82,7 +82,7 @@ object salaryF: TsalaryF
       Caption = #32479#35745
       Enabled = False
       TabOrder = 8
-      OnClick = btn_tjClick
+      Visible = False
     end
     object cbb_bm: TComboBox
       Left = 44
@@ -663,14 +663,6 @@ object salaryF: TsalaryF
           end
         end
       end
-      object tab_yf: TTabSheet
-        Caption = #32479#35745#65306#25353#25209#27425
-        ImageIndex = 1
-      end
-      object tab2: TTabSheet
-        Caption = #32479#35745#65306#25353#37096#38376
-        ImageIndex = 2
-      end
       object tab_template: TTabSheet
         Caption = #27169#26495
         ImageIndex = 3
@@ -702,8 +694,8 @@ object salaryF: TsalaryF
     end
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 344
-    Top = 265
+    Left = 144
+    Top = 296
     PixelsPerInch = 96
     object cxStyle_bg: TcxStyle
       AssignedValues = [svColor]
@@ -722,8 +714,8 @@ object salaryF: TsalaryF
       'OM TPsalary_t s  '#13#10'LEFT JOIN TPdeptOrder_t o  ON o.name=s.deptNa' +
       'me'
     Parameters = <>
-    Left = 40
-    Top = 327
+    Left = 160
+    Top = 238
     object dSet_salaryNO: TLargeintField
       FieldName = 'NO'
       ReadOnly = True
@@ -1013,11 +1005,11 @@ object salaryF: TsalaryF
   end
   object dSource_salary: TDataSource
     DataSet = dSet_salary
-    Left = 136
-    Top = 323
+    Left = 80
+    Top = 234
   end
   object openDLG: TOpenDialog
-    Left = 450
-    Top = 263
+    Left = 282
+    Top = 254
   end
 end

@@ -46,8 +46,6 @@ type
     cxGrid_mxDBTableView1: TcxGridDBTableView;
     cxGrid_mxLevel1: TcxGridLevel;
     lbl: TLabel;
-    tab_yf: TTabSheet;
-    tab2: TTabSheet;
     dSet_salary: TADODataSet;
     dSource_salary: TDataSource;
     tab_template: TTabSheet;
@@ -190,7 +188,6 @@ type
     procedure cbb_zwDropDown(Sender: TObject);
     procedure cbb_lbDropDown(Sender: TObject);
     procedure btn_delClick(Sender: TObject);
-    procedure btn_tjClick(Sender: TObject);
   private
     myThread: TThread; // 线程
 
@@ -291,7 +288,7 @@ end;
 
 procedure TsalaryF.btn_delClick(Sender: TObject);
 var
-  yf, who, deptName, id: string;
+  d1, d2: string;
 begin
   if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
   begin
@@ -299,15 +296,14 @@ begin
     Exit;
   end;
 
-  yf := dSet_salary.FieldByName('yf').AsString;
-  deptName := dSet_salary.FieldByName('deptName').AsString;
-  who := dSet_salary.FieldByName('name').AsString;
+  d1 := yf1.Text;
+  d2 := yf2.Text;
 
-  if msg_query(' 删除 ' + yf + ' 月, ' + deptName + ', ' + who + ' 的此条明细？') then
+  if msg_query(' 删除 ' + d1 + ' 至 ' + d2 + ' 的所有明细？') then
   begin
-    id := dSet_salary.FieldByName('id').AsString;
 
-    if Command_Exec('DELETE FROM TPsalary_t WHERE id =' + id) then
+    if Command_Exec('DELETE FROM TPsalary_t WHERE yf >= ''' + d1 +
+      ''' AND yf<=''' + d2 + ''' ') then
     begin
       msg_info('   删除成功');
       btn_mx.Click;
@@ -466,6 +462,7 @@ begin
                 else
                   value := (Trim(excelSheet.cells.item[hang, lie]));
 
+                // 判断是否为数值
                 if not IsNumber(PChar(value)) then
                 begin
                   excelSheet.cells(hang, lie_tips) := ' 行 ' + IntToStr(hang) +
@@ -561,7 +558,7 @@ end;
 
 procedure TsalaryF.btn_mxClick(Sender: TObject);
 var
-  sql, d1, d2, deptName, name: string;
+  sql, d1, d2, deptName, name, zw, lb: string;
 begin
   tab_mx.Show;
 
@@ -569,6 +566,8 @@ begin
   d2 := yf2.Text;
   name := Trim(cbb_name.Text);
   deptName := Trim(cbb_bm.Text);
+  zw := Trim(cbb_zw.Text);
+  lb := Trim(cbb_lb.Text);
 
   // if deptName = '' then
   // begin
@@ -580,10 +579,11 @@ begin
   // deptName := '';
   // end;
 
-  sql := 'SELECT   row_number()over(ORDER BY o.order1) AS NO, s.* FROM TPsalary_t s '
+  sql := 'SELECT row_number()over(ORDER BY o.order1) AS NO, s.* FROM TPsalary_t s '
     + '  LEFT JOIN TPdeptOrder_t o  ON o.name=s.deptName ' + ' WHERE yf>= ''' +
     d1 + ''' AND yf<=''' + d2 + ''' AND s.deptName LIKE ''%' + deptName +
-    '%'' AND s.name LIKE ''%' + name + '%''';
+    '%'' AND s.name LIKE ''%' + name + '%'' AND s.zhiwu LIKE ''%' + zw +
+    '%'' AND s.leibie LIKE ''%' + lb + '%'' ';
 
   try
     paintBox.Refresh;
@@ -654,16 +654,6 @@ begin
   end;
 end;
 
-procedure TsalaryF.btn_tjClick(Sender: TObject);
-begin
-
-  if pg_ctl.ActivePage = tab_yf then
-  begin
-
-  end;
-
-end;
-
 procedure TsalaryF.ExportTemplate;
 var
   bm, yf, sql: string;
@@ -722,7 +712,7 @@ end;
 
 procedure TsalaryF.cbb_lbDropDown(Sender: TObject);
 begin
-  DropDown_(dm.dSet_pub, cbb_bm, 'SELECT DISTINCT leiBie FROM TPsalary_t',
+  DropDown_(dm.dSet_pub, cbb_lb, 'SELECT DISTINCT leiBie FROM TPsalary_t',
     'leiBie');
 end;
 
@@ -749,7 +739,7 @@ end;
 
 procedure TsalaryF.cbb_zwDropDown(Sender: TObject);
 begin
-  DropDown_(dm.dSet_pub, cbb_bm,
+  DropDown_(dm.dSet_pub, cbb_zw,
     'SELECT DISTINCT zhiWu FROM TPsalary_t', 'zhiWu');
 end;
 

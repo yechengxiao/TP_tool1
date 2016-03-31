@@ -60,8 +60,19 @@ type
     cxGrid1DBTableView1batch: TcxGridDBColumn;
     cxGrid1DBTableView1is_ok: TcxGridDBColumn;
     cxGrid1DBTableView1receive_date: TcxGridDBColumn;
+    tab_record: TTabSheet;
+    cxGrid2: TcxGrid;
+    cxGridDBTableView1: TcxGridDBTableView;
+    cxGridLevel1: TcxGridLevel;
+    cxGridDBTableView1Column1badgenumber: TcxGridDBColumn;
+    cxGridDBTableView1Column2cardIdOld: TcxGridDBColumn;
+    cxGridDBTableView1Column3czrq: TcxGridDBColumn;
+    cxGridDBTableView1Column4cardIDNew: TcxGridDBColumn;
+    cxGridDBTableView1Column1msg: TcxGridDBColumn;
     procedure btn_selectClick(Sender: TObject);
     procedure cxGrid1DBTableView1DblClick(Sender: TObject);
+    procedure edit_userIdKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -87,11 +98,25 @@ begin
     badgenumber := Trim(edit_userId.Text);
     name := Trim(edit_name.Text);
 
-    // id name type noNew noOld
-    sql := 'EXEC SP_changeCardNO ''' + badgenumber + ''',''' + name +
-      ''',''select'','''','''' ';
+    if pg_ctl.ActivePage = tab_lostCard then
+    begin
+      // id name type noNew noOld
+      sql := 'EXEC SP_changeCardNO ''' + badgenumber + ''',''' + name +
+        ''',''select'','''','''' ';
 
-    DataSet_Open(ADODataSet1, sql);
+      DataSet_Open(ADODataSet1, sql);
+    end
+    else if pg_ctl.ActivePage = tab_record then
+    begin
+
+      if badgenumber <> '' then
+        badgenumber := ' WHERE badgenumber LIKE ''%' + badgenumber + '%'' ';
+
+      sql := 'SELECT * FROM TPchangeCardNORecord ' + badgenumber +
+        ' ORDER BY badgenumber';
+
+      DataSet_Open(dm.dSet_pubForGrid, sql);
+    end;
 
     lbl_msg.Caption := '²éÑ¯Íê³É...';
   except
@@ -137,6 +162,18 @@ begin
     FreeAndNil(changeCardNo_modify_F);
   end;
 
+end;
+
+procedure TchangeCardNoF.edit_userIdKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #13 then
+    btn_select.OnClick(Sender);
+
+end;
+
+procedure TchangeCardNoF.FormShow(Sender: TObject);
+begin
+  tab_lostCard.Show;
 end;
 
 end.

@@ -73,6 +73,10 @@ begin
   begin
     msg_info('修改成功');
     Close;
+  end
+  else
+  begin
+    msg_info('修改不成功，餐卡号可能已经存在');
   end;
 end;
 
