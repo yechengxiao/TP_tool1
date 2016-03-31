@@ -16,6 +16,7 @@ type
     procedure treeMenuClick(Sender: TObject);
   private
     checkInOutMenu, salaryMenu, carCashSZMenu, changeCardNoMenu: string;
+    currentForm: string;
     { Private declarations }
   public
     { Public declarations }
@@ -33,37 +34,39 @@ procedure TmenuF.FormCreate(Sender: TObject);
 var
   faNode1, faNode2: TTreeNode;
 begin
-  {
-    checkInOutMenu := '月度考勤';
-    salaryMenu := '员工工资';
-    carCashSZMenu := '饭卡收支';
 
-    treeMenu.Items.BeginUpdate;
-    faNode1 := treeMenu.Items.AddFirst(nil, '人事统计');
-    treeMenu.Items.AddChildFirst(faNode1, checkInOutMenu);
-
-    if bm_logined = ADMIN then
-    begin
-    // 添加节点
-    treeMenu.Items.AddChild(faNode1, salaryMenu);
-
-    faNode2 := treeMenu.Items.Add(nil, '食堂统计');
-    treeMenu.Items.AddChild(faNode2, carCashSZMenu);
-    end;
-  }
-
-  // 餐卡改号专用
-  changeCardNoMenu := '餐卡改号';
+  checkInOutMenu := '考勤';
+  salaryMenu := '工资';
+  carCashSZMenu := '饭卡收支';
 
   treeMenu.Items.BeginUpdate;
+  faNode1 := treeMenu.Items.AddFirst(nil, '人事统计');
+  // treeMenu.Items.AddChildFirst(faNode1, checkInOutMenu);
 
   if bm_logined = ADMIN then
   begin
     // 添加节点
-    faNode1 := treeMenu.Items.AddFirst(nil, '人事');
-    treeMenu.Items.AddChildFirst(faNode1, changeCardNoMenu);
+    treeMenu.Items.AddChild(faNode1, salaryMenu);
+
+    {
+      faNode2 := treeMenu.Items.Add(nil, '食堂统计');
+      treeMenu.Items.AddChild(faNode2, carCashSZMenu);
+    }
   end;
 
+  {
+    // 餐卡改号专用
+    changeCardNoMenu := '餐卡改号';
+
+    treeMenu.Items.BeginUpdate;
+
+    if bm_logined = ADMIN then
+    begin
+    // 添加节点
+    faNode1 := treeMenu.Items.AddFirst(nil, '人事');
+    treeMenu.Items.AddChildFirst(faNode1, changeCardNoMenu);
+    end;
+  }
   treeMenu.Items.EndUpdate;
   treeMenu.FullExpand;
 
@@ -75,66 +78,88 @@ procedure TmenuF.treeMenuClick(Sender: TObject);
 var
   formCaption: string;
 begin
-  formCaption := treeMenu.Selected.Text;
+  formCaption := Trim(treeMenu.Selected.Text);
 
-  if Pos(formCaption, checkInOutMenu) > 0 then // 考勤
+  if currentForm = formCaption then
+    Exit;
+
+  if formCaption = checkInOutMenu then // 考勤
   begin
-    if Assigned(checkInOutF) then
-      FreeAndNil(checkInOutF);
+    currentForm := formCaption;
 
-    checkInOutF := TcheckInOutF.Create(nil);
+    try
+      checkInOutF.Free;
+    except
+    end;
 
-    Self.Caption := checkInOutF.Caption;
+    Application.CreateForm(TcheckInOutF, checkInOutF);
+
     checkInOutF.Update;
     checkInOutF.Parent := panRight;
     checkInOutF.Align := alClient;
     checkInOutF.BorderStyle := bsNone;
 
-    checkInOutF.Visible := true;
+    checkInOutF.Visible := True;
+
   end
-  else if Pos(formCaption, salaryMenu) > 0 then // 工资
+  else if formCaption = salaryMenu then // 工资
   begin
-    if Assigned(salaryF) then
-      FreeAndNil(salaryF);
+    currentForm := formCaption;
 
-    salaryF := TsalaryF.Create(nil);
+    // if Assigned(salaryF) then
+    // FreeAndNil(salaryF);
 
-    Self.Caption := salaryF.Caption;
+    // salaryF := TsalaryF.Create(salaryF);
+
+    try
+      salaryF.Free;
+    except
+    end;
+
+    Application.CreateForm(TsalaryF, salaryF);
+
     salaryF.Update;
     salaryF.Parent := panRight;
     salaryF.Align := alClient;
     salaryF.BorderStyle := bsNone;
-    salaryF.Visible := true;
+
+    salaryF.Visible := True;
   end
-  else if Pos(formCaption, carCashSZMenu) > 0 then // 饭卡
+  else if formCaption = carCashSZMenu then // 饭卡
   begin
-    if Assigned(carCashSZ_F) then
+    currentForm := formCaption;
+
+    {
+      if Assigned(carCashSZ_F) then
       FreeAndNil(carCashSZ_F);
 
-    carCashSZ_F := TcarCashSZ_F.Create(nil);
+      carCashSZ_F := TcarCashSZ_F.Create(nil);
 
-    Self.Caption := carCashSZ_F.Caption;
-    carCashSZ_F.Update;
-    carCashSZ_F.Parent := panRight;
-    carCashSZ_F.Align := alClient;
-    carCashSZ_F.BorderStyle := bsNone;
-    carCashSZ_F.Visible := true;
+
+      carCashSZ_F.Update;
+      carCashSZ_F.Parent := panRight;
+      carCashSZ_F.Align := alClient;
+      carCashSZ_F.BorderStyle := bsNone;
+      carCashSZ_F.Visible := true;
+    }
   end
-  else if Pos(formCaption, changeCardNoMenu) > 0 then // changeCardNoMenu
+  else if formCaption = changeCardNoMenu then // changeCardNoMenu
   begin
+    currentForm := formCaption;
+
     if Assigned(changeCardNoF) then
       FreeAndNil(changeCardNoF);
 
     changeCardNoF := TchangeCardNoF.Create(nil);
 
-    Self.Caption := changeCardNoF.Caption;
     changeCardNoF.Update;
     changeCardNoF.Parent := panRight;
     changeCardNoF.Align := alClient;
     changeCardNoF.BorderStyle := bsNone;
-    changeCardNoF.Visible := true;
+    changeCardNoF.Visible := True;
   end;
 
+  Self.Caption := currentForm;
 end;
 
 end.

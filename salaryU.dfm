@@ -2,8 +2,8 @@ object salaryF: TsalaryF
   Left = 0
   Top = 0
   Caption = #24037#36164#32479#35745
-  ClientHeight = 438
-  ClientWidth = 906
+  ClientHeight = 511
+  ClientWidth = 1065
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,28 +17,28 @@ object salaryF: TsalaryF
   object pan_up: TPanel
     Left = 0
     Top = 0
-    Width = 906
+    Width = 1065
     Height = 121
     Align = alTop
     Color = clInfoBk
     ParentBackground = False
     TabOrder = 0
     object lbl1: TLabel
-      Left = 16
-      Top = 17
+      Left = 8
+      Top = 29
       Width = 24
       Height = 13
       Caption = #25209#27425
     end
     object lbl_bm: TLabel
-      Left = 16
-      Top = 46
+      Left = 8
+      Top = 58
       Width = 24
       Height = 13
       Caption = #37096#38376
     end
     object paintBox: TPaintBox
-      Left = 686
+      Left = 845
       Top = 1
       Width = 219
       Height = 119
@@ -47,46 +47,36 @@ object salaryF: TsalaryF
       ExplicitHeight = 79
     end
     object lbl_name: TLabel
-      Left = 16
-      Top = 77
+      Left = 8
+      Top = 89
       Width = 24
       Height = 13
       Caption = #22995#21517
     end
     object lbl: TLabel
-      Left = 144
-      Top = 17
+      Left = 128
+      Top = 29
       Width = 12
       Height = 13
       Caption = #33267
     end
     object lbl_zw: TLabel
-      Left = 194
-      Top = 44
+      Left = 186
+      Top = 58
       Width = 24
       Height = 13
       Caption = #32844#21153
     end
     object lbl_lb: TLabel
-      Left = 194
-      Top = 75
+      Left = 186
+      Top = 89
       Width = 24
       Height = 13
       Caption = #31867#21035
     end
-    object btn_tj: TButton
-      Left = 369
-      Top = 65
-      Width = 80
-      Height = 25
-      Caption = #32479#35745
-      Enabled = False
-      TabOrder = 8
-      Visible = False
-    end
     object cbb_bm: TComboBox
-      Left = 44
-      Top = 38
+      Left = 36
+      Top = 50
       Width = 130
       Height = 21
       DropDownCount = 20
@@ -96,26 +86,26 @@ object salaryF: TsalaryF
         '')
     end
     object cbb_name: TComboBox
-      Left = 44
-      Top = 69
+      Left = 36
+      Top = 81
       Width = 130
       Height = 21
       DropDownCount = 20
-      TabOrder = 10
+      TabOrder = 9
       OnDropDown = cbb_nameDropDown
     end
     object btn_mx: TButton
-      Left = 368
-      Top = 36
+      Left = 312
+      Top = 48
       Width = 80
-      Height = 25
+      Height = 52
       Caption = #24037#36164#26126#32454
       TabOrder = 6
       OnClick = btn_mxClick
     end
     object groupB: TGroupBox
-      Left = 526
-      Top = 6
+      Left = 606
+      Top = 8
       Width = 73
       Height = 94
       Caption = #23383#27573#21487#35265#24615
@@ -154,8 +144,8 @@ object salaryF: TsalaryF
       end
     end
     object GroupBox1: TGroupBox
-      Left = 463
-      Top = 6
+      Left = 515
+      Top = 9
       Width = 57
       Height = 94
       Caption = #23548#20986
@@ -194,9 +184,9 @@ object salaryF: TsalaryF
       end
     end
     object cbb_zw: TComboBox
-      Left = 222
-      Top = 36
-      Width = 130
+      Left = 214
+      Top = 50
+      Width = 80
       Height = 21
       DropDownCount = 20
       TabOrder = 5
@@ -205,35 +195,35 @@ object salaryF: TsalaryF
         '')
     end
     object cbb_lb: TComboBox
-      Left = 222
-      Top = 67
-      Width = 130
+      Left = 214
+      Top = 81
+      Width = 80
       Height = 21
       DropDownCount = 20
-      TabOrder = 9
+      TabOrder = 8
       OnDropDown = cbb_lbDropDown
       Items.Strings = (
         '')
     end
     object yf1: TMaskEdit
-      Left = 46
-      Top = 11
+      Left = 38
+      Top = 21
       Width = 60
       Height = 21
       TabOrder = 3
       Text = ''
     end
     object yf2: TMaskEdit
-      Left = 180
-      Top = 11
+      Left = 172
+      Top = 21
       Width = 60
       Height = 21
       TabOrder = 4
       Text = ''
     end
     object GroupBox2: TGroupBox
-      Left = 611
-      Top = 6
+      Left = 414
+      Top = 9
       Width = 73
       Height = 94
       Caption = #23548#20837#26041#24335
@@ -270,14 +260,68 @@ object salaryF: TsalaryF
       end
     end
     object btn_del: TBitBtn
-      Left = 720
-      Top = 70
-      Width = 75
+      Left = 709
+      Top = 40
+      Width = 76
       Height = 25
-      Hint = #21024#38500#19968#26465#24037#36164#26126#32454
       ParentCustomHint = False
       BiDiMode = bdLeftToRight
-      Caption = 'Detele'
+      Caption = #25209#37327#21024
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00020000000900000012000000180000001A0000001A00000018000000100000
+        0005000000010000000000000000000000000000000000000000000000020000
+        000D3524146A936338E5A56B3AFFA36938FFA16736FF9D6233FB633E20B70805
+        022800000006000000010000000000000000000000000000000000000008442F
+        1D78C18B59FEE1AC76FFE4C296FFB5793BFFB5793CFFB5793CFFAD7239FF7E50
+        2AD80302042A00000006000000010000000000000000000000000000000DB07D
+        4EF3E6B17AFFE9B47DFFE9B47DFFE7C79DFFB67A3DFFB57A3DFFB57A3DFF6953
+        7BFF090E5ED50001052800000006000000010000000000000000000000086A4E
+        329DEFD7B3FFE9B47DFFE9B47DFFE9B47DFFEACDA4FFB57B3EFF735C86FF313F
+        CCFF2935B8FF0B1161D501010627000000050000000100000000000000010000
+        000C745538A5F2DDBBFFE9B47DFFE9B47DFFE9B47DFFD1CEE1FF3443CEFF3443
+        CDFF3443CEFF2C39BAFF0D1463D4010106260000000500000001000000000000
+        00020000000B76583BA4F5E2C1FFE9B47DFFB5A9B8FF829FF1FFB1C9F5FF3949
+        D1FF3A4AD1FF3A49D1FF303FBDFF111767D30101062500000005000000000000
+        0000000000010000000B785B3DA3E9E1D2FF87A3F2FF87A4F1FF87A3F2FFB9D0
+        F7FF3E50D5FF3E50D5FF3F50D5FF3545C2FF141B6AD201010622000000000000
+        000000000000000000010000000A2C386FA2C9E2F9FF8CA8F3FF8DA8F3FF8CA8
+        F3FFC0D8F9FF4457D9FF4356D9FF4456D9FF3949C2FF141A61C2000000000000
+        000000000000000000000000000100000009303D74A1CFE7FBFF92ADF3FF91AD
+        F4FF92ADF4FFC6DEFAFF495EDBFF495DDCFF475AD7FF232F8BF0000000000000
+        00000000000000000000000000000000000100000008334177A0D4ECFCFF97B2
+        F5FF97B2F4FF97B3F5FFCCE4FBFF4A5FDAFF3141A4F6090C214A000000000000
+        000000000000000000000000000000000000000000010000000736457A9FD8F0
+        FDFF9DB7F5FF9CB7F5FFD9F1FEFF6B81CAF50B0E234700000006000000000000
+        0000000000000000000000000000000000000000000000000001000000063947
+        7D9EDBF3FEFFDBF3FFFF677FCFF513192C440000000500000001000000000000
+        0000000000000000000000000000000000000000000000000000000000010000
+        00053543728E4F63AACD151A2D40000000040000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0001000000030000000400000002000000000000000000000000}
+      ParentBiDiMode = False
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 10
+      OnClick = btn_delClick
+    end
+    object btn_del1: TBitBtn
+      Left = 709
+      Top = 71
+      Width = 76
+      Height = 25
+      ParentCustomHint = False
+      BiDiMode = bdLeftToRight
+      Caption = #21333#26465#21024
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clRed
       Font.Height = -11
@@ -323,22 +367,22 @@ object salaryF: TsalaryF
       ParentShowHint = False
       ShowHint = True
       TabOrder = 11
-      OnClick = btn_delClick
+      OnClick = btn_del1Click
     end
   end
   object pan_down: TPanel
     Left = 0
     Top = 121
-    Width = 906
-    Height = 317
+    Width = 1065
+    Height = 390
     Align = alClient
     Caption = 'pan_down'
     TabOrder = 1
     object pg_ctl: TPageControl
       Left = 1
       Top = 1
-      Width = 904
-      Height = 315
+      Width = 1063
+      Height = 388
       ActivePage = tab_mx
       Align = alClient
       TabOrder = 0
@@ -348,8 +392,8 @@ object salaryF: TsalaryF
         object cxGrid_mx: TcxGrid
           Left = 0
           Top = 0
-          Width = 896
-          Height = 287
+          Width = 1055
+          Height = 360
           Align = alClient
           TabOrder = 0
           object cxGrid_mxDBTableView1: TcxGridDBTableView
@@ -364,6 +408,158 @@ object salaryF: TsalaryF
               item
                 Kind = skSum
                 Column = cxGrid_mxDBTableView1tongXunBT
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jiangJin
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1qiTaFa
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1nianGongGZ
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1xueLiJT
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1zhiChengBT
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1yaoFei
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jiXiaoJJ
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1geLeiBT
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1fuZhuJT
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1zhiBanFei
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1gaoWenFei
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jiaBanNum
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jiaBanFei
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1yeCanFei
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1qiTaBF
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1shuBaoFei
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jia1
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jia2
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jia3
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1suoDeShui
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1yangLao
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1shiYe
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1gongJi
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1yiBao
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1shiJia
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1bingJia
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1chanHunSangJia
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1qiTaKou
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1shuiDian
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1fangZu
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1shouJi
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1daiKou
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1gongHui
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1nianJin
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jian1
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jian2
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1jian3
+              end
+              item
+                Kind = skSum
+                Column = cxGrid_mxDBTableView1shiFa
               end>
             DataController.Summary.SummaryGroups = <>
             OptionsData.Deleting = False
@@ -669,8 +865,8 @@ object salaryF: TsalaryF
         object cxGrid_template: TcxGrid
           Left = 0
           Top = 0
-          Width = 896
-          Height = 287
+          Width = 1055
+          Height = 360
           Align = alClient
           TabOrder = 0
           object cxGrid_templateDBTableView1: TcxGridDBTableView

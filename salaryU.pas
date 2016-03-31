@@ -33,7 +33,6 @@ type
     lbl_bm: TLabel;
     paintBox: TPaintBox;
     lbl_name: TLabel;
-    btn_tj: TButton;
     cbb_bm: TComboBox;
     cbb_name: TComboBox;
     pan_down: TPanel;
@@ -170,6 +169,7 @@ type
     cxGrid_mxDBTableView1jian3: TcxGridDBColumn;
     cxGrid_mxDBTableView1shiFa: TcxGridDBColumn;
     cxGrid_mxDBTableView1memo: TcxGridDBColumn;
+    btn_del1: TBitBtn;
     procedure FormShow(Sender: TObject);
     procedure btn_importClick(Sender: TObject);
     procedure btn_mxClick(Sender: TObject);
@@ -188,6 +188,7 @@ type
     procedure cbb_zwDropDown(Sender: TObject);
     procedure cbb_lbDropDown(Sender: TObject);
     procedure btn_delClick(Sender: TObject);
+    procedure btn_del1Click(Sender: TObject);
   private
     myThread: TThread; // 线程
 
@@ -286,10 +287,46 @@ begin
   end;
 end;
 
+procedure TsalaryF.btn_del1Click(Sender: TObject);
+var
+  yf, who, deptName, id: string;
+begin
+  {
+    单条删除
+  }
+  if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
+  begin
+    msg_info('没有数据...');
+    Exit;
+  end;
+
+  yf := dSet_salary.FieldByName('yf').AsString;
+  deptName := dSet_salary.FieldByName('deptName').AsString;
+  who := dSet_salary.FieldByName('name').AsString;
+
+  if msg_query(' 删除 ' + yf + ' 月 ' + deptName + ' ' + who + ' 的此条明细？') then
+  begin
+    id := dSet_salary.FieldByName('id').AsString;
+
+    if Command_Exec('DELETE FROM TPsalary_t WHERE id =' + id) then
+    begin
+      msg_info('   删除成功');
+      btn_mx.Click;
+    end;
+  end
+  else
+  begin
+    Exit;
+  end;
+end;
+
 procedure TsalaryF.btn_delClick(Sender: TObject);
 var
-  d1, d2: string;
+  d1, d2, name, deptName, zw, lb, where: string;
 begin
+  {
+    批量删除
+  }
   if cxGrid_mxDBTableView1.DataController.DataSource.DataSet.IsEmpty then
   begin
     msg_info('没有数据...');
@@ -299,19 +336,56 @@ begin
   d1 := yf1.Text;
   d2 := yf2.Text;
 
-  if msg_query(' 删除 ' + d1 + ' 至 ' + d2 + ' 的所有明细？') then
+  if (d1 = '') or (d2 = '') then
   begin
-
-    if Command_Exec('DELETE FROM TPsalary_t WHERE yf >= ''' + d1 +
-      ''' AND yf<=''' + d2 + ''' ') then
-    begin
-      msg_info('   删除成功');
-      btn_mx.Click;
-    end;
-  end
-  else
-  begin
+    msg_err('批次必填');
     Exit;
+  end;
+
+  name := Trim(cbb_name.Text);
+  deptName := Trim(cbb_bm.Text);
+  zw := Trim(cbb_zw.Text);
+  lb := Trim(cbb_lb.Text);
+
+  try
+    paintBox.Refresh;
+
+    if msg_query(' 删除 ' + d1 + ' 至 ' + d2 + ' ' + deptName + ' ' + zw + ' ' + lb
+      + ' ' + name + ' 的所有明细？') then
+    begin
+
+      if name <> '' then
+      begin
+        name := ' AND name=''' + name + ''' ';
+      end;
+      if deptName <> '' then
+      begin
+        deptName := ' AND deptName=''' + deptName + ''' ';
+      end;
+      if zw <> '' then
+      begin
+        zw := ' AND zhiwu=''' + zw + ''' ';
+      end;
+      if lb <> '' then
+      begin
+        lb := ' AND leibie=''' + lb + ''' ';
+      end;
+
+      where := ' WHERE yf >= ''' + d1 + ''' AND yf<=''' + d2 + ''' ' + name +
+        deptName + zw + lb;
+
+      if Command_Exec('DELETE FROM TPsalary_t ' + where) then
+      begin
+        msg_info('   删除完成');
+        btn_mx.Click;
+      end;
+    end
+    else
+    begin
+      Exit;
+    end;
+  finally
+    paintBox.Refresh;
   end;
 
 end;
@@ -470,6 +544,7 @@ begin
                   isSQL := False;
                   Break;
                 end;
+
               except
                 Break;
               end;
@@ -564,33 +639,36 @@ begin
 
   d1 := yf1.Text;
   d2 := yf2.Text;
+
+  if (d1 = '') or (d2 = '') then
+  begin
+    msg_err('批次必填');
+    Exit;
+  end;
+
   name := Trim(cbb_name.Text);
   deptName := Trim(cbb_bm.Text);
   zw := Trim(cbb_zw.Text);
   lb := Trim(cbb_lb.Text);
 
-  // if deptName = '' then
-  // begin
-  // msg_info('请选择部门');
-  // Exit;
-  // end
-  // else if deptName = ALL_DEPT then
-  // begin
-  // deptName := '';
-  // end;
-
-  sql := 'SELECT row_number()over(ORDER BY o.order1) AS NO, s.* FROM TPsalary_t s '
-    + '  LEFT JOIN TPdeptOrder_t o  ON o.name=s.deptName ' + ' WHERE yf>= ''' +
-    d1 + ''' AND yf<=''' + d2 + ''' AND s.deptName LIKE ''%' + deptName +
-    '%'' AND s.name LIKE ''%' + name + '%'' AND s.zhiwu LIKE ''%' + zw +
-    '%'' AND s.leibie LIKE ''%' + lb + '%'' ';
-
   try
     paintBox.Refresh;
+
+    sql := 'SELECT row_number()over(ORDER BY o.order1) AS NO, s.* FROM TPsalary_t s '
+      + '  LEFT JOIN TPdeptOrder_t o  ON o.name=s.deptName ' + ' WHERE yf>= '''
+      + d1 + ''' AND yf<=''' + d2 + ''' AND s.deptName LIKE ''%' + deptName +
+      '%'' AND s.name LIKE ''%' + name + '%'' AND s.zhiwu LIKE ''%' + zw +
+      '%'' AND s.leibie LIKE ''%' + lb + '%'' ';
+
     DataSet_Open(dSet_salary, sql);
+
+    paintBox.Canvas.TextOut(5, 10, '已检索出 ' + IntToStr(dSet_salary.RecordCount)
+      + ' 条数据');
   except
     on e: Exception do
+    begin
       msg_err('出了点错: ' + e.message);
+    end;
   end;
 end;
 
@@ -707,7 +785,6 @@ begin
   DropDown_(dm.dSet_pub, cbb_bm, 'SELECT DISTINCT deptname FROM TPsalary_t',
     'deptname');
 
-  // cbb_bm.Items.Add(ALL_DEPT);
 end;
 
 procedure TsalaryF.cbb_lbDropDown(Sender: TObject);
@@ -721,13 +798,7 @@ var
   sql, deptName: string;
 begin
   deptName := Trim(cbb_bm.Text);
-  // if deptName = '' then
-  // begin
-  // cbb_name.Clear;
-  // msg_info('请选择部门');
-  // Exit;
-  // end
-  // else
+
   if deptName <> '' then
   begin
     sql := 'SELECT distinct name FROM TPsalary_t WHERE deptName=''' +

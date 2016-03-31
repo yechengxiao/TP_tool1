@@ -166,10 +166,6 @@ object checkInOutF: TcheckInOutF
       TabOrder = 0
       object tab1: TTabSheet
         Caption = #32771#21220#26126#32454
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
@@ -471,10 +467,6 @@ object checkInOutF: TcheckInOutF
       object tab2: TTabSheet
         Caption = #24322#21160#26126#32454
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cxGrid2: TcxGrid
           Left = 0
           Top = 0
@@ -537,10 +529,6 @@ object checkInOutF: TcheckInOutF
       object tab3: TTabSheet
         Caption = #32771#21220#32771#26680#27719#24635
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object cxGrid3: TcxGrid
           Left = 0
           Top = 0

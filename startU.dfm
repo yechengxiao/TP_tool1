@@ -39289,6 +39289,7 @@ object startF: TstartF
     Height = 21
     PasswordChar = '*'
     TabOrder = 1
+    OnKeyPress = edt_passKeyPress
   end
   object cbb_bm: TComboBox
     Left = 438

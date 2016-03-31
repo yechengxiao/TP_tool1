@@ -21,6 +21,7 @@ type
     procedure btn_loginClick(Sender: TObject);
     procedure btn_exitClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure edt_passKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -112,6 +113,13 @@ begin
   end;
 end;
 
+procedure TstartF.edt_passKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #13 then
+    btn_login.OnClick(Sender);
+
+end;
+
 procedure TstartF.btn_exitClick(Sender: TObject);
 begin
   Application.Terminate;
@@ -124,7 +132,8 @@ begin
   sql := 'SELECT department FROM user_login ORDER BY department DESC';
   DropDown_(dm.dSet_pub, cbb_bm, sql, 'department');
 
-  ver := '20160330_changeCardNo';
+  // ver := '20160330_changeCardNo';
+  ver := '20160128_dev';
 
   lbl_msg.Caption := UpperCase(ver);
 end;
