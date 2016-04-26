@@ -890,8 +890,8 @@ object salaryF: TsalaryF
     end
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 144
-    Top = 296
+    Left = 256
+    Top = 320
     PixelsPerInch = 96
     object cxStyle_bg: TcxStyle
       AssignedValues = [svColor]
@@ -1055,7 +1055,7 @@ object salaryF: TsalaryF
       Size = 3
     end
     object dSet_salaryjia1: TBCDField
-      DisplayLabel = #21152#39033'1'
+      DisplayLabel = #31119#21033
       FieldName = 'jia1'
       Precision = 18
       Size = 3
@@ -1201,8 +1201,8 @@ object salaryF: TsalaryF
   end
   object dSource_salary: TDataSource
     DataSet = dSet_salary
-    Left = 80
-    Top = 234
+    Left = 64
+    Top = 250
   end
   object openDLG: TOpenDialog
     Left = 282
